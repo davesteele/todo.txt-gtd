@@ -1,0 +1,143 @@
+#!/usr/bin/python3
+
+import re
+import os
+import argparse
+
+
+def TaskProj(line):
+    match = re.search(" \+([^ ]+)", line)
+
+    if match:
+        return match.group(1)
+    else:
+        return None
+
+
+def LineGen(todotxt):
+    project = None
+    deferredTasks = []
+
+    for line in todotxt.split('\n'):
+
+        match = re.search("^# ([^ ]+)$", line)
+        if match:
+            project = match.group(1)
+
+        taskProj = TaskProj(line)
+        if taskProj:
+            if project and (project != taskProj):
+                deferredTasks.append(line)
+            else:
+                yield (taskProj, line)
+        else:
+            yield (project, line)
+
+    for line in deferredTasks:
+        yield(TaskProj(line), line)
+
+
+class Projects(object):
+    def __init__(self):
+        self.proj_list = {}
+
+    def GetProject(self, name):
+        if name not in self.proj_list:
+            project = Project(name)
+            self.proj_list[name] = project
+
+        return self.proj_list[name]
+
+    def Dump(self):
+        output = ""
+        for name, proj in sorted(self.proj_list.items(), key=lambda x: x[0]):
+            output += proj.Dump() + "\n"
+
+        return output[:-1]
+
+
+class Project(object):
+    def __init__(self, name):
+        self.name = name
+        self.tasks = []
+
+    def AddTask(self, text):
+
+        if not self.tasks and text[0] != "#":
+            self.AddTask("# {}".format(self.name))
+            self.AddTask("#")
+            self.AddTask("")
+
+        self.tasks.append(Task(text, self.name))
+
+    def Dump(self):
+
+        if self.tasks[-1].text:
+            self.AddTask("")
+
+        return "\n".join([x.text for x in self.tasks])
+
+
+class Task(object):
+    def __init__(self, text, project):
+        self.project = project
+        self.text = self.FixTask(text, project)
+
+    def GetContext(self, text):
+        match = re.search(" @([^ ]+)", text)
+        if match:
+            return match.group(1)
+        else:
+            return None
+
+    def GetProject(self, text):
+        match = re.search(" \+([^ ]+)", text)
+        if match:
+            return match.group(1)
+        else:
+            return None
+
+    def FixTask(self, text, proj_name):
+        context = self.GetContext(text)
+        project = self.GetProject(text)
+
+        if context and not project and self.project != "X-None":
+            text = text + " +" + proj_name
+
+        return text
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description="Clean up the todo.txt file in a GTD fashion"
+        )
+
+    parser.add_argument(
+        "-f", "--file",
+        help="the todo.txt file location (defaults to Dropbox)",
+        default=os.path.expanduser("~/Dropbox/todo/todo.txt")
+    )
+
+    args = parser.parse_args()
+
+    return args
+
+
+def main():
+
+    args = parse_args()
+
+    projects = Projects()
+
+    with open(args.file, 'r') as fp:
+        todotxt = fp.read()
+
+    for proj_name, task_text in LineGen(todotxt):
+        projects.GetProject(proj_name).AddTask(task_text)
+
+    with open(args.file, 'w') as fp:
+        fp.write(projects.Dump())
+
+
+if __name__ == '__main__':
+    main()

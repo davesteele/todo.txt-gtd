@@ -1,0 +1,70 @@
+#!/usr/bin/python3
+
+import os
+import argparse
+import datetime
+import shutil
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(
+            description="Back up the todo.txt todo.txt file"
+        )
+
+    parser.add_argument(
+        "-f", "--file",
+        help="the todo.txt file location (defaults to Dropbox)",
+        type=str,
+        default=os.path.expanduser("~/Dropbox/todo/todo.txt")
+    )
+
+    parser.add_argument(
+        "-b", "--backupdir",
+        help="the backup location (defaults to \"todo/backup\" in Dropbox)",
+        type=str,
+        default=os.path.expanduser("~/Dropbox/todo/") + "backup"
+    )
+
+    parser.add_argument(
+        "-n", "--num",
+        help="the number of backup files to keep (defaults to 14)",
+        type=int,
+        default=14,
+    )
+
+    args = parser.parse_args()
+
+    return args
+
+
+def backup_path(backup_dir):
+    datestr = datetime.datetime.now().__str__()
+
+    for badstr in [' ', ':', '.']:
+        datestr = datestr.replace(badstr, "-")
+
+    return os.path.join(backup_dir, "todo.txt-{}".format(datestr))
+
+
+def cleanup(backup_dir, num_files):
+    files = sorted(os.listdir(backup_dir))
+
+    if len(files) > num_files:
+        delfiles = files[:len(files)-num_files]
+        [os.remove(os.path.join(backup_dir, x)) for x in delfiles]
+
+
+def main():
+
+    args = parse_args()
+
+    if not os.path.exists(args.backupdir):
+        os.makedirs(args.backupdir)
+
+    shutil.copy2(args.file, backup_path(args.backupdir))
+
+    cleanup(args.backupdir, args.num)
+
+
+if __name__ == '__main__':
+    main()

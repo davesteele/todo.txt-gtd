@@ -1,0 +1,18 @@
+# BProj
+#
+# This is BProj
+
+1st task @computer +BProj
+second task @pending
+
+Wandering task @computer +AProj
+
+# AProj
+Figure out what AProj is @computer
+
+# X-None
+
+Make a CProj @computer +CProj
+Do an AProj @computer +AProj
+Lonely task @computer
+Do a CProj @computer +CProj
