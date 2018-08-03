@@ -60,3 +60,20 @@ def test_backup_num(tst_env):
     call_backup(tst_env.todopath.strpath, tst_env.backupdir.strpath, 3)
 
     assert len(tst_env.backupdir.listdir()) == 3
+
+
+def test_backup_del_oldest(tst_env):
+    call_backup(tst_env.todopath.strpath, tst_env.backupdir.strpath, 3)
+
+    oldest = tst_env.backupdir.listdir()[0]
+
+    for _ in range(2):
+        call_backup(tst_env.todopath.strpath, tst_env.backupdir.strpath, 3)
+
+    paths = [x.strpath for x in tst_env.backupdir.listdir()]
+    assert oldest.strpath in paths
+
+    call_backup(tst_env.todopath.strpath, tst_env.backupdir.strpath, 3)
+
+    paths = [x.strpath for x in tst_env.backupdir.listdir()]
+    assert oldest.strpath not in paths
