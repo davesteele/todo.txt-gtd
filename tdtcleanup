@@ -4,6 +4,7 @@ import re
 import os
 import argparse
 
+current_project = None
 
 def TaskProj(line):
     match = re.search(" \+([^ ]+)", line)
@@ -15,23 +16,24 @@ def TaskProj(line):
 
 
 def LineGen(todotxt):
-    project = None
+    global current_project
+
     deferredTasks = []
 
     for line in todotxt.split('\n'):
 
         match = re.search("^# ([^ ]+)$", line)
         if match:
-            project = match.group(1)
+            current_project = match.group(1)
 
         taskProj = TaskProj(line)
         if taskProj:
-            if project and (project != taskProj):
+            if current_project and (current_project != taskProj):
                 deferredTasks.append(line)
             else:
                 yield (taskProj, line)
         else:
-            yield (project, line)
+            yield (current_project, line)
 
     for line in deferredTasks:
         yield(TaskProj(line), line)
@@ -62,8 +64,10 @@ class Project(object):
         self.tasks = []
 
     def AddTask(self, text):
+        global current_project
 
         if not self.tasks and text[0] != "#":
+            current_project = self.name
             self.AddTask("# {}".format(self.name))
             self.AddTask("#")
             self.AddTask("")
