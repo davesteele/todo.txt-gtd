@@ -41,7 +41,7 @@ def LineGen(todotxt):
 
 class Projects(object):
     def __init__(self):
-        self.proj_list = {}
+        self.proj_list = { "_None": Project("_None") }
 
     def GetProject(self, name):
         if name not in self.proj_list:
@@ -52,7 +52,7 @@ class Projects(object):
 
     def Dump(self):
         output = ""
-        for name, proj in sorted(self.proj_list.items(), key=lambda x: x[0]):
+        for name, proj in sorted(self.proj_list.items(), key=lambda x: x[0].upper()):
             output += proj.Dump() + "\n"
 
         return output[:-1]
@@ -66,7 +66,7 @@ class Project(object):
     def AddTask(self, text):
         global current_project
 
-        if not self.tasks and text[0] != "#":
+        if not self.tasks and (not text or text[0] != "#"):
             current_project = self.name
             self.AddTask("# {}".format(self.name))
             self.AddTask("#")
@@ -76,7 +76,7 @@ class Project(object):
 
     def Dump(self):
 
-        if self.tasks[-1].text:
+        if not self.tasks or self.tasks[-1].text:
             self.AddTask("")
 
         return "\n".join([x.text for x in self.tasks])
