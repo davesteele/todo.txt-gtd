@@ -105,7 +105,7 @@ class Task(object):
         context = self.GetContext(text)
         project = self.GetProject(text)
 
-        if context and not project and self.project != "X-None":
+        if context and not project and self.project != "_None":
             text = text + " +" + proj_name
 
         return text
