@@ -4,6 +4,7 @@ import subprocess
 import shlex
 import os
 
+
 def test_cleanup(file_case, tmpdir):
     inpath = "test/cases/" + file_case + ".in"
     outpath = "test/cases/" + file_case + ".out"

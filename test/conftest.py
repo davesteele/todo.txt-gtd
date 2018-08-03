@@ -1,5 +1,6 @@
 import os
 
+
 def pytest_generate_tests(metafunc):
     if 'file_case' in metafunc.fixturenames:
         cases = []
