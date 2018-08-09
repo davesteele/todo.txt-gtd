@@ -3,16 +3,14 @@ import pytest
 import subprocess
 import shlex
 import os
+import py
 
 
 def test_cleanup(file_case, tmpdir):
-    inpath = "test/cases/" + file_case + ".in"
-    outpath = "test/cases/" + file_case + ".out"
-
-    workfile = tmpdir.join(file_case + ".in")
-    workfile.write(open(inpath, 'r').read())
+    workfile = tmpdir.join("todo.txt")
+    file_case.infile.copy(workfile)
 
     subprocess.run(shlex.split("./tdtcleanup -f " + str(workfile)))
 
-    assert(workfile.read() == open(outpath, 'r').read())
-    assert(workfile.size() == os.stat(outpath).st_size)
+    assert(workfile.read() == file_case.outfile.read())
+    assert(workfile.size() == file_case.outfile.size())
