@@ -15,5 +15,4 @@ def test_cleanup(file_case, tmpdir):
     subprocess.run(shlex.split("./tdtcleanup -f " + str(workfile)))
 
     assert(workfile.read() == open(outpath, 'r').read())
-
-    assert(os.stat(str(workfile)).st_size == os.stat(outpath).st_size)
+    assert(workfile.size() == os.stat(outpath).st_size)
