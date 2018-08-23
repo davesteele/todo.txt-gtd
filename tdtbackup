@@ -8,7 +8,7 @@ import shutil
 
 def parse_args():
     parser = argparse.ArgumentParser(
-            description="Back up the todo.txt todo.txt file"
+            description="Back up the todo.txt file"
         )
 
     parser.add_argument(
