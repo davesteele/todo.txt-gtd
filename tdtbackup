@@ -61,7 +61,10 @@ def main():
     if not os.path.exists(args.backupdir):
         os.makedirs(args.backupdir)
 
-    shutil.copy2(args.file, backup_path(args.backupdir))
+    # use read/write for a dos2unix action
+    with open(args.file, 'r') as rp:
+        with open(backup_path(args.backupdir), 'w') as wp:
+            wp.write(rp.read())
 
     cleanup(args.backupdir, args.num)
 
