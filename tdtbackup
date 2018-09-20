@@ -1,13 +1,20 @@
 #!/usr/bin/python3
 
-import os
-import argparse
 import datetime
+import os
 import shutil
+
+import configargparse
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(
+    parser = configargparse.ArgumentParser(
+            default_config_files=[
+                "/etc/todo-txt-gtd/tdtbackup.conf",
+                "~/.config/todo-txt-gtd/tdtbackup.conf",
+                "~/.tdtbackup.conf",
+                "~/.todo-txt/tdtbackup.conf",
+            ],
             description="Back up the todo.txt file"
         )
 
