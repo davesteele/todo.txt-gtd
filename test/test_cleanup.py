@@ -2,8 +2,6 @@
 import pytest
 import subprocess
 import shlex
-import os
-import py
 from collections import namedtuple
 
 

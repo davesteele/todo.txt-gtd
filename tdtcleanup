@@ -4,8 +4,11 @@ import re
 import os
 import argparse
 
+NONE_TASK = "_None"
+
+
 def TaskProj(line):
-    match = re.search(" \+([^ ]+)", line)
+    match = re.search(" \+([^ ]+)", line)  # noqa
 
     if match:
         return match.group(1)
@@ -40,27 +43,23 @@ def LineGen(todotxt):
         yield(TaskProj(line), line)
 
 
-class Projects(object):
-    def __init__(self):
-        self.proj_list = { "_None": Project("_None") }
+class Projects(dict):
+    def __init__(self, *args, **kwargs):
+        returnval = super(Projects, self).__init__(*args, **kwargs)
+        self[NONE_TASK]
+        return returnval
 
-    def GetProject(self, name):
-        pname = name
-        if not pname:
-            pname = "_None"
-
-        if pname not in self.proj_list:
-            project = Project(pname)
-            self.proj_list[pname] = project
-
-        return self.proj_list[pname]
+    def __missing__(self, key):
+        if key is None:
+            proj = self[NONE_TASK]
+        else:
+            proj = Project(key)
+            self[key] = proj
+        return proj
 
     def Dump(self):
-        output = ""
-        for name, proj in sorted(self.proj_list.items(), key=lambda x: x[0].upper()):
-            output += proj.Dump() + "\n"
-
-        return output[:-1]
+        projs = sorted([self[x] for x in self], key=lambda y: y.name.upper())
+        return "\n".join([x.Dump() for x in projs])
 
 
 class Project(object):
@@ -77,7 +76,6 @@ class Project(object):
         self.tasks.append(Task(text, self.name))
 
     def Dump(self):
-
         if not self.tasks or self.tasks[-1].text:
             self.AddTask("")
 
@@ -97,7 +95,7 @@ class Task(object):
             return None
 
     def GetProject(self, text):
-        match = re.search(" \+([^ ]+)", text)
+        match = re.search(" \+([^ ]+)", text)  # noqa
         if match:
             return match.group(1)
         else:
@@ -107,7 +105,7 @@ class Task(object):
         context = self.GetContext(text)
         project = self.GetProject(text)
 
-        if context and not project and self.project != "_None":
+        if context and not project and self.project != NONE_TASK:
             if proj_name:
                 text = text + " +" + proj_name
 
@@ -121,7 +119,8 @@ def parse_args():
 
     parser.add_argument(
         "-f", "--file",
-        help="the todo.txt file location (defaults to ~/Dropbox/todo/todo.txt)",
+        help="the todo.txt file location "
+             "(defaults to ~/Dropbox/todo/todo.txt)",
         default=os.path.expanduser("~/Dropbox/todo/todo.txt")
     )
 
@@ -140,7 +139,7 @@ def main():
         todotxt = fp.read()
 
     for proj_name, task_text in LineGen(todotxt):
-        projects.GetProject(proj_name).AddTask(task_text)
+        projects[proj_name].AddTask(task_text)
 
     with open(args.file, 'w') as fp:
         fp.write(projects.Dump())
