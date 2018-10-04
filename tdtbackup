@@ -3,18 +3,25 @@
 import datetime
 import os
 import shutil
+import sys
 
 import configargparse
 
 
 def parse_args():
-    parser = configargparse.ArgumentParser(
-            default_config_files=[
+    def conf_paths():
+        if "-c" in sys.argv or "--config-file" in sys.argv:
+            return []
+        else:
+            return [
                 "/etc/todo-txt-gtd/tdtbackup.conf",
                 "~/.config/todo-txt-gtd/tdtbackup.conf",
                 "~/.tdtbackup.conf",
                 "~/.todo-txt/tdtbackup.conf",
-            ],
+            ]
+
+    parser = configargparse.ArgumentParser(
+            default_config_files=conf_paths(),
             description="Back up the todo.txt file"
         )
 
@@ -37,6 +44,12 @@ def parse_args():
         help="the number of backup files to keep (defaults to 14)",
         type=int,
         default=14,
+    )
+
+    parser.add_argument(
+        "-c", "--config_file",
+        is_config_file=True,
+        help="alternate config file",
     )
 
     args = parser.parse_args()
