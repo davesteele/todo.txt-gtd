@@ -3,17 +3,28 @@
 import re
 import os
 import argparse
+from functools import wraps
 
 NONE_PROJ = "_None"
 
 
-def TaskProj(line):
-    match = re.search(" \+([^ ]+)", line)  # noqa
+def none_on_exception(*exceptions):
+    def _none_on_exception(fp):
+        @wraps(fp)
+        def wrapper(*args, **kwargs):
+            try:
+                return fp(*args, **kwargs)
+            except exceptions:
+                return None
 
-    if match:
-        return match.group(1)
-    else:
-        return None
+        return wrapper
+
+    return _none_on_exception
+
+
+@none_on_exception(AttributeError)
+def TaskProj(line):
+    return re.search(" \+([^ ]+)", line).group(1)
 
 
 def LineGen(todotxt):
@@ -45,9 +56,8 @@ def LineGen(todotxt):
 
 class Projects(dict):
     def __init__(self, *args, **kwargs):
-        returnval = super(Projects, self).__init__(*args, **kwargs)
+        super(Projects, self).__init__(*args, **kwargs)
         self[NONE_PROJ]
-        return returnval
 
     def __missing__(self, key):
         if key is None:
@@ -57,9 +67,9 @@ class Projects(dict):
             self[key] = proj
         return proj
 
-    def Dump(self):
+    def __repr__(self):
         projs = sorted([self[x] for x in self], key=lambda y: y.name.upper())
-        return "\n".join([x.Dump() for x in projs])
+        return "\n".join([str(x) for x in projs])
 
 
 class Project(object):
@@ -75,7 +85,7 @@ class Project(object):
 
         self.tasks.append(Task(text, self.name))
 
-    def Dump(self):
+    def __repr__(self):
         if not self.tasks or self.tasks[-1].text:
             self.AddTask("")
 
@@ -85,29 +95,26 @@ class Project(object):
 class Task(object):
     def __init__(self, text, project):
         self.project = project
-        self.text = self.FixTask(text, project)
+        self.text = self.FixTask(text)
 
+    @none_on_exception(AttributeError)
     def GetContext(self, text):
-        match = re.search(" @([^ ]+)", text)
-        if match:
-            return match.group(1)
-        else:
-            return None
+        return re.search(" @([^ ]+)", text).group(1)
 
+    @none_on_exception(AttributeError)
     def GetProject(self, text):
-        match = re.search(" \+([^ ]+)", text)  # noqa
-        if match:
-            return match.group(1)
-        else:
-            return None
+        return re.search(" \+([^ ]+)", text).group(1)
 
-    def FixTask(self, text, proj_name):
+    def FixTask(self, text):
         context = self.GetContext(text)
-        project = self.GetProject(text)
+        taskProj = self.GetProject(text)
 
-        if context and not project and self.project != NONE_PROJ:
-            if proj_name:
-                text = text + " +" + proj_name
+        if context is not None \
+           and taskProj is None \
+           and self.project != NONE_PROJ \
+           and self.project is not None:
+
+            text = "{0} +{1}".format(text, self.project)
 
         return text
 
@@ -130,19 +137,16 @@ def parse_args():
 
 
 def main():
-
     args = parse_args()
 
     projects = Projects()
 
     with open(args.file, 'r') as fp:
-        todotxt = fp.read()
-
-    for proj_name, task_text in LineGen(todotxt):
-        projects[proj_name].AddTask(task_text)
+        for proj_name, task_text in LineGen(fp.read()):
+            projects[proj_name].AddTask(task_text)
 
     with open(args.file, 'w') as fp:
-        fp.write(projects.Dump())
+        fp.write(str(projects))
 
 
 if __name__ == '__main__':

@@ -2,8 +2,6 @@ import pytest
 from collections import namedtuple
 import subprocess
 import shlex
-from pathlib import Path
-import os
 
 
 Env = namedtuple("Env", ['todopath', 'backupdir', 'configpath'])
@@ -24,7 +22,7 @@ def tst_env(tmpdir):
 
 def call_backup(tst_env, num=0):
     cmdfmt = "./tdtbackup -c {2} -f {0} -b {1}"
-    cmd = cmdfmt.format( 
+    cmd = cmdfmt.format(
             tst_env.todopath,
             tst_env.backupdir,
             tst_env.configpath,

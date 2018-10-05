@@ -9,19 +9,18 @@ import configargparse
 
 
 def parse_args():
-    def conf_paths():
-        if "-c" in sys.argv or "--config-file" in sys.argv:
-            return []
-        else:
-            return [
-                "/etc/todo-txt-gtd/tdtbackup.conf",
-                "~/.config/todo-txt-gtd/tdtbackup.conf",
-                "~/.tdtbackup.conf",
-                "~/.todo-txt/tdtbackup.conf",
-            ]
+    if "-c" in sys.argv or "--config-file" in sys.argv:
+        conf_paths = []
+    else:
+        conf_paths = [
+            "/etc/todo-txt-gtd/tdtbackup.conf",
+            "~/.config/todo-txt-gtd/tdtbackup.conf",
+            "~/.tdtbackup.conf",
+            "~/.todo-txt/tdtbackup.conf",
+        ]
 
     parser = configargparse.ArgumentParser(
-            default_config_files=conf_paths(),
+            default_config_files=conf_paths,
             description="Back up the todo.txt file"
         )
 
@@ -75,7 +74,6 @@ def cleanup(backup_dir, num_files):
 
 
 def main():
-
     args = parse_args()
 
     if not os.path.exists(args.backupdir):
