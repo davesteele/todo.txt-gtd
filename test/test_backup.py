@@ -34,17 +34,17 @@ def call_backup(tst_env, num=0):
     subprocess.call(shlex.split(cmd))
 
 
-def test_backup_one(tst_env):
+def test_backup_zero(tst_env):
     assert len(tst_env.backupdir.listdir()) == 0
 
-    call_backup(tst_env)
 
+def test_backup_one(tst_env):
+    call_backup(tst_env)
     assert len(tst_env.backupdir.listdir()) == 1
 
 
 def test_backup_contents(tst_env):
     call_backup(tst_env)
-
     assert tst_env.todopath.read() == tst_env.backupdir.listdir()[0].read()
 
 

@@ -145,8 +145,7 @@ def main():
         for proj_name, task_text in LineGen(fp.read()):
             projects[proj_name].AddTask(task_text)
 
-    with open(args.file, 'w') as fp:
-        fp.write(str(projects))
+    open(args.file, 'w').write(str(projects))
 
 
 if __name__ == '__main__':
