@@ -24,7 +24,7 @@ def none_on_exception(*exceptions):
 
 @none_on_exception(AttributeError)
 def TaskProj(line):
-    return re.search(" \+([^ ]+)", line).group(1)
+    return re.search(" \+([^ ]+)", line).group(1)  # noqa
 
 
 def LineGen(todotxt):
@@ -102,14 +102,11 @@ class Task(object):
 
     @none_on_exception(AttributeError)
     def GetProject(self, text):
-        return re.search(" \+([^ ]+)", text).group(1)
+        return re.search(" \+([^ ]+)", text).group(1)  # noqa
 
     def FixTask(self, text, project):
-        context = self.GetContext(text)
-        taskProj = self.GetProject(text)
-
-        if context is not None \
-           and taskProj is None \
+        if self.GetContext(text) is not None \
+           and self.GetProject(text) is None \
            and project != NONE_PROJ \
            and project is not None:
 
