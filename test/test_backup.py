@@ -83,5 +83,5 @@ def test_backup_del_oldest(tst_env):
 
     call_backup(tst_env, 3)
 
-    paths = [x.strpath for x in tst_env.backupdir.listdir()]
+    paths = [str(x) for x in tst_env.backupdir.listdir()]
     assert oldest.strpath not in paths

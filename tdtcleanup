@@ -94,8 +94,7 @@ class Project(object):
 
 class Task(object):
     def __init__(self, text, project):
-        self.project = project
-        self.text = self.FixTask(text)
+        self.text = self.FixTask(text, project)
 
     @none_on_exception(AttributeError)
     def GetContext(self, text):
@@ -105,16 +104,16 @@ class Task(object):
     def GetProject(self, text):
         return re.search(" \+([^ ]+)", text).group(1)
 
-    def FixTask(self, text):
+    def FixTask(self, text, project):
         context = self.GetContext(text)
         taskProj = self.GetProject(text)
 
         if context is not None \
            and taskProj is None \
-           and self.project != NONE_PROJ \
-           and self.project is not None:
+           and project != NONE_PROJ \
+           and project is not None:
 
-            text = "{0} +{1}".format(text, self.project)
+            text = "{0} +{1}".format(text, project)
 
         return text
 
