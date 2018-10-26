@@ -89,7 +89,7 @@ class Project(object):
         if not self.tasks or self.tasks[-1].text:
             self.AddTask("")
 
-        return "\n".join([x.text for x in self.tasks])
+        return "\n".join([str(x) for x in self.tasks])
 
 
 class Task(object):
@@ -113,6 +113,9 @@ class Task(object):
             text = "{0} +{1}".format(text, project)
 
         return text
+
+    def __repr__(self):
+        return self.text
 
 
 def parse_args():
