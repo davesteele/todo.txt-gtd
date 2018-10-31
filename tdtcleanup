@@ -27,6 +27,11 @@ def TaskProj(line):
     return re.search(" \+([^ ]+)", line).group(1)  # noqa
 
 
+@none_on_exception(AttributeError)
+def HeaderProj(line):
+    return re.search("^# ([^ ]+)$", line).group(1)  # noqa
+
+
 def LineGen(todotxt):
     current_project = None
 
@@ -34,9 +39,8 @@ def LineGen(todotxt):
 
     for line in todotxt.split('\n'):
 
-        match = re.search("^# ([^ ]+)$", line)
-        if match:
-            current_project = match.group(1)
+        if HeaderProj(line):
+            current_project = HeaderProj(line)
 
         taskProj = TaskProj(line)
         if taskProj:
@@ -83,7 +87,8 @@ class Project(object):
             self.AddTask("#")
             self.AddTask("")
 
-        self.tasks.append(Task(text, self.name))
+        if not (self.tasks and HeaderProj(text)):
+            self.tasks.append(Task(text, self.name))
 
     def __repr__(self):
         if not self.tasks or self.tasks[-1].text:
