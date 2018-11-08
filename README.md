@@ -1,6 +1,6 @@
 # todo.txt-gtd
 My recipe for customizing a [**todo.txt**](http://todotxt.org/) environment for
-[Getting Things Done](https://gettingthingsdone.com/).
+[**Getting Things Done**](https://gettingthingsdone.com/).
 
 # The Cleanup Script
 
