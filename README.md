@@ -62,7 +62,7 @@ For the Weekly Review:
 
 # Configuring Existing todo.txt Apps
 
-Filter on '@' to limit your task lists to just tasks. I use _@pending_ as a special context for tasks that cannot be performed yet due to an uncompleted previous step. If you pick up this convention, filter out _@pending_ from your lists as well.
+Filter on '@' to limit your task lists to just tasks. I use a '\~' as a special context flag (e.g. '@\~errands') for tasks that cannot be performed yet due to an uncompleted previous step. If you pick up this convention, you may want to filter out '@~' from your lists as well.
 
 Avoid the 'archive' operation. This typically will remove duplicate lines in _todo.txt_. This can wreak havoc on formatting, eliminating white space and empty comment lines in the file.
 
