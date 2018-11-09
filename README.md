@@ -83,6 +83,16 @@ Filter on '@' to limit your task lists to just tasks. I use a '\~' as a special 
 
 Avoid the 'archive' operation. This typically will remove duplicate lines in _todo.txt_. This can wreak havoc on formatting, eliminating white space and empty comment lines in the file.
 
+# Specific Todo.txt Apps for GTD
+
+I've used the classic [todo.txt CLI](https://todotxt.org/) with success. As mentioned previously, avoid the archive operation.
+
+I've come to prefer [ToPydo](https://pypi.org/project/topydo/), though it needs a [small change](https://github.com/davesteele/topydo/commit/fafee24beb4718f375a921f3b4772c5fea37d7ac) to avoid eliminating blank lines.
+
+[SimpleTask](https://play.google.com/store/apps/details?id=nl.mpcjanssen.todotxtholo&hl=en_US) works well on Android. Make a "Current Tasks" filter with the "List" tab consisting of a checked "Invert Filter" box, plus check "-" and all contexts you want to eliminate (e.g. "someday").
+
+Of course, a primary way of interacting with the todo list is by editing the todo.txt file directly.
+
 # Usage
 
     $ ./tdtcleanup -h
