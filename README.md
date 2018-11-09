@@ -42,6 +42,23 @@ On subsequent runs, _tdtcleanup_ will do the following:
 * Add the '+' project tag to any tasks in a Project Section that don't already have one. A task is defined here as a line of text that includes an '@' context. This processing doesn't happen in the *_None* section.
 * Move tasks to the proper Project Section, if they aren't already there. The Section is created, using a Project Header, if necessary.
 
+# The Context Listing Script
+
+The _tdtlist_ script lists the tasks in todo.txt, by context.
+
+If you process either of the above todo.txt files through _tdtlist_, it will output the following
+
+    @errands
+    
+    Get an oil change @errands +CarMaintenance
+    Get a Haircut @errands +Grooming
+    
+    @home
+    
+    Check the car battery water level @home +CarMaintenance
+
+# The Backup script
+
 _tdtbackup_ is a utility script for making rotating backups of the todo.txt file.
 
 # Working with a GTD todo.txt
@@ -78,6 +95,19 @@ Avoid the 'archive' operation. This typically will remove duplicate lines in _to
       -f FILE, --file FILE  the todo.txt file location (defaults to
                             ~/Dropbox/todo/todo.txt)
 
+
+    $ ./tdtlist -h
+    usage: tdtlist [-h] [-f FILE] [TERM [TERM ...]]
+    
+    List the tasks in todo.txt, by @category
+    
+    positional arguments:
+      TERM                  search terms to filter the reported tasks
+    
+    optional arguments:
+      -h, --help            show this help message and exit
+      -f FILE, --file FILE  the todo.txt file location (defaults to
+                            ~/Dropbox/todo/todo.txt)
 
 
     $ ./tdtbackup -h
