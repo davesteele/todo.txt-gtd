@@ -1,8 +1,9 @@
 #!/usr/bin/python3
 
-import re
-import os
 import argparse
+import datetime
+import os
+import re
 
 def is_task(line, *terms):
     if len(line) == 0:
@@ -15,6 +16,9 @@ def is_task(line, *terms):
         return False
 
     if re.search("^x ", line):
+        return False
+
+    if threshold_mask(line):
         return False
 
     if not terms:
@@ -39,6 +43,17 @@ def task_sort(tasks):
     pri_tagged_tasks = [(task_priority(txt), n, txt) for (n, txt) in enumerate(tasks)]
 
     return [x[2] for x in sorted(pri_tagged_tasks)]
+
+
+def threshold_mask(task):
+    match = re.search("t:(\d\d\d\d-\d\d-\d\d)", task)
+
+    if not match:
+        return False
+
+    threshold_date = datetime.datetime.strptime(match.group(1), "%Y-%m-%d")
+
+    return datetime.datetime.now() < threshold_date
 
 
 def parse_args():
