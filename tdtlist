@@ -21,6 +21,9 @@ def is_task(line, *terms):
     if threshold_mask(line):
         return False
 
+    if "@~" in line:
+        return False
+
     if not terms:
         return True
 
