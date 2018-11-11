@@ -6,10 +6,10 @@ import os
 import re
 
 def is_task(line, *terms):
-    if len(line) == 0:
+    if re.search("^\s*#", line):
         return False
 
-    if line[0] == "#":
+    if re.search("^\s*$", line):
         return False
 
     if "@" not in line:
