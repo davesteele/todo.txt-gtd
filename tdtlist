@@ -4,8 +4,9 @@ import argparse
 import datetime
 import os
 import re
+from typing import List
 
-def is_task(line, *terms):
+def is_task(line: str, *terms: List[str]) -> bool:
     if re.search("^\s*#", line):
         return False
 
@@ -34,7 +35,7 @@ def is_task(line, *terms):
     return True
 
 
-def task_priority(task):
+def task_priority(task: str) -> str:
     match = re.search( "^\((.)\) ", task)
     if match:
         return match.group(1)
@@ -42,13 +43,13 @@ def task_priority(task):
     return "M"
 
 
-def task_sort(tasks):
+def task_sort(tasks: List[str]) -> List[str]:
     pri_tagged_tasks = [(task_priority(txt), n, txt) for (n, txt) in enumerate(tasks)]
 
     return [x[2] for x in sorted(pri_tagged_tasks)]
 
 
-def threshold_mask(task):
+def threshold_mask(task: str) -> bool:
     match = re.search("t:(\d\d\d\d-\d\d-\d\d)", task)
 
     if not match:
