@@ -6,11 +6,9 @@ import os
 import re
 from typing import List
 
-def is_task(line: str, *terms: List[str]) -> bool:
-    if re.search("^\s*#", line):
-        return False
 
-    if re.search("^\s*$", line):
+def is_task(line: str, *terms: List[str]) -> bool:
+    if re.search(r"^\s*#", line):
         return False
 
     if "@" not in line:
@@ -36,7 +34,7 @@ def is_task(line: str, *terms: List[str]) -> bool:
 
 
 def task_priority(task: str) -> str:
-    match = re.search( "^\((.)\) ", task)
+    match = re.search(r"^\((.)\) ", task)
     if match:
         return match.group(1)
 
@@ -44,13 +42,13 @@ def task_priority(task: str) -> str:
 
 
 def task_sort(tasks: List[str]) -> List[str]:
-    pri_tagged_tasks = [(task_priority(txt), n, txt) for (n, txt) in enumerate(tasks)]
+    pri_tasks = [(task_priority(txt), n, txt) for (n, txt) in enumerate(tasks)]
 
-    return [x[2] for x in sorted(pri_tagged_tasks)]
+    return [x[2] for x in sorted(pri_tasks)]
 
 
 def threshold_mask(task: str) -> bool:
-    match = re.search("t:(\d\d\d\d-\d\d-\d\d)", task)
+    match = re.search(r"t:(\d\d\d\d-\d\d-\d\d)", task)
 
     if not match:
         return False
@@ -87,8 +85,8 @@ def parse_args():
 def main():
     args = parse_args()
 
-    todotxt = open(args.file, 'r').read()
-    tasks = task_sort([x for x in todotxt.splitlines() if is_task(x, *args.terms)])
+    txt = open(args.file, 'r').read()
+    tasks = task_sort([x for x in txt.splitlines() if is_task(x, *args.terms)])
     contexts = sorted({y for x in tasks for y in x.split() if y[0] == "@"})
 
     for context in contexts:
