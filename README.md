@@ -94,6 +94,8 @@ I've come to prefer [ToPydo](https://pypi.org/project/topydo/), though it needs 
 
 [SimpleTask](https://play.google.com/store/apps/details?id=nl.mpcjanssen.todotxtholo&hl=en_US) works well on Android. Make a "Current Tasks" filter with the "List" tab consisting of a checked "Invert Filter" box, plus check "-" and all contexts you want to eliminate (e.g. "someday").
 
+Run 'tdtlist -l' for a printable todo list, for offline use.
+
 Of course, a primary way of interacting with the todo list is by editing the todo.txt file directly.
 
 # Usage
