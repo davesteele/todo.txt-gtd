@@ -77,10 +77,28 @@ def parse_args():
         help="search terms to filter the reported tasks",
     )
 
+    parser.add_argument(
+        "-l", "--launch",
+        action="store_true",
+        help="open the task list, after creating",
+    )
+
     args = parser.parse_args()
+
+    docdir = os.path.dirname(args.file)
+    args.rst_file = os.path.join(docdir, "tasks.rst")
+    args.txt_file = os.path.join(docdir, "tasks.txt")
+    args.odt_file = os.path.join(docdir, "tasks.odt")
 
     return args
 
+def rstify(task):
+
+    task = re.sub("\\(", "\(", task)
+    task = re.sub("\\)", "\)", task)
+    task = "* " + task
+
+    return task
 
 def main():
     args = parse_args()
@@ -89,13 +107,15 @@ def main():
     tasks = task_sort([x for x in txt.splitlines() if is_task(x, *args.terms)])
     contexts = sorted({y for x in tasks for y in x.split() if y[0] == "@"})
 
+    txtfd = open(args.txt_file, 'w')
+    rstfd = open(args.rst_file, 'w')
     for context in contexts:
-        print(context)
-        print()
+        txtfd.write("\n{}\n".format(context))
+        rstfd.write("\n{}\n".format(context))
         for task in tasks:
             if context in task.split():
-                print(task)
-        print()
+                txtfd.write("{}\n".format(task))
+                rstfd.write("{}\n".format(rstify(task)))
 
 
 if __name__ == '__main__':
