@@ -5,6 +5,7 @@ import datetime
 import os
 import re
 import subprocess
+import textwrap
 from typing import List
 
 
@@ -61,8 +62,15 @@ def threshold_mask(task: str) -> bool:
 
 def parse_args():
     parser = argparse.ArgumentParser(
-        description="List the tasks in todo.txt, by @category"
-        )
+        description="List the tasks in todo.txt, by @category",
+        epilog=textwrap.dedent("""
+            Process the todo.txt file, and save tasks lists, by context,
+            in text and LibreOffice formats. The lists are saved in the
+            same directory as todo.txt. Optionally, the LibreOffice list
+            can be automatically opened.
+            """[1:-1]
+        ),
+    )
 
     parser.add_argument(
         "-f", "--file",

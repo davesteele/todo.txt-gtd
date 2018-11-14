@@ -57,6 +57,9 @@ If you process either of the above todo.txt files through _tdtlist_, it will out
     
     Check the car battery water level @home +CarMaintenance
 
+The list is saved in text and LibreOffice ".odt" formats. It can be optionally
+automatically opened after it is created.
+
 # The Backup script
 
 _tdtbackup_ is a utility script for making rotating backups of the todo.txt file.
@@ -106,8 +109,8 @@ Of course, a primary way of interacting with the todo list is by editing the tod
                             ~/Dropbox/todo/todo.txt)
 
 
-    $ ./tdtlist -h
-    usage: tdtlist [-h] [-f FILE] [TERM [TERM ...]]
+    $ tdtlist -h
+    usage: tdtlist [-h] [-f FILE] [-l] [TERM [TERM ...]]
     
     List the tasks in todo.txt, by @category
     
@@ -118,6 +121,8 @@ Of course, a primary way of interacting with the todo list is by editing the tod
       -h, --help            show this help message and exit
       -f FILE, --file FILE  the todo.txt file location (defaults to
                             ~/Dropbox/todo/todo.txt)
+      -l, --launch          open the task list, after creating
+
 
 
     $ ./tdtbackup -h
