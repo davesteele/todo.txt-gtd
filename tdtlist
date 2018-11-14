@@ -4,6 +4,7 @@ import argparse
 import datetime
 import os
 import re
+import subprocess
 from typing import List
 
 
@@ -109,13 +110,25 @@ def main():
 
     txtfd = open(args.txt_file, 'w')
     rstfd = open(args.rst_file, 'w')
-    for context in contexts:
-        txtfd.write("\n{}\n".format(context))
-        rstfd.write("\n{}\n".format(context))
-        for task in tasks:
-            if context in task.split():
-                txtfd.write("{}\n".format(task))
-                rstfd.write("{}\n".format(rstify(task)))
+    with open(args.txt_file, 'w') as txtfd:
+        with open(args.rst_file, 'w') as rstfd:
+            for context in contexts:
+                txtfd.write("\n{}\n".format(context))
+                rstfd.write("\n{}\n\n".format(context))
+                for task in tasks:
+                    if context in task.split():
+                        txtfd.write("{}\n".format(task))
+                        rstfd.write("{}\n".format(rstify(task)))
+                rstfd.write("\n|\n")
+
+    subprocess.run(
+        ['rst2odt', args.rst_file, args.odt_file],
+    )
+
+    os.remove(args.rst_file)
+
+    if args.launch:
+        subprocess.call(['xdg-open', args.odt_file])
 
 
 if __name__ == '__main__':
