@@ -108,8 +108,6 @@ def main():
     tasks = task_sort([x for x in txt.splitlines() if is_task(x, *args.terms)])
     contexts = sorted({y for x in tasks for y in x.split() if y[0] == "@"})
 
-    txtfd = open(args.txt_file, 'w')
-    rstfd = open(args.rst_file, 'w')
     with open(args.txt_file, 'w') as txtfd:
         with open(args.rst_file, 'w') as rstfd:
             for context in contexts:
