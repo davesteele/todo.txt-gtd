@@ -123,6 +123,9 @@ Of course, a primary way of interacting with the todo list is by editing the tod
                             ~/Dropbox/todo/todo.txt)
       -l, --launch          open the task list, after creating
 
+    Process the todo.txt file, and save tasks lists, by context, in text and
+    LibreOffice formats. The lists are saved in the same directory as todo.txt.
+    Optionally, the LibreOffice list can be automatically opened.
 
 
     $ ./tdtbackup -h
