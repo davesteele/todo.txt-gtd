@@ -93,7 +93,7 @@ def main():
         print(context)
         print()
         for task in tasks:
-            if [x for x in task.split() if x == context]:
+            if context in task.split():
                 print(task)
         print()
 
