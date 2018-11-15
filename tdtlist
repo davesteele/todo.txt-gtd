@@ -41,9 +41,8 @@ def is_task(line: str, *terms: List[str]) -> bool:
     if not terms:
         return True
 
-    for term in terms:
-        if term not in line:
-            return False
+    if any(term not in line for term in terms):
+        return False
 
     return True
 
