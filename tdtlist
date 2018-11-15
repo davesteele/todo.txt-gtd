@@ -139,10 +139,7 @@ def main():
                     rstfd.write("{}\n".format(rstify(task)))
             rstfd.write("\n|\n")
 
-    subprocess.run(
-        ['rst2odt', args.rst_file, args.odt_file],
-    )
-
+    subprocess.run(['rst2odt', args.rst_file, args.odt_file])
     os.remove(args.rst_file)
 
     if args.launch:
