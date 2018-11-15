@@ -6,6 +6,7 @@ import datetime
 import os
 import re
 import subprocess
+import sys
 import textwrap
 from typing import List
 
@@ -139,8 +140,12 @@ def main():
                     rstfd.write("{}\n".format(rstify(task)))
             rstfd.write("\n|\n")
 
-    subprocess.run(['rst2odt', args.rst_file, args.odt_file])
-    os.remove(args.rst_file)
+    try:
+        subprocess.run(['rst2odt', args.rst_file, args.odt_file])
+        os.remove(args.rst_file)
+    except FileNotFoundError:
+        print("tdtlist requires the rst2odt utility in the python3-docutils package")
+        sys.exit(1)
 
     if args.launch:
         with nullfd(1), nullfd(2):
