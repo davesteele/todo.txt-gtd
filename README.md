@@ -90,13 +90,24 @@ Avoid the 'archive' operation. This typically will remove duplicate lines in _to
 
 I've used the classic [todo.txt CLI](https://todotxt.org/) with success. As mentioned previously, avoid the archive operation.
 
-I've come to prefer [ToPydo](https://pypi.org/project/topydo/), though it needs a [small change](https://github.com/davesteele/topydo/commit/fafee24beb4718f375a921f3b4772c5fea37d7ac) to avoid eliminating blank lines.
+I've come to prefer [ToPydo](https://pypi.org/project/topydo/), for its support
+of [threshold dates and recurrance](https://github.com/mpcjanssen/simpletask-android/blob/master/app/src/main/assets/extensions.en.md). Note that it needs a [small change](https://github.com/davesteele/topydo/commit/fafee24beb4718f375a921f3b4772c5fea37d7ac) to avoid eliminating blank lines. Make sure to use the '-a' option to disable auto-archive on task completion.
 
 [SimpleTask](https://play.google.com/store/apps/details?id=nl.mpcjanssen.todotxtholo&hl=en_US) works well on Android. Make a "Current Tasks" filter with the "List" tab consisting of a checked "Invert Filter" box, plus check "-" and all contexts you want to eliminate (e.g. "someday").
 
 Run 'tdtlist -l' for a printable todo list, for offline use.
 
 Of course, a primary way of interacting with the todo list is by editing the todo.txt file directly.
+
+My .bashrc to support todo.txt:
+
+    alias vitodo='vim ~/Dropbox/todo/todo.txt'
+    alias cdtodo='cd ~/Dropbox/todo/'
+    alias todo='topydo -a -t ~/Dropbox/todo/todo.txt'
+
+And my cron:
+
+    0 2 * * * /usr/local/bin/tdtbackup; /usr/local/bin/tdtcleanup; /usr/local/bin/tdtlist
 
 # Usage
 
