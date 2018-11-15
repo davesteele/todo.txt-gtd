@@ -75,8 +75,8 @@ def threshold_mask(task: str) -> bool:
 
 def rstify(task: str) -> str:
 
-    task = re.sub("\\(", "\(", task)
-    task = re.sub("\\)", "\)", task)
+    task = re.sub("\\(", r"\(", task)
+    task = re.sub("\\)", r"\)", task)
     task = "* " + task
 
     return task
@@ -123,6 +123,7 @@ def parse_args():
 
     return args
 
+
 def main():
     args = parse_args()
 
@@ -144,7 +145,8 @@ def main():
         subprocess.run(['rst2odt', args.rst_file, args.odt_file])
         os.remove(args.rst_file)
     except FileNotFoundError:
-        print("tdtlist requires the rst2odt utility in the python3-docutils package")
+        print("tdtlist requires the rst2odt utility "
+              "in the python3-docutils package")
         sys.exit(1)
 
     if args.launch:
