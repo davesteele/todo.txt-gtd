@@ -8,11 +8,11 @@ import re
 import subprocess
 import sys
 import textwrap
-from typing import List
+from typing import List, Generator
 
 
 @contextmanager
-def nullfd(fd):
+def nullfd(fd: int) -> Generator:
     saveout = os.dup(fd)
     os.close(fd)
     os.open(os.devnull, os.O_RDWR)
@@ -73,7 +73,7 @@ def threshold_mask(task: str) -> bool:
     return datetime.datetime.now() < threshold_date
 
 
-def rstify(task):
+def rstify(task: str) -> str:
 
     task = re.sub("\\(", "\(", task)
     task = re.sub("\\)", "\)", task)
