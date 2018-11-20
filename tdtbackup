@@ -8,15 +8,16 @@ import configargparse
 
 
 def parse_args():
-    if "-c" in sys.argv or "--config-file" in sys.argv:
-        conf_paths = []
-    else:
-        conf_paths = [
-            "/etc/todo-txt-gtd/tdtbackup.conf",
-            "~/.config/todo-txt-gtd/tdtbackup.conf",
-            "~/.tdtbackup.conf",
-            "~/.todo-txt/tdtbackup.conf",
-        ]
+    conf_paths = [
+        "/etc/todo-txt-gtd/tdtbackup.conf",
+        "~/.config/todo-txt-gtd/tdtbackup.conf",
+        "~/.tdtbackup.conf",
+        "~/.todo-txt/tdtbackup.conf",
+    ]
+    for confarg in ("-c", "--config-file"):
+        if any(True for arg in sys.argv if arg.startswith(confarg)):
+            conf_paths=[]
+            break
 
     parser = configargparse.ArgumentParser(
             default_config_files=conf_paths,
@@ -56,7 +57,7 @@ def parse_args():
 
 
 def backup_path(backup_dir):
-    datestr = datetime.datetime.now().__str__()
+    datestr = str(datetime.datetime.now())
 
     for badstr in [' ', ':', '.']:
         datestr = datestr.replace(badstr, "-")
@@ -68,8 +69,8 @@ def cleanup(backup_dir, num_files):
     files = sorted(os.listdir(backup_dir))
 
     if len(files) > num_files:
-        delfiles = files[:len(files)-num_files]
-        [os.remove(os.path.join(backup_dir, x)) for x in delfiles]
+        for delfile in files[:len(files)-num_files]:
+            os.remove(os.path.join(backup_dir, delfile))
 
 
 def main():
