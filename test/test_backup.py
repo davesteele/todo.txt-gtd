@@ -1,8 +1,15 @@
-import pytest
 from collections import namedtuple
+import imp
+from mock import Mock
+import os
+import pytest
 import subprocess
 import shlex
 
+tdtbackup = imp.load_source(
+        'tdtbackup',
+        os.path.join(pytest.config.rootdir, 'tdtbackup')
+)
 
 Env = namedtuple("Env", ['todopath', 'backupdir', 'configpath'])
 
@@ -85,3 +92,22 @@ def test_backup_del_oldest(tst_env):
 
     paths = [str(x) for x in tst_env.backupdir.listdir()]
     assert oldest.strpath not in paths
+
+
+@pytest.mark.parametrize('params', [
+    ([], False),
+    (['x'], False),
+    (['-c'], True),
+    (["--config-file"], True),
+    (["--config-file=foo"], True),
+])
+def test_parse_args(monkeypatch, params):
+    configargparse = Mock()
+    monkeypatch.setattr(tdtbackup, "configargparse", configargparse)
+    monkeypatch.setattr(tdtbackup.sys, "argv", params[0])
+
+    tdtbackup.parse_args()
+
+    callargs = configargparse.ArgumentParser.call_args
+    calledlist = callargs[1]['default_config_files']
+    assert (calledlist == []) is params[1]
