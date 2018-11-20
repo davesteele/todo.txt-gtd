@@ -87,13 +87,11 @@ def test_backup_del_oldest(tst_env):
     for _ in range(2):
         call_backup(tst_env, 3)
 
-    paths = [x.strpath for x in tst_env.backupdir.listdir()]
-    assert oldest.strpath in paths
+    assert oldest in tst_env.backupdir.listdir()
 
     call_backup(tst_env, 3)
 
-    paths = [str(x) for x in tst_env.backupdir.listdir()]
-    assert oldest.strpath not in paths
+    assert oldest not in tst_env.backupdir.listdir()
 
 
 @pytest.mark.parametrize('params', [
