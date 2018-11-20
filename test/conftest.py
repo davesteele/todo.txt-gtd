@@ -1,11 +1,12 @@
 import os
 from collections import namedtuple
 import py
+import pytest
 
 
 def cases():
     Case = namedtuple("Case", ["infile", "outfile"])
-    casepath = "test/cases/"
+    casepath = os.path.join(pytest.config.rootdir, "test/cases/")
 
     cases = []
     for path in os.listdir(casepath):

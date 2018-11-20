@@ -28,11 +28,13 @@ def tst_env(tmpdir):
 
 
 def call_backup(tst_env, num=0):
-    cmdfmt = "./tdtbackup -c {2} -f {0} -b {1}"
+    cmdpath = os.path.join(pytest.config.rootdir, "tdtbackup")
+    cmdfmt = "{3} -c {2} -f {0} -b {1}"
     cmd = cmdfmt.format(
             tst_env.todopath,
             tst_env.backupdir,
             tst_env.configpath,
+            cmdpath,
             )
 
     if num:
