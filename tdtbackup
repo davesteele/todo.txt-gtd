@@ -28,14 +28,14 @@ def parse_args():
         "-f", "--file",
         help="the todo.txt file location (defaults to Dropbox)",
         type=str,
-        default=os.path.expanduser("~/Dropbox/todo/todo.txt")
+        default="~/Dropbox/todo/todo.txt"
     )
 
     parser.add_argument(
         "-b", "--backupdir",
         help="the backup location (defaults to \"todo/backup\" in Dropbox)",
         type=str,
-        default=os.path.expanduser("~/Dropbox/todo/") + "backup"
+        default="~/Dropbox/todo/backup"
     )
 
     parser.add_argument(
@@ -52,6 +52,8 @@ def parse_args():
     )
 
     args = parser.parse_args()
+    args.file = default=os.path.expanduser(args.file)
+    args.backupdir = default=os.path.expanduser(args.backupdir)
 
     return args
 
