@@ -94,6 +94,17 @@ def test_backup_del_oldest(tst_env):
     assert oldest not in tst_env.backupdir.listdir()
 
 
+@pytest.fixture
+def parser_mock(monkeypatch):
+    configargparse = Mock()
+    configargparse.ArgumentParser().parse_args().file = ""
+    configargparse.ArgumentParser().parse_args().backupdir = ""
+
+    monkeypatch.setattr(tdtbackup, "configargparse", configargparse)
+
+    return configargparse
+
+
 @pytest.mark.parametrize('params', [
     ([], False),
     (['x'], False),
@@ -101,13 +112,25 @@ def test_backup_del_oldest(tst_env):
     (["--config-file"], True),
     (["--config-file=foo"], True),
 ])
-def test_parse_args(monkeypatch, params):
-    configargparse = Mock()
-    monkeypatch.setattr(tdtbackup, "configargparse", configargparse)
+def test_parse_args(parser_mock, monkeypatch, params):
     monkeypatch.setattr(tdtbackup.sys, "argv", params[0])
 
     tdtbackup.parse_args()
 
-    callargs = configargparse.ArgumentParser.call_args
+    callargs = parser_mock.ArgumentParser.call_args
     calledlist = callargs[1]['default_config_files']
     assert (calledlist == []) is params[1]
+
+
+@pytest.mark.parametrize("params", [
+    ("", True),
+    ("x", True),
+    ("~", False),
+])
+def test_parse_expand_user(parser_mock, params):
+    parser_mock.ArgumentParser().parse_args().file = params[0]
+    parser_mock.ArgumentParser().parse_args().backupdir = params[0]
+
+    args = tdtbackup.parse_args()
+
+    assert (args.file == params[0]) is params[1]

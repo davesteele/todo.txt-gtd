@@ -52,8 +52,8 @@ def parse_args():
     )
 
     args = parser.parse_args()
-    args.file = default=os.path.expanduser(args.file)
-    args.backupdir = default=os.path.expanduser(args.backupdir)
+    args.file = os.path.expanduser(args.file)
+    args.backupdir = os.path.expanduser(args.backupdir)
 
     return args
 
