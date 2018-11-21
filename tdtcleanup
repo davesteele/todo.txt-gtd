@@ -132,10 +132,11 @@ def parse_args():
         "-f", "--file",
         help="the todo.txt file location "
              "(defaults to ~/Dropbox/todo/todo.txt)",
-        default=os.path.expanduser("~/Dropbox/todo/todo.txt")
+        default="~/Dropbox/todo/todo.txt",
     )
 
     args = parser.parse_args()
+    args.file = os.path.expanduser(args.file)
 
     return args
 
