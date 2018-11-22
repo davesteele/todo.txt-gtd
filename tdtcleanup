@@ -72,8 +72,8 @@ class Projects(dict):
         return proj
 
     def __repr__(self):
-        projs = sorted([self[x] for x in self], key=lambda y: y.name.upper())
-        return "\n".join([str(x) for x in projs])
+        projs = sorted((str(self[x]) for x in self), key=lambda y: y.upper())
+        return "\n".join(projs)
 
 
 class Project(object):
@@ -94,7 +94,7 @@ class Project(object):
         if not self.tasks or self.tasks[-1].text:
             self.AddTask("")
 
-        return "\n".join([str(x) for x in self.tasks])
+        return "\n".join(str(x) for x in self.tasks)
 
 
 class Task(object):
