@@ -101,7 +101,7 @@ Of course, a primary way of interacting with the todo list is by editing the tod
 
 My .bashrc to support todo.txt:
 
-    alias vitodo='vim ~/Dropbox/todo/todo.txt'
+    alias vitodo='vim ~/Dropbox/todo/todo.txt; tdtcleanup'
     alias cdtodo='cd ~/Dropbox/todo/'
     alias todo='topydo -a -t ~/Dropbox/todo/todo.txt'
 
