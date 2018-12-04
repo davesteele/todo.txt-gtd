@@ -76,7 +76,7 @@ For the Weekly Review:
 
 * Run _tdtcleanup_
 * Delete completed tasks
-* Update the '@' context on multi-step tasks as necessary
+* Update the '@~' -> '@' context on multi-step tasks as necessary
 * Add tasks and '+' project tags, as needed
 * Run _tdtcleanup_ again
 
