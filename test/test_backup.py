@@ -134,3 +134,4 @@ def test_parse_expand_user(parser_mock, params):
     args = tdtbackup.parse_args()
 
     assert (args.file == params[0]) is params[1]
+    assert (args.backupdir == params[0]) is params[1]
