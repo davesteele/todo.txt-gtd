@@ -16,7 +16,7 @@ def parse_args():
     ]
     for confarg in ("-c", "--config-file"):
         if any(True for arg in sys.argv if arg.startswith(confarg)):
-            conf_paths=[]
+            conf_paths = []
             break
 
     parser = configargparse.ArgumentParser(
@@ -75,18 +75,21 @@ def cleanup(backup_dir, num_files):
             os.remove(os.path.join(backup_dir, delfile))
 
 
-def main():
-    args = parse_args()
-
-    if not os.path.exists(args.backupdir):
-        os.makedirs(args.backupdir)
+def backup(backupdir, filename, num):
+    if not os.path.exists(backupdir):
+        os.makedirs(backupdir)
 
     # use read/write for a dos2unix action
-    with open(args.file, 'r') as rp:
-        with open(backup_path(args.backupdir), 'w') as wp:
+    with open(filename, 'r') as rp:
+        with open(backup_path(backupdir), 'w') as wp:
             wp.write(rp.read())
 
-    cleanup(args.backupdir, args.num)
+    cleanup(backupdir, num)
+
+
+def main():
+    args = parse_args()
+    backup(args.backupdir, args.file, args.num)
 
 
 if __name__ == '__main__':

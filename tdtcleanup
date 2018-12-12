@@ -32,36 +32,13 @@ def HeaderProj(line):
     return re.search("^# ([^ ]+)$", line).group(1)  # noqa
 
 
-def LineGen(todotxt):
-    current_project = None
-
-    deferredTasks = []
-
-    for line in todotxt.split('\n'):
-
-        if HeaderProj(line):
-            current_project = HeaderProj(line)
-
-        taskProj = TaskProj(line)
-        if taskProj:
-            if current_project and (current_project != taskProj):
-                deferredTasks.append(line)
-            else:
-                yield (taskProj, line)
-        else:
-            if current_project:
-                yield (current_project, line)
-            else:
-                deferredTasks.append(line)
-
-    for line in deferredTasks:
-        yield(TaskProj(line), line)
-
-
 class Projects(dict):
-    def __init__(self, *args, **kwargs):
-        super(Projects, self).__init__(*args, **kwargs)
+    def __init__(self, todotxt=""):
+        super(Projects, self).__init__()
         self[NONE_PROJ]
+
+        for proj_name, task_text in self.LineGen(todotxt):
+            self[proj_name].AddTask(task_text)
 
     def __missing__(self, key):
         if key is None:
@@ -74,6 +51,31 @@ class Projects(dict):
     def __repr__(self):
         projs = sorted((str(self[x]) for x in self), key=lambda y: y.upper())
         return "\n".join(projs)
+
+    def LineGen(self, todotxt):
+        current_project = None
+
+        deferredTasks = []
+
+        for line in todotxt.split('\n'):
+
+            if HeaderProj(line):
+                current_project = HeaderProj(line)
+
+            taskProj = TaskProj(line)
+            if taskProj:
+                if current_project and (current_project != taskProj):
+                    deferredTasks.append(line)
+                else:
+                    yield (taskProj, line)
+            else:
+                if current_project:
+                    yield (current_project, line)
+                else:
+                    deferredTasks.append(line)
+
+        for line in deferredTasks:
+            yield(TaskProj(line), line)
 
 
 class Project(object):
@@ -141,16 +143,17 @@ def parse_args():
     return args
 
 
+def cleanup(filepath):
+    with open(filepath, 'r') as fp:
+        projects = Projects(fp.read())
+
+    open(filepath, 'w').write(str(projects))
+
+
 def main():
     args = parse_args()
 
-    projects = Projects()
-
-    with open(args.file, 'r') as fp:
-        for proj_name, task_text in LineGen(fp.read()):
-            projects[proj_name].AddTask(task_text)
-
-    open(args.file, 'w').write(str(projects))
+    cleanup(args.file)
 
 
 if __name__ == '__main__':

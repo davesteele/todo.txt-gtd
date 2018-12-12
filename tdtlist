@@ -120,9 +120,7 @@ def parse_args():
     return args
 
 
-def main():
-    args = parse_args()
-
+def list_tasks(args):
     txt = open(args.file, 'r').read()
     tasks = task_sort([x for x in txt.splitlines() if is_task(x, *args.terms)])
     contexts = sorted({y for x in tasks for y in x.split() if y[0] == "@"})
@@ -153,6 +151,11 @@ def main():
     if args.launch:
         with nullfd(1), nullfd(2):
             subprocess.call(['xdg-open', args.odt_file])
+
+
+def main():
+    args = parse_args()
+    list_tasks(args)
 
 
 if __name__ == '__main__':
