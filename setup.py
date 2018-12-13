@@ -1,15 +1,21 @@
-from setuptools import setup, find_packages
+from os import path
+from setuptools import setup
+
+this_directory = path.abspath(path.dirname(__file__))
+with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
+    long_description = f.read()
 
 setup(
-    name='tdtgtd',
+    name="Todo.txt-GTD",
     version="0.1",
     packages=["tdtgtd"],
-    # url='https://github.com/Tinche/aiofiles',
+    url="https://github.com/davesteele/todo.txt-gtd",
     license="GPL 2.0",
     author="David Steele",
-    author_email='dsteele@gmail.com',
+    author_email="dsteele@gmail.com",
     description="Todo.txt support scripts for GTD.",
-    long_description="no",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     entry_points={
         "console_scripts": [
             "tdtcleanup = tdtgtd.tdtcleanup:cleanup",
@@ -17,12 +23,15 @@ setup(
             "tdtlist = tdtgtd.tdtlist:list_tasks",
         ]
     },
-    setup_requires=['pytest-runner'],
-    tests_require=['pytest'],
+    setup_requires=["pytest-runner"],
+    tests_require=["pytest"],
     classifiers=[
         "Development Status :: 4 - Beta",
-        "Programming Language :: Python :: 3.5",
-        "Programming Language :: Python :: 3.6",
-        "Programming Language :: Python :: 3.7",
+        "Intended Audience :: End Users/Desktop",
+        "License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)",
+        "Natural Language :: English",
+        "Operating System :: POSIX :: Linux",
+        "Programming Language :: Python :: 3 :: Only",
+        "Topic :: Other/Nonlisted Topic",
     ]
 )
