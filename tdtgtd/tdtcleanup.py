@@ -147,7 +147,8 @@ def cleanup(filepath):
     with open(filepath, 'r') as fp:
         projects = Projects(fp.read())
 
-    open(filepath, 'w').write(str(projects))
+    with open(filepath, 'w') as fp:
+        fp.write(str(projects))
 
 
 def main():
