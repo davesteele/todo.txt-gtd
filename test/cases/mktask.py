@@ -12,6 +12,3 @@ subprocess.call(shlex.split("../../tdtlist -f {}".format(infile)))
 
 os.remove("tasks.odt")
 os.rename("tasks.txt", outfile)
-
-
-

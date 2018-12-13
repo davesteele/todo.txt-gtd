@@ -1,15 +1,8 @@
 from collections import namedtuple
-import imp
 from mock import Mock
-import os
 import pytest
-import subprocess
-import shlex
 
-tdtbackup = imp.load_source(
-        'tdtbackup',
-        os.path.join(pytest.config.rootdir, 'tdtbackup')
-)
+from tdtgtd import tdtbackup
 
 Env = namedtuple("Env", ['todopath', 'backupdir', 'configpath'])
 
@@ -27,20 +20,8 @@ def tst_env(tmpdir):
     return Env(srcfile, backupdir, configfile)
 
 
-def call_backup(tst_env, num=0):
-    cmdpath = os.path.join(pytest.config.rootdir, "tdtbackup")
-    cmdfmt = "{3} -c {2} -f {0} -b {1}"
-    cmd = cmdfmt.format(
-            tst_env.todopath,
-            tst_env.backupdir,
-            tst_env.configpath,
-            cmdpath,
-            )
-
-    if num:
-        cmd += " -n {}".format(num)
-
-    subprocess.call(shlex.split(cmd))
+def call_backup(tst_env, num=14):
+    tdtbackup.backup(tst_env.backupdir, tst_env.todopath, num)
 
 
 def test_backup_zero(tst_env):

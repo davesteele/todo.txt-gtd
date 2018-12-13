@@ -1,15 +1,22 @@
-
+import mock
 import os
-import pytest
-import subprocess
-import shlex
+
+from tdtgtd import tdtlist
 
 
 def test_list(clean_fxt):
     sourcefile = str(clean_fxt.workfile)
+    docdir = os.path.dirname(sourcefile)
 
-    cmdpath = os.path.join(pytest.config.rootdir, "tdtlist")
-    subprocess.run(shlex.split(cmdpath + " -f " + sourcefile))
+    args = mock.Mock()
+    args.file = str(sourcefile)
+    args.txt_file = os.path.join(docdir, "tasks.txt")
+    args.rst_file = os.path.join(docdir, "tasks.rst")
+    args.odt_file = os.path.join(docdir, "tasks.odt")
+    args.launch = False
+    args.terms = []
+
+    tdtlist.list_tasks(args)
 
     tstfile = clean_fxt.taskfile.dirpath().join("tasks.txt")
 
