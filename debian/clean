@@ -1,0 +1,4 @@
+todo.txt-gtd/
+.pytest_cache/
+todo.txt_gtd.egg-info/
+.eggs/

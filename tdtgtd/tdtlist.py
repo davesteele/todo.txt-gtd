@@ -121,19 +121,20 @@ def parse_args():
 
 
 def list_tasks(args):
-    txt = open(args.file, 'r').read()
+    txt = open(args.file, 'r', encoding="utf-8").read()
     tasks = task_sort([x for x in txt.splitlines() if is_task(x, *args.terms)])
     contexts = sorted({y for x in tasks for y in x.split() if y[0] == "@"})
 
-    with open(args.txt_file, 'w') as txtfd, open(args.rst_file, 'w') as rstfd:
-        for context in contexts:
-            txtfd.write("\n{}\n".format(context))
-            rstfd.write("\n{}\n\n".format(context))
-            for task in tasks:
-                if context in task.split():
-                    txtfd.write("{}\n".format(task))
-                    rstfd.write("{}\n".format(rstify(task)))
-            rstfd.write("\n|\n")
+    with open(args.txt_file, 'w', encoding="utf-8") as txtfd:
+        with open(args.rst_file, 'w', encoding="utf-8") as rstfd:
+            for context in contexts:
+                txtfd.write("\n{}\n".format(context))
+                rstfd.write("\n{}\n\n".format(context))
+                for task in tasks:
+                    if context in task.split():
+                        txtfd.write("{}\n".format(task))
+                        rstfd.write("{}\n".format(rstify(task)))
+                rstfd.write("\n|\n")
 
     try:
         subprocess.run([

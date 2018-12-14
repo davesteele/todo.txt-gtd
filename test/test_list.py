@@ -20,4 +20,4 @@ def test_list(clean_fxt):
 
     tstfile = clean_fxt.taskfile.dirpath().join("tasks.txt")
 
-    assert(clean_fxt.taskfile.read() == tstfile.read())
+    assert(clean_fxt.taskfile.read_text("utf-8") == tstfile.read_text("utf-8"))

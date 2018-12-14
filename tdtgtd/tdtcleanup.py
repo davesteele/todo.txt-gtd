@@ -24,7 +24,7 @@ def none_on_exception(*exceptions):
 
 @none_on_exception(AttributeError)
 def TaskProj(line):
-    return re.search(" \+([^ ]+)", line).group(1)  # noqa
+    return re.search(r" \+([^ ]+)", line).group(1)  # noqa
 
 
 @none_on_exception(AttributeError)
@@ -109,7 +109,7 @@ class Task(object):
 
     @none_on_exception(AttributeError)
     def GetProject(self, text):
-        return re.search(" \+([^ ]+)", text).group(1)  # noqa
+        return re.search(r" \+([^ ]+)", text).group(1)  # noqa
 
     def FixTask(self, text, project):
         if self.GetContext(text) is not None \
@@ -144,10 +144,10 @@ def parse_args():
 
 
 def cleanup(filepath):
-    with open(filepath, 'r') as fp:
+    with open(filepath, 'r', encoding="utf-8") as fp:
         projects = Projects(fp.read())
 
-    with open(filepath, 'w') as fp:
+    with open(filepath, 'w', encoding="utf-8") as fp:
         fp.write(str(projects))
 
 

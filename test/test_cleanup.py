@@ -9,5 +9,7 @@ def test_cleanup(clean_fxt, numruns):
     for _ in range(numruns):
         tdtcleanup.cleanup(clean_fxt.workfile)
 
-    assert(clean_fxt.workfile.read() == clean_fxt.outfile.read())
+        test_output = clean_fxt.workfile.read_text("utf-8")
+        ref_output = clean_fxt.outfile.read_text("utf-8")
+    assert(test_output == ref_output)
     assert(clean_fxt.workfile.size() == clean_fxt.outfile.size())
