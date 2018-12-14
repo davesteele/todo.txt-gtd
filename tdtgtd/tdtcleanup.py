@@ -3,23 +3,10 @@
 import re
 import os
 import argparse
-from functools import wraps
+
+from .utils import none_on_exception
 
 NONE_PROJ = "_None"
-
-
-def none_on_exception(*exceptions):
-    def _none_on_exception(fp):
-        @wraps(fp)
-        def wrapper(*args, **kwargs):
-            try:
-                return fp(*args, **kwargs)
-            except exceptions:
-                return None
-
-        return wrapper
-
-    return _none_on_exception
 
 
 @none_on_exception(AttributeError)

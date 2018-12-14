@@ -1,25 +1,15 @@
 #!/usr/bin/python3
 
 import argparse
-from contextlib import contextmanager
 import datetime
 import os
 import re
 import subprocess
 import sys
 import textwrap
-from typing import List, Generator
+from typing import List
 
-
-@contextmanager
-def nullfd(fd: int) -> Generator:
-    saveout = os.dup(fd)
-    os.close(fd)
-    os.open(os.devnull, os.O_RDWR)
-    try:
-        yield
-    finally:
-        os.dup2(saveout, fd)
+from .utils import nullfd
 
 
 def is_task(line: str, *terms: List[str]) -> bool:
