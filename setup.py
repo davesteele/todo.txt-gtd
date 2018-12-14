@@ -23,6 +23,7 @@ setup(
             "tdtlist = tdtgtd.tdtlist:main",
         ]
     },
+    install_requires=["configargparse"],
     setup_requires=["pytest-runner"],
     tests_require=["pytest"],
     classifiers=[
