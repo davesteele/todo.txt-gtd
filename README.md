@@ -121,7 +121,7 @@ My .bashrc to support todo.txt:
 
 And my cron:
 
-    0 2 * * * /usr/local/bin/tdtbackup; /usr/local/bin/tdtcleanup; /usr/local/bin/tdtlist
+    0 2 * * * tdtbackup; tdtcleanup; tdtlist
 
 # Usage
 
