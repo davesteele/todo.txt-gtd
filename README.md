@@ -2,7 +2,9 @@
 My recipe for customizing a [**todo.txt**](http://todotxt.org/) environment for
 [**Getting Things Done**](https://gettingthingsdone.com/).
 
-# The Cleanup Script
+# Scripts
+
+## The Cleanup Script
 
 Given the following text in the file _~/Dropbox/todo/todo.txt_:
 
@@ -42,7 +44,7 @@ On subsequent runs, _tdtcleanup_ will do the following:
 * Add the '+' project tag to any tasks in a Project Section that don't already have one. A task is defined here as a line of text that includes an '@' context. This processing doesn't happen in the *_None* section.
 * Move tasks to the proper Project Section, if they aren't already there. The Section is created, using a Project Header, if necessary.
 
-# The Context Listing Script
+## The Context Listing Script
 
 The _tdtlist_ script lists the tasks in todo.txt, by context.
 
@@ -60,7 +62,7 @@ If you process either of the above todo.txt files through _tdtlist_, it will out
 The list is saved in text and LibreOffice ".odt" formats. It can be optionally
 automatically opened after it is created.
 
-# The Project script
+## The Project script
 
 The _tdtproj_ script supports working with a single project, or group of projects. It opens an
 edit session with just the specified project section from the todo.txt file, and replaces that
@@ -74,7 +76,7 @@ Run _tdtproj_ with the "-l" option to get a current list of projects.
 A bash completion script is available that responds to tab completion with an appropriate project
 list.
 
-# The Backup script
+## The Backup script
 
 _tdtbackup_ is a utility script for making rotating backups of the todo.txt file.
 
@@ -135,6 +137,7 @@ And my cron:
       -f FILE, --file FILE  the todo.txt file location (defaults to
                             ~/Dropbox/todo/todo.txt)
 
+---
 
     $ tdtlist -h
     usage: tdtlist [-h] [-f FILE] [-l] [TERM [TERM ...]]
@@ -154,6 +157,7 @@ And my cron:
     LibreOffice formats. The lists are saved in the same directory as todo.txt.
     Optionally, the LibreOffice list can be automatically opened.
 
+---
 
     $ tdtproj -h
     usage: tdtproj [-h] [-f FILE] [-l] [TERM [TERM ...]]
@@ -169,6 +173,7 @@ And my cron:
                             ~/Dropbox/todo/todo.txt)
       -l, --list            just list the projects in the current todo.txt file
 
+---
 
     $ tdtbackup -h
     usage: tdtbackup [-h] [-f FILE] [-b BACKUPDIR] [-n NUM]
