@@ -60,6 +60,20 @@ If you process either of the above todo.txt files through _tdtlist_, it will out
 The list is saved in text and LibreOffice ".odt" formats. It can be optionally
 automatically opened after it is created.
 
+# The Project script
+
+The _tdtproj_ script supports working with a single project, or group of projects. It opens an
+edit session with just the specified project section from the todo.txt file, and replaces that
+section after the session is complete.
+
+If all of the lines are deleted from the edit session, no changes are made to the original
+todo.txt file. If just the header line is kept, all other lines are deleted from the original.
+
+Run _tdtproj_ with the "-l" option to get a current list of projects.
+
+A bash completion script is available that responds to tab completion with an appropriate project
+list.
+
 # The Backup script
 
 _tdtbackup_ is a utility script for making rotating backups of the todo.txt file.
@@ -111,7 +125,7 @@ And my cron:
 
 # Usage
 
-    $ ./tdtcleanup -h
+    $ tdtcleanup -h
     usage: tdtcleanup [-h] [-f FILE]
     
     Clean up the todo.txt file in a GTD fashion
@@ -141,7 +155,22 @@ And my cron:
     Optionally, the LibreOffice list can be automatically opened.
 
 
-    $ ./tdtbackup -h
+    $ tdtproj -h
+    usage: tdtproj [-h] [-f FILE] [-l] [TERM [TERM ...]]
+    
+    Work with one or more GTD projects in todo.txt
+    
+    positional arguments:
+      TERM                  search terms to filter the project(s) to use
+    
+    optional arguments:
+      -h, --help            show this help message and exit
+      -f FILE, --file FILE  the todo.txt file location (defaults to
+                            ~/Dropbox/todo/todo.txt)
+      -l, --list            just list the projects in the current todo.txt file
+
+
+    $ tdtbackup -h
     usage: tdtbackup [-h] [-f FILE] [-b BACKUPDIR] [-n NUM]
     
     Back up the todo.txt todo.txt file

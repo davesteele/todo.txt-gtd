@@ -1,0 +1,13 @@
+#!/bin/bash
+
+_tdtproj_completions()
+{
+	candidates=""
+	for candidate in `$1 -l $2`; do
+		candidates="$candidates $candidate"
+	done
+
+	COMPREPLY=($(compgen -W "$candidates" $2))
+}
+
+complete -F _tdtproj_completions tdtproj
