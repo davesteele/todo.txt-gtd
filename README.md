@@ -96,6 +96,9 @@ For the Weekly Review:
 * Add tasks and '+' project tags, as needed
 * Run _tdtcleanup_ again
 
+I've found that running "``for proj in  `tdtproj -l`; do tdtproj $proj; done``" is a mind-clearing way to
+accomplish this.
+
 # Configuring Existing todo.txt Apps
 
 Filter on '@' to limit your task lists to just tasks. I use a '\~' as a special context flag (e.g. '@\~errands') for tasks that cannot be performed yet due to an uncompleted previous step. If you pick up this convention, you may want to filter out '@~' from your lists as well.

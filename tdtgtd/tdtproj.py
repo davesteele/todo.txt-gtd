@@ -63,7 +63,11 @@ def edit_proj(tdpath, terms):
         editpath = os.path.join(tmpdir, "todo.txt")
         save_selected_projs(tdpath, editpath, terms)
 
-        run(shlex.split("vi {}".format(editpath)))
+        try:
+            editor = os.environ["EDITOR"]
+        except KeyError:
+            editor = "editor"
+        run([editor, editpath])
 
         editprojs = read_proj(editpath)
 
