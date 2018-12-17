@@ -22,16 +22,19 @@ def is_task(line: str, *terms: List[str]) -> bool:
     if re.search("^x ", line):
         return False
 
-    if threshold_mask(line):
-        return False
-
-    if "@~" in line:
-        return False
-
     if any(term not in line for term in terms):
         return False
 
     return True
+
+def is_current_task(line: str, *terms: List[str]) -> bool:
+    if "@~" in line:
+        return False
+    
+    if threshold_mask(line):
+        return False
+
+    return is_task(line, *terms)
 
 
 def task_priority(task: str) -> str:
@@ -112,7 +115,7 @@ def parse_args():
 
 def list_tasks(args):
     txt = open(args.file, 'r', encoding="utf-8").read()
-    tasks = task_sort([x for x in txt.splitlines() if is_task(x, *args.terms)])
+    tasks = task_sort([x for x in txt.splitlines() if is_current_task(x, *args.terms)])
     contexts = sorted({y for x in tasks for y in x.split() if y[0] == "@"})
 
     with open(args.txt_file, 'w', encoding="utf-8") as txtfd:

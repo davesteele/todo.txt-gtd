@@ -69,6 +69,22 @@ class Project(object):
     def __init__(self, name):
         self.name = name
         self.tasks = []
+        self.index = 0
+
+    def __len__(self):
+        return len(self.tasks)
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        try:
+            returnval = self.tasks[self.index]
+            self.index += 1
+        except IndexError:
+            raise StopIteration
+
+        return returnval
 
     def AddTask(self, text):
         if not self.tasks and (not text or text[0] != "#"):
