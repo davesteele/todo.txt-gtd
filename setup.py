@@ -28,12 +28,14 @@ setup(
     setup_requires=["pytest-runner"],
     tests_require=["pytest"],
     classifiers=[
-        "Development Status :: 4 - Beta",
+        "Development Status :: 5 - Production/Stable",
         "Intended Audience :: End Users/Desktop",
         "License :: OSI Approved :: "
         "GNU General Public License v2 or later (GPLv2+)",
         "Natural Language :: English",
         "Operating System :: POSIX :: Linux",
+        "Operating System :: MacOS",
+        "Operating System :: Microsoft :: Windows",
         "Programming Language :: Python :: 3 :: Only",
         "Topic :: Other/Nonlisted Topic",
     ]
