@@ -2,6 +2,8 @@
 My recipe for customizing a [**todo.txt**](http://todotxt.org/) environment for
 [**Getting Things Done**](https://gettingthingsdone.com/).
 
+[Installing](#Installing)
+
 # Scripts
 
 ## The Cleanup Script
@@ -127,6 +129,12 @@ My .bashrc to support todo.txt:
 And my cron:
 
     0 2 * * * tdtbackup; tdtcleanup; tdtlist
+
+<a name="Installing"/>
+
+# Installing
+
+[Deb package](https://davesteele.github.io/todo.txt-gtd/deb/tdtgtd_0.1_all.deb)
 
 # Usage
 
