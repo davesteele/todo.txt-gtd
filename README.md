@@ -141,7 +141,7 @@ The [Deb package](https://davesteele.github.io/todo.txt-gtd/deb/tdtgtd_0.1_all.d
     sudo dpkg -i tdtgtd*.deb
     sudo apt-get -f install
 
-pip install:
+[pip](https://pypi.org/project/todo.txt-gtd/) install:
 
     pip install todo.txt-gtd
 
