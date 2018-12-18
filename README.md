@@ -192,6 +192,13 @@ pip install:
       -f FILE, --file FILE  the todo.txt file location (defaults to
                             ~/Dropbox/todo/todo.txt)
       -l, --list            just list the projects in the current todo.txt file
+    
+    Edit one or more isolated projects in a todo.txt file (todo.txt projects are
+    denoted by a a leading "+"). If the entire project is deleted during the edit
+    session, the original project is preserved in todo.txt. If just the Project
+    Header line is kept, then the project is deleted in the original. The default
+    text editor, set by 'update-alternatives', is used. This can be overridden by
+    setting the 'EDITOR' environment variable.
 
 ---
 
