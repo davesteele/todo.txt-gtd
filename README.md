@@ -134,7 +134,16 @@ And my cron:
 
 # Installing
 
-[Deb package](https://davesteele.github.io/todo.txt-gtd/deb/tdtgtd_0.1_all.deb)
+The [Deb package](https://davesteele.github.io/todo.txt-gtd/deb/tdtgtd_0.1_all.deb):
+
+    sudo apt-get update
+    sudo apt-get upgrade
+    sudo dpkg -i tdtgtd*.deb
+    sudo apt-get -f install
+
+pip install:
+
+    pip install todo.txt-gtd
 
 # Usage
 
