@@ -80,7 +80,7 @@ def proj_headers(path):
     tokens = map(HeaderProj, todotxt.split('\n'))
     proj_hdrs = filter(None, tokens)
         
-    return proj_hdrs
+    return set(proj_hdrs) - set(["_None"])
      
 
 def edit_proj(tdpath, terms):
@@ -95,7 +95,7 @@ def edit_proj(tdpath, terms):
         run([editor, editpath])
 
         editprojs = read_proj(editpath)
-        projhdrs = {x for x in proj_headers(editpath) if x != "_None"}
+        projhdrs = proj_headers(editpath)
 
     allprojs = read_proj(tdpath)
 
