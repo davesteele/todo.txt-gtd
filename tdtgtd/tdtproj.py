@@ -77,7 +77,7 @@ def proj_headers(path):
     with open(path, 'r', encoding="utf-8") as fp:
         todotxt = fp.read()
 
-    tokens = map(HeaderProj, todotxt)
+    tokens = map(HeaderProj, todotxt.split('\n'))
     proj_hdrs = filter(None, tokens)
         
     return proj_hdrs
