@@ -72,21 +72,13 @@ def save_selected_projs(tdpath, editpath, terms):
 
     write_proj(editpath, pdict)
 
+    return {x for x in pdict if x != "_None"}
 
-def proj_headers(path):
-    with open(path, 'r', encoding="utf-8") as fp:
-        todotxt = fp.read()
-
-    tokens = map(HeaderProj, todotxt.split('\n'))
-    proj_hdrs = filter(None, tokens)
-        
-    return set(proj_hdrs) - set(["_None"])
-     
 
 def edit_proj(tdpath, terms):
     with TemporaryDirectory() as tmpdir:
         editpath = os.path.join(tmpdir, "todo.txt")
-        save_selected_projs(tdpath, editpath, terms)
+        projhdrs = save_selected_projs(tdpath, editpath, terms)
 
         try:
             editor = os.environ["EDITOR"]
@@ -95,7 +87,6 @@ def edit_proj(tdpath, terms):
         run([editor, editpath])
 
         editprojs = read_proj(editpath)
-        projhdrs = proj_headers(editpath)
 
     allprojs = read_proj(tdpath)
 
