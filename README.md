@@ -134,7 +134,7 @@ And my cron:
 
 # Installing
 
-The [Deb package](https://davesteele.github.io/todo.txt-gtd/deb/tdtgtd_0.1_all.deb):
+The [Deb package](https://davesteele.github.io/todo.txt-gtd/deb/index.html):
 
     sudo apt-get update
     sudo dpkg -i tdtgtd*.deb
