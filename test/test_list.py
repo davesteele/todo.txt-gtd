@@ -3,12 +3,12 @@ import mock
 import os
 import pytest
 
+from .conftest import makefiles, cases
 from tdtgtd import tdtlist
 
 
-@pytest.fixture
-def listargs(clean_fxt):
-    sourcefile = str(clean_fxt.workfile)
+def get_args(workfile):
+    sourcefile = str(workfile)
     docdir = os.path.dirname(sourcefile)
 
     args = mock.Mock()
@@ -19,21 +19,27 @@ def listargs(clean_fxt):
     args.launch = False
     args.terms = []
 
-    ListArgs = collections.namedtuple("ListArgs", ["clean_fxt", "args"])
-    return ListArgs(clean_fxt, args)
+    return args
 
 
-def test_list(listargs, monkeypatch):
+def test_list(clean_fxt, monkeypatch):
     monkeypatch.setattr(tdtlist.subprocess, "run", mock.Mock())
 
-    tdtlist.list_tasks(listargs.args)
+    args = get_args(clean_fxt.workfile)
 
-    tstfile = listargs.clean_fxt.taskfile.dirpath().join("tasks.txt")
+    tdtlist.list_tasks(args)
 
-    assert(listargs.clean_fxt.taskfile.read_text("utf-8") == tstfile.read_text("utf-8"))
+    tstfile = clean_fxt.taskfile.dirpath().join("tasks.txt")
+
+    assert(clean_fxt.taskfile.read_text("utf-8") == tstfile.read_text("utf-8"))
 
 
-def test_odt(listargs):
-    tdtlist.list_tasks(listargs.args)
+def test_odt(tmpdir):
+    case = cases()[0]
+    outfile, workfile, taskfile = makefiles(case, tmpdir)
+    args = get_args(workfile)
 
-    assert("tasks.odt" in os.listdir(listargs.clean_fxt.taskfile.dirpath()))
+    tdtlist.list_tasks(args)
+
+    assert("tasks.odt" in os.listdir(workfile.dirpath()))
+    assert("tasks.rst" not in os.listdir(workfile.dirpath()))

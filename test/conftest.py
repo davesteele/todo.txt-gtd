@@ -27,8 +27,7 @@ def pytest_generate_tests(metafunc):
         metafunc.parametrize('file_case', cases())
 
 
-@pytest.fixture
-def clean_fxt(file_case, tmpdir):
+def makefiles(file_case, tmpdir):
     workfile = tmpdir.join("todo.txt")
     file_case.infile.copy(workfile)
 
@@ -38,5 +37,12 @@ def clean_fxt(file_case, tmpdir):
     taskfile = tmpdir.join(file_case.taskfile.basename)
     file_case.taskfile.copy(taskfile)
 
+    return (outfile, workfile, taskfile)
+
+    
+
+@pytest.fixture
+def clean_fxt(file_case, tmpdir):
+
     Clean = namedtuple("Clean", ["outfile", "workfile", "taskfile"])
-    return Clean(outfile, workfile, taskfile)
+    return Clean(*makefiles(file_case, tmpdir))
