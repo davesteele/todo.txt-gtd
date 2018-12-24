@@ -1,10 +1,13 @@
+import collections
 import mock
 import os
+import pytest
 
 from tdtgtd import tdtlist
 
 
-def test_list(clean_fxt):
+@pytest.fixture
+def listargs(clean_fxt):
     sourcefile = str(clean_fxt.workfile)
     docdir = os.path.dirname(sourcefile)
 
@@ -16,8 +19,21 @@ def test_list(clean_fxt):
     args.launch = False
     args.terms = []
 
-    tdtlist.list_tasks(args)
+    ListArgs = collections.namedtuple("ListArgs", ["clean_fxt", "args"])
+    return ListArgs(clean_fxt, args)
 
-    tstfile = clean_fxt.taskfile.dirpath().join("tasks.txt")
 
-    assert(clean_fxt.taskfile.read_text("utf-8") == tstfile.read_text("utf-8"))
+def test_list(listargs, monkeypatch):
+    monkeypatch.setattr(tdtlist.subprocess, "run", mock.Mock())
+
+    tdtlist.list_tasks(listargs.args)
+
+    tstfile = listargs.clean_fxt.taskfile.dirpath().join("tasks.txt")
+
+    assert(listargs.clean_fxt.taskfile.read_text("utf-8") == tstfile.read_text("utf-8"))
+
+
+def test_odt(listargs):
+    tdtlist.list_tasks(listargs.args)
+
+    assert("tasks.odt" in os.listdir(listargs.clean_fxt.taskfile.dirpath()))
