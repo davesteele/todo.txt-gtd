@@ -7,7 +7,7 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name="todo.txt-gtd",
-    version="0.1",
+    version="0.2",
     packages=["tdtgtd"],
     url="https://github.com/davesteele/todo.txt-gtd",
     license="GPL 2.0",

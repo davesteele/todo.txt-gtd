@@ -1,4 +1,10 @@
-tdtgtd (0.1) UNRELEASED; urgency=low
+tdtgtd (0.2) tdtgtd; urgency=medium
+
+  * Various updates.
+
+ -- David Steele <steele@debian.org>  Mon, 24 Dec 2018 16:51:00 -0500
+
+tdtgtd (0.1) tdtgtd; urgency=low
 
   * Initial release.
 
