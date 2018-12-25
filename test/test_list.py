@@ -3,7 +3,7 @@ import mock
 import os
 import pytest
 
-from .conftest import makefiles, cases
+from conftest import makefiles, cases
 from tdtgtd import tdtlist
 
 
