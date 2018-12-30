@@ -1,2 +1,2 @@
-Test-Command: py.test-3
+Tests: pytest.sh
 Depends: @, @builddeps@
