@@ -6,6 +6,7 @@ import os
 import re
 import subprocess
 import sys
+import tempfile
 import textwrap
 from typing import List
 
@@ -100,26 +101,25 @@ def parse_args():
     parser.add_argument(
         "-l", "--launch",
         action="store_true",
-        help="open the task list, after creating",
+        help="open a transient version of the task list",
     )
 
     args = parser.parse_args()
 
-    docdir = os.path.dirname(args.file)
-    args.rst_file = os.path.join(docdir, "tasks.rst")
-    args.txt_file = os.path.join(docdir, "tasks.txt")
-    args.odt_file = os.path.join(docdir, "tasks.odt")
-
     return args
 
 
-def list_tasks(args):
-    txt = open(args.file, 'r', encoding="utf-8").read()
-    tasks = task_sort([x for x in txt.splitlines() if is_current_task(x, *args.terms)])
+def list_tasks(infile, outdir, terms, launch):
+    txt = open(infile, 'r', encoding="utf-8").read()
+    tasks = task_sort([x for x in txt.splitlines() if is_current_task(x, *terms)])
     contexts = sorted({y for x in tasks for y in x.split() if y[0] == "@"})
 
-    with open(args.txt_file, 'w', encoding="utf-8") as txtfd:
-        with open(args.rst_file, 'w', encoding="utf-8") as rstfd:
+    rst_file = os.path.join(outdir, "tasks.rst")
+    txt_file = os.path.join(outdir, "tasks.txt")
+    odt_file = os.path.join(outdir, "tasks.odt")
+
+    with open(txt_file, 'w', encoding="utf-8") as txtfd:
+        with open(rst_file, 'w', encoding="utf-8") as rstfd:
             for context in contexts:
                 txtfd.write("\n{}\n".format(context))
                 rstfd.write("\n{}\n\n".format(context))
@@ -133,23 +133,29 @@ def list_tasks(args):
         subprocess.run([
             "rst2odt",
             "--create-links",
-            args.rst_file,
-            args.odt_file
+            rst_file,
+            odt_file
         ])
-        os.remove(args.rst_file)
+        os.remove(rst_file)
     except FileNotFoundError:
         print("tdtlist requires the rst2odt utility "
               "in the python3-docutils package")
         sys.exit(1)
 
-    if args.launch:
+    if launch:
         with nullfd(1), nullfd(2):
-            subprocess.call(['xdg-open', args.odt_file])
+            subprocess.call(['xdg-open', odt_file])
 
 
 def main():
     args = parse_args()
-    list_tasks(args)
+
+    if args.launch:
+        docdir = tempfile.mkdtemp()
+        list_tasks(args.file, docdir, args.terms, args.launch)
+    else:
+        docdir = os.path.dirname(args.file)
+        list_tasks(args.file, docdir, args.terms, args.launch)
 
 
 if __name__ == '__main__':
