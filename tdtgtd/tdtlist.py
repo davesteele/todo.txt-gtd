@@ -152,10 +152,10 @@ def main():
 
     if args.launch:
         docdir = tempfile.mkdtemp()
-        list_tasks(args.file, docdir, args.terms, args.launch)
     else:
         docdir = os.path.dirname(args.file)
-        list_tasks(args.file, docdir, args.terms, args.launch)
+
+    list_tasks(args.file, docdir, args.terms, args.launch)
 
 
 if __name__ == '__main__':
