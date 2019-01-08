@@ -120,12 +120,24 @@ def list_tasks(infile, outdir, terms, launch):
 
     with open(txt_file, 'w', encoding="utf-8") as txtfd:
         with open(rst_file, 'w', encoding="utf-8") as rstfd:
+            txtfd.write("To Do List\n")
+            txtfd.write(str(datetime.datetime.now().strftime("%B %d, %Y")))
+            txtfd.write("\n\n")
+
+            rstfd.write("To Do List\n")
+            rstfd.write("==========\n\n")
+            rstfd.write(str(datetime.datetime.now().strftime("%B %d, %Y")))
+            rstfd.write("\n_______________________________________\n\n")
+
             for context in contexts:
                 txtfd.write("\n{}\n".format(context))
-                rstfd.write("\n{}\n\n".format(context))
+
+                rstfd.write("\n**{}**\n\n".format(context))
+
                 for task in tasks:
                     if context in task.split():
                         txtfd.write("{}\n".format(task))
+
                         rstfd.write("{}\n".format(rstify(task)))
                 rstfd.write("\n|\n")
 
