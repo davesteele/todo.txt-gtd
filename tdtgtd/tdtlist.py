@@ -2,6 +2,7 @@
 
 import argparse
 import datetime
+import distutils.spawn
 import os
 import re
 import subprocess
@@ -120,10 +121,6 @@ def list_tasks(infile, outdir, terms, launch):
 
     with open(txt_file, 'w', encoding="utf-8") as txtfd:
         with open(rst_file, 'w', encoding="utf-8") as rstfd:
-            txtfd.write("To Do List\n")
-            txtfd.write(str(datetime.datetime.now().strftime("%B %d, %Y")))
-            txtfd.write("\n\n")
-
             rstfd.write("To Do List\n")
             rstfd.write("==========\n\n")
             rstfd.write(str(datetime.datetime.now().strftime("%B %d, %Y")))
@@ -143,7 +140,8 @@ def list_tasks(infile, outdir, terms, launch):
 
     try:
         subprocess.run([
-            "rst2odt",
+            "python3",
+            distutils.spawn.find_executable("rst2odt"),
             "--create-links",
             rst_file,
             odt_file

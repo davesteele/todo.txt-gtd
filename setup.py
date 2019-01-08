@@ -24,7 +24,10 @@ setup(
             "tdtproj = tdtgtd.tdtproj:main",
         ]
     },
-    install_requires=["configargparse"],
+    install_requires=[
+        "configargparse",
+        "docutils",
+        ],
     setup_requires=["pytest-runner"],
     tests_require=["pytest"],
     classifiers=[
