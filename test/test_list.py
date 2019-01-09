@@ -8,7 +8,7 @@ from tdtgtd import tdtlist
 
 
 def test_list(clean_fxt, monkeypatch):
-    monkeypatch.setattr(tdtlist.subprocess, "run", mock.Mock())
+    monkeypatch.setattr(tdtlist, "rst2odt", mock.Mock())
 
     tdtlist.list_tasks(
         clean_fxt.workfile,

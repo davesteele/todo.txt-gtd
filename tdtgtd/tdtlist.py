@@ -11,6 +11,7 @@ import tempfile
 import textwrap
 from typing import List
 
+from .rst2odt import rst2odt
 from .utils import nullfd
 
 
@@ -138,19 +139,8 @@ def list_tasks(infile, outdir, terms, launch):
                         rstfd.write("{}\n".format(rstify(task)))
                 rstfd.write("\n|\n")
 
-    try:
-        subprocess.run([
-            "python3",
-            distutils.spawn.find_executable("rst2odt"),
-            "--create-links",
-            rst_file,
-            odt_file
-        ])
-        os.remove(rst_file)
-    except FileNotFoundError:
-        print("tdtlist requires the rst2odt utility "
-              "in the python3-docutils package")
-        sys.exit(1)
+    rst2odt(rst_file, odt_file)
+    os.remove(rst_file)
 
     if launch:
         with nullfd(1), nullfd(2):
