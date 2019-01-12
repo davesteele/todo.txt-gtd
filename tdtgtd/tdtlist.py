@@ -5,6 +5,7 @@ import datetime
 import distutils.spawn
 import os
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -147,11 +148,18 @@ def list_tasks(infile, outdir, terms, launch):
             subprocess.call(['xdg-open', odt_file])
 
 
+def tempdir():
+    tempdir = os.path.join(tempfile.gettempdir(), "tdtlist")
+    shutil.rmtree(tempdir, onerror=lambda x,y,z: None)
+    os.makedirs(tempdir)
+    return tempdir
+
+
 def main():
     args = parse_args()
 
     if args.launch:
-        docdir = tempfile.mkdtemp()
+        docdir = tempfile.mkdtemp(dir=tempdir())
     else:
         docdir = os.path.dirname(args.file)
 
