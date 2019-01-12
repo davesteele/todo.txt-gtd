@@ -4,6 +4,7 @@ import argparse
 import datetime
 import distutils.spawn
 import os
+import pwd
 import re
 import shutil
 import subprocess
@@ -149,7 +150,8 @@ def list_tasks(infile, outdir, terms, launch):
 
 
 def tempdir():
-    tempdir = os.path.join(tempfile.gettempdir(), "tdtlist")
+    dirname = "tdtlist-{}".format(pwd.getpwuid(os.getuid())[0])
+    tempdir = os.path.join(tempfile.gettempdir(), dirname)
     shutil.rmtree(tempdir, onerror=lambda x,y,z: None)
     os.makedirs(tempdir)
     return tempdir
