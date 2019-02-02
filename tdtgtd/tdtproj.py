@@ -4,7 +4,7 @@ from subprocess import run
 from tempfile import TemporaryDirectory
 import textwrap
 
-from .tdtcleanup import Projects, HeaderProj
+from .tdtcleanup import Projects, Project
 from .tdtlist import is_task
 
 
@@ -70,6 +70,11 @@ def save_selected_projs(tdpath, editpath, terms):
         if not all(x in project for x in terms):
             del pdict[project]
 
+    if len(pdict) == 0 and terms and terms[0]:
+        proj = Project(terms[0])
+        pdict[terms[0]] = proj
+        str(proj)
+
     write_proj(editpath, pdict)
 
     return {x for x in pdict if x != "_None"}
@@ -92,7 +97,8 @@ def edit_proj(tdpath, terms):
 
     for proj in editprojs:
         if len(editprojs[proj]) <= 2:
-            del allprojs[proj]
+            if proj in allprojs:
+                del allprojs[proj]
         elif proj in projhdrs:
             allprojs[proj] = editprojs[proj]
         else:
