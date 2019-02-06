@@ -9,9 +9,11 @@ INDEX_TEMPLATE = r"""
 <body>
 <h2>Todo.txt-gtd Deb Files</h2>
 <p>
+<ul>
 % for name in names:
     <li><a href="${name}">${name}</a></li>
 % endfor
+</ul>
 </p>
 </body>
 </html>
