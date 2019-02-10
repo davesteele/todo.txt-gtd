@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """ Build index from directory listing
 
-make_index.py </path/to/directory> [--header <header text>]
+make_index.py </path/to/directory>
 """
 
 INDEX_TEMPLATE = r"""
@@ -31,12 +31,10 @@ from mako.template import Template
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("directory")
-    parser.add_argument("--header")
     args = parser.parse_args()
     fnames = [fname for fname in sorted(os.listdir(args.directory))
               if fname not in EXCLUDED]
-    header = (args.header if args.header else os.path.basename(args.directory))
-    print(Template(INDEX_TEMPLATE).render(names=fnames, header=header))
+    print(Template(INDEX_TEMPLATE).render(names=fnames))
 
 
 if __name__ == '__main__':
