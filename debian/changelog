@@ -1,6 +1,13 @@
-tdtgtd (0.2) tdtgtd; urgency=medium
+tdtgtd (0.2) tdtgtd; urgency=low
 
-  * Various updates.
+  * Add completions to tdtlist.
+  * Get autopkgtest working with lxc.
+  * tdtlist
+    - Move odt context list creation to Python.
+    - Add more formatting to odt.
+    - Add capability to create to a tempdir and open on the fly.
+  * tdtproj
+    - Add capability to create a new project.
 
  -- David Steele <steele@debian.org>  Mon, 24 Dec 2018 16:51:00 -0500
 
