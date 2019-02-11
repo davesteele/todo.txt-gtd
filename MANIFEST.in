@@ -1,8 +1,6 @@
 include LICENSE
 include README.md
-include setup.*
 include pytest.ini
-include tdtgtd/*.py
 include test/*.py
 include completions/*
 include test/cases/*
