@@ -36,7 +36,7 @@ Now _todo.txt_ can be treated as a comprehensive Projects file. Tasks are
 organized by Project, and arbitrary text related to projects can be added
 as comments.
 
-A '#' comment consisting of a single word is a Project Header, defining the
+A "#" comment block starting with a comment consisting of a single word is a Project Header, defining the
 default project for following tasks. The final *_None* project is special -
 it collects tasks that are added using various **todo.txt** applications.
 

@@ -15,7 +15,10 @@ def TaskProj(line):
 
 
 @none_on_exception(AttributeError)
-def HeaderProj(line):
+def HeaderProj(line, prev_line):
+    if prev_line.startswith("#"):
+        return None
+
     return re.search("^# ([^ ]+)$", line).group(1)  # noqa
 
 
@@ -43,11 +46,12 @@ class Projects(dict):
         current_project = None
 
         deferredTasks = []
+        prev_line = ""
 
         for line in todotxt.split('\n'):
 
-            if HeaderProj(line):
-                current_project = HeaderProj(line)
+            if HeaderProj(line, prev_line):
+                current_project = HeaderProj(line, prev_line)
 
             taskProj = TaskProj(line)
             if taskProj:
@@ -60,6 +64,8 @@ class Projects(dict):
                     yield (current_project, line)
                 else:
                     deferredTasks.append(line)
+
+            prev_line = line
 
         for line in deferredTasks:
             yield(TaskProj(line), line)
@@ -82,7 +88,11 @@ class Project(object):
             self.AddTask("#")
             self.AddTask("")
 
-        if not (self.tasks and HeaderProj(text)):
+        try:
+            prev_line = self.tasks[-1].text
+        except IndexError:
+            prev_line = ""
+        if not (self.tasks and HeaderProj(text, prev_line)):
             self.tasks.append(Task(text, self.name))
 
     def __repr__(self):
