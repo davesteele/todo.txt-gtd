@@ -129,6 +129,11 @@ def list_tasks(infile, outdir, terms, launch):
             rstfd.write(str(datetime.datetime.now().strftime("%B %d, %Y")))
             rstfd.write("\n_______________________________________\n\n")
 
+            if terms:
+                term_list = ", ".join(['"' + x + '"' for x in terms])
+                rstfd.write(term_list)
+                rstfd.write("\n++++++++++++++++++++++++++++++++++++++++++\n\n")
+
             for context in contexts:
                 txtfd.write("\n{}\n".format(context))
 
