@@ -5,6 +5,7 @@ python:
 # command to install dependencies
 install:
   - pip install setuptools pytest pytest-runner
+  - pip install configargparse docutils
   - export PYTHONPATH=$PYTHONPATH:$(pwd)
 # command to run tests
 script:
