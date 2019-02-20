@@ -1,5 +1,5 @@
 import collections
-import mock
+from unittest.mock import Mock
 import os
 import pytest
 
@@ -8,11 +8,11 @@ from tdtgtd import tdtlist
 
 
 def test_list(clean_fxt, monkeypatch):
-    monkeypatch.setattr(tdtlist, "rst2odt", mock.Mock())
+    monkeypatch.setattr(tdtlist, "rst2odt", Mock())
 
     tdtlist.list_tasks(
-        clean_fxt.workfile,
-        clean_fxt.workfile.dirpath(),
+        str(clean_fxt.workfile),
+        str(clean_fxt.workfile.dirpath()),
         [],
         False,
     )
@@ -26,11 +26,11 @@ def test_odt(tmpdir):
     outfile, workfile, taskfile = makefiles(case, tmpdir)
 
     tdtlist.list_tasks(
-        workfile,
-        workfile.dirpath(),
+        str(workfile),
+        str(workfile.dirpath()),
         [],
         False,
     )
 
-    assert("tasks.odt" in os.listdir(workfile.dirpath()))
-    assert("tasks.rst" not in os.listdir(workfile.dirpath()))
+    assert("tasks.odt" in os.listdir(str(workfile.dirpath())))
+    assert("tasks.rst" not in os.listdir(str(workfile.dirpath())))

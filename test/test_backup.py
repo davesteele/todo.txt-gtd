@@ -1,5 +1,5 @@
 from collections import namedtuple
-from mock import Mock
+from unittest.mock import Mock
 import pytest
 
 from tdtgtd import tdtbackup
@@ -21,7 +21,7 @@ def tst_env(tmpdir):
 
 
 def call_backup(tst_env, num=14):
-    tdtbackup.backup(tst_env.backupdir, tst_env.todopath, num)
+    tdtbackup.backup(str(tst_env.backupdir), str(tst_env.todopath), num)
 
 
 def test_backup_zero(tst_env):
