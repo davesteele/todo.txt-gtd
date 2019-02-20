@@ -1,7 +1,10 @@
 language: python
 python:
+  - "pypy3.5"
+  - "3.5"
   - "3.6"
   - "3.7-dev"
+  - "3.8-dev"
 # command to install dependencies
 install:
   - pip install setuptools pytest pytest-runner
