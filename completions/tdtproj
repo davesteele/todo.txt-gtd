@@ -2,12 +2,16 @@
 
 _tdtlist_completions()
 {
+  if [ "$3" = "-f" ] ; then
+	COMPREPLY=($(compgen -A file $2))
+  else
 	candidates=""
 	for candidate in `tdtproj -l $2`; do
 		candidates="$candidates $candidate"
 	done
 
 	COMPREPLY=($(compgen -W "$candidates" $2))
+  fi
 }
 
 complete -F _tdtlist_completions tdtlist
