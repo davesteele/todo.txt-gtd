@@ -182,18 +182,20 @@ The [Deb package](https://davesteele.github.io/todo.txt-gtd/deb/index.html):
 ---
 
     $ tdtproj -h
-    usage: tdtproj [-h] [-f FILE] [-l] [TERM [TERM ...]]
+    usage: tdtproj [-h] [-f FILE] [-l] [-x] [TERM [TERM ...]]
     
     Work with one or more GTD projects in todo.txt
     
     positional arguments:
-      TERM                  search terms to filter the project(s) to use
+      TERM                  search terms to filter the project(s) to use. Projects
+                            matching ANY of the terms will be used.
     
     optional arguments:
       -h, --help            show this help message and exit
       -f FILE, --file FILE  the todo.txt file location (defaults to
                             ~/Dropbox/todo/todo.txt)
       -l, --list            just list the projects in the current todo.txt file
+      -x, --exact           require an exact match of project to TERM
     
     Edit one or more isolated projects in a todo.txt file (todo.txt projects are
     denoted by a a leading "+"). If the entire project is deleted during the edit
@@ -205,9 +207,15 @@ The [Deb package](https://davesteele.github.io/todo.txt-gtd/deb/index.html):
 ---
 
     $ tdtbackup -h
-    usage: tdtbackup [-h] [-f FILE] [-b BACKUPDIR] [-n NUM]
+    usage: tdtbackup [-h] [-f FILE] [-b BACKUPDIR] [-n NUM] [-c CONFIG_FILE]
     
-    Back up the todo.txt todo.txt file
+    Back up the todo.txt file Args that start with '--' (eg. -f) can also be set
+    in a config file (/etc/todo-txt-gtd/tdtbackup.conf or ~/.config/todo-txt-
+    gtd/tdtbackup.conf or ~/.tdtbackup.conf or ~/.todo-txt/tdtbackup.conf or
+    specified via -c). Config file syntax allows: key=value, flag=true,
+    stuff=[a,b,c] (for details, see syntax at https://goo.gl/R74nmi). If an arg is
+    specified in more than one place, then commandline values override config file
+    values which override defaults.
     
     optional arguments:
       -h, --help            show this help message and exit
@@ -216,4 +224,5 @@ The [Deb package](https://davesteele.github.io/todo.txt-gtd/deb/index.html):
                             the backup location (defaults to "todo/backup" in
                             Dropbox)
       -n NUM, --num NUM     the number of backup files to keep (defaults to 14)
-
+      -c CONFIG_FILE, --config_file CONFIG_FILE
+                            alternate config file
