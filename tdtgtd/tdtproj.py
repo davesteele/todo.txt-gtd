@@ -44,7 +44,8 @@ def parse_args():
         "terms",
         nargs="*",
         metavar="TERM",
-        help="search terms to filter the project(s) to use",
+        help="search terms to filter the project(s) to use. " \
+             "Projects matching ANY of the terms will be used.",
     )
 
     args = parser.parse_args()
@@ -67,7 +68,7 @@ def save_selected_projs(tdpath, editpath, terms):
     pdict = read_proj(tdpath)
 
     for project in list(pdict):
-        if not all(x in project for x in terms):
+        if not any(x in project for x in terms):
             del pdict[project]
 
     if len(pdict) == 0 and terms and terms[0]:
@@ -114,7 +115,7 @@ def main():
 
     if args.list:
         for proj in read_proj(args.file):
-            if all(x in proj for x in args.terms):
+            if any(x in proj for x in args.terms):
                 print(proj)
     else:
         edit_proj(args.file, args.terms)
