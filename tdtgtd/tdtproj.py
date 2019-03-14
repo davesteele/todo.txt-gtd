@@ -41,6 +41,12 @@ def parse_args():
     )
 
     parser.add_argument(
+        "-x", "--exact",
+        action="store_true",
+        help="require an exact match of project to TERM",
+    )
+
+    parser.add_argument(
         "terms",
         nargs="*",
         metavar="TERM",
@@ -64,11 +70,13 @@ def write_proj(path, projs):
         p.write(str(projs))
 
 
-def save_selected_projs(tdpath, editpath, terms):
+def save_selected_projs(tdpath, editpath, terms, exact):
     pdict = read_proj(tdpath)
 
     for project in list(pdict):
         if not any(x in project for x in terms):
+            del pdict[project]
+        elif exact and not any(x == project for x in terms):
             del pdict[project]
 
     if len(pdict) == 0 and terms and terms[0]:
@@ -81,10 +89,10 @@ def save_selected_projs(tdpath, editpath, terms):
     return {x for x in pdict if x != "_None"}
 
 
-def edit_proj(tdpath, terms):
+def edit_proj(tdpath, terms, exact):
     with TemporaryDirectory() as tmpdir:
         editpath = os.path.join(tmpdir, "todo.txt")
-        projhdrs = save_selected_projs(tdpath, editpath, terms)
+        projhdrs = save_selected_projs(tdpath, editpath, terms, exact)
 
         try:
             editor = os.environ["EDITOR"]
@@ -116,9 +124,10 @@ def main():
     if args.list:
         for proj in read_proj(args.file):
             if any(x in proj for x in args.terms):
-                print(proj)
+                if not args.exact or any(x==proj for x in args.terms):
+                    print(proj)
     else:
-        edit_proj(args.file, args.terms)
+        edit_proj(args.file, args.terms, args.exact)
 
 
 if __name__ == "__main__":
