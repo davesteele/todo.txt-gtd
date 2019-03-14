@@ -74,9 +74,9 @@ def save_selected_projs(tdpath, editpath, terms, exact):
     pdict = read_proj(tdpath)
 
     for project in list(pdict):
-        if not any(x in project for x in terms):
+        if terms and not any(x in project for x in terms):
             del pdict[project]
-        elif exact and not any(x == project for x in terms):
+        elif exact and terms and not any(x == project for x in terms):
             del pdict[project]
 
     if len(pdict) == 0 and terms and terms[0]:
@@ -123,9 +123,12 @@ def main():
 
     if args.list:
         for proj in read_proj(args.file):
-            if any(x in proj for x in args.terms):
-                if not args.exact or any(x==proj for x in args.terms):
-                    print(proj)
+            if not args.terms:
+                print(proj)
+            elif args.exact and any(x==proj for x in args.terms):
+                print(proj)
+            elif not args.exact and any(x in proj for x in args.terms):
+                print(proj)
     else:
         edit_proj(args.file, args.terms, args.exact)
 
