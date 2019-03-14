@@ -96,7 +96,7 @@ def edit_proj(tdpath, terms):
     allprojs = read_proj(tdpath)
 
     for proj in editprojs:
-        if len(editprojs[proj]) <= 2:
+        if len(editprojs[proj]) <= 2 and proj != "_None":
             if proj in allprojs:
                 del allprojs[proj]
         elif proj in projhdrs:
