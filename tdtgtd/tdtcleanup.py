@@ -1,8 +1,9 @@
 #!/usr/bin/python3
 
-import re
-import os
+from collections import OrderedDict
 import argparse
+import os
+import re
 
 from .utils import none_on_exception
 
@@ -22,7 +23,7 @@ def HeaderProj(line, prev_line):
     return re.search("^# ([^ ]+)$", line).group(1)  # noqa
 
 
-class Projects(dict):
+class Projects(OrderedDict):
     def __init__(self, todotxt=""):
         super(Projects, self).__init__()
         self[NONE_PROJ]
