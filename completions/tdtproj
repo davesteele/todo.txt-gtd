@@ -1,18 +1,16 @@
 #!/bin/bash
 
-_tdtlist_completions()
+_tdt_completions()
 {
+  local candidates
+
   if [ "$3" = "-f" ] ; then
 	COMPREPLY=($(compgen -A file $2))
   else
-	candidates=""
-	for candidate in `tdtproj -l $2`; do
-		candidates="$candidates $candidate"
-	done
-
+	candidates=("$(tdtproj -l "$2")")
 	COMPREPLY=($(compgen -W "$candidates" $2))
   fi
 }
 
-complete -F _tdtlist_completions tdtlist
-complete -F _tdtlist_completions tdtproj
+complete -F _tdt_completions tdtlist
+complete -F _tdt_completions tdtproj
