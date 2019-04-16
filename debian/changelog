@@ -1,3 +1,17 @@
+tdtgtd (0.3) tdtgtd; urgency=medium
+
+  * tdtproj
+    - -x option for exact match only.
+  * tdtcleanup
+    - Preserve project ordering on older Pythons.
+    - Better Project Header detection.
+  * tdtlist
+    - Improved formatting of odt file.
+  * tdtproj
+    - Fixed a bug causing _None to be deleted.
+
+ -- David Steele <steele@debian.org>  Tue, 16 Apr 2019 11:57:09 -0400
+
 tdtgtd (0.2) tdtgtd; urgency=low
 
   * Add completions to tdtlist.
