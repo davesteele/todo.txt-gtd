@@ -2,4 +2,3 @@
 /usr/share/tdtgtd/tdtbackup /usr/bin/tdtbackup
 /usr/share/tdtgtd/tdtlist /usr/bin/tdtlist
 /usr/share/tdtgtd/tdtproj /usr/bin/tdtproj
-/usr/share/bash-completion/completions/tdtproj /usr/share/bash-completion/completions/tdtlist

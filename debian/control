@@ -4,6 +4,7 @@ Priority: optional
 Maintainer: David Steele <steele@debian.org>
 Build-Depends:
     debhelper (>=11),
+    bash-completion,
     dh-python,
     python3-all,
     python3-setuptools,
