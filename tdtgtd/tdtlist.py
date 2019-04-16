@@ -114,7 +114,8 @@ def parse_args():
 
 
 def list_tasks(infile, outdir, terms, launch):
-    txt = open(infile, 'r', encoding="utf-8").read()
+    with open(infile, 'r', encoding="utf-8") as fp:
+        txt = fp.read()
     tasks = task_sort([x for x in txt.splitlines() if is_current_task(x, *terms)])
     contexts = sorted({y for x in tasks for y in x.split() if y[0] == "@"})
 
