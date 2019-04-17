@@ -82,8 +82,8 @@ def parse_args():
         epilog=textwrap.dedent("""
             Process the todo.txt file, and save tasks lists, by context,
             in text and LibreOffice formats. The lists are saved in the
-            same directory as todo.txt. Optionally, the LibreOffice list
-            can be automatically opened.
+            same directory as tasks.txt and tasks.odt. Optionally, the
+            LibreOffice list can be automatically opened.
             """[1:-1]
         ),
     )

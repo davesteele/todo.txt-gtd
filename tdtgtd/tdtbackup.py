@@ -21,7 +21,7 @@ def parse_args():
 
     parser = configargparse.ArgumentParser(
             default_config_files=conf_paths,
-            description="Back up the todo.txt file"
+            description="Back up the todo.txt file.",
         )
 
     parser.add_argument(
