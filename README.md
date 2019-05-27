@@ -101,7 +101,7 @@ For the Weekly Review:
 * Add tasks and '+' project tags, as needed
 * Run _tdtcleanup_ again
 
-I've found that running "``for proj in  `tdtproj -l`; do tdtproj $proj; done``" is a mind-clearing way to
+I've found that running "``for proj in `tdtproj -l`; do tdtproj -x $proj; done``" is a mind-clearing way to
 accomplish this.
 
 # Configuring Existing todo.txt Apps
