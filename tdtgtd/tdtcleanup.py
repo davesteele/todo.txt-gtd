@@ -73,9 +73,9 @@ class Projects(OrderedDict):
 
 
 class Project(object):
-    def __init__(self, name):
+    def __init__(self, name, tasks = []):
         self.name = name
-        self.tasks = []
+        self.tasks = [x for x in tasks]
 
     def __len__(self):
         return len(self.tasks)
@@ -96,11 +96,14 @@ class Project(object):
         if not (self.tasks and HeaderProj(text, prev_line)):
             self.tasks.append(Task(text, self.name))
 
-    def __repr__(self):
+    def finish(self):
         if not self.tasks or self.tasks[-1].text:
             self.AddTask("")
 
-        return "\n".join(str(x) for x in self.tasks)
+    def __repr__(self):
+        workproj = Project(self.name, self.tasks)
+        workproj.finish()
+        return "\n".join(str(x) for x in workproj.tasks)
 
 
 class Task(object):
