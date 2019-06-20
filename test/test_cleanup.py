@@ -18,7 +18,7 @@ def test_cleanup(clean_fxt, numruns):
 
 @pytest.fixture
 def projs_fxt(file_case):
-    with open(file_case.outfile, "r") as fp:
+    with open(str(file_case.outfile), "r") as fp:
         text = fp.read()
 
     return tdtcleanup.Projects(text)
