@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 from collections import OrderedDict
+import copy
 import argparse
 import os
 import re
@@ -73,15 +74,20 @@ class Projects(OrderedDict):
 
 
 class Project(object):
-    def __init__(self, name, tasks = []):
+    def __init__(self, name):
         self.name = name
-        self.tasks = [x for x in tasks]
+        self.tasks = []
 
     def __len__(self):
         return len(self.tasks)
 
     def __iter__(self):
         return iter(self.tasks)
+
+    def __copy__(self):
+        image = Project(self.name)
+        image.tasks = copy.copy(self.tasks)
+        return image
 
     def AddTask(self, text):
         if not self.tasks and (not text or text[0] != "#"):
@@ -101,7 +107,7 @@ class Project(object):
             self.AddTask("")
 
     def __repr__(self):
-        workproj = Project(self.name, self.tasks)
+        workproj = copy.copy(self)
         workproj.finish()
         return "\n".join(str(x) for x in workproj.tasks)
 
