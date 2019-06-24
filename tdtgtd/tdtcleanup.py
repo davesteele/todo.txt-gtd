@@ -95,11 +95,7 @@ class Project(object):
             self.AddTask("#")
             self.AddTask("")
 
-        try:
-            prev_line = self.tasks[-1].text
-        except IndexError:
-            prev_line = ""
-        if not (self.tasks and HeaderProj(text, prev_line)):
+        if not (self.tasks and HeaderProj(text, self.tasks[-1].text)):
             self.tasks.append(Task(text, self.name))
 
     def finish(self):
