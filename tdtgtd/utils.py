@@ -26,3 +26,4 @@ def nullfd(fd):
         yield
     finally:
         os.dup2(saveout, fd)
+        os.close(saveout)
