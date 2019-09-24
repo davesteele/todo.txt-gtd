@@ -40,7 +40,7 @@ class Projects(OrderedDict):
             self[key] = proj
         return proj
 
-    def __repr__(self):
+    def __str__(self):
         projs = sorted((str(self[x]) for x in self), key=lambda y: y.upper())
         return "\n".join(projs)
 
@@ -102,7 +102,7 @@ class Project(object):
         if not self.tasks or self.tasks[-1].text:
             self.AddTask("")
 
-    def __repr__(self):
+    def __str__(self):
         workproj = copy.copy(self)
         workproj.finish()
         return "\n".join(str(x) for x in workproj.tasks)
@@ -130,7 +130,7 @@ class Task(object):
 
         return text
 
-    def __repr__(self):
+    def __str__(self):
         return self.text
 
 
