@@ -6,7 +6,9 @@ import pytest
 
 def cases():
     Case = namedtuple("Case", ["infile", "outfile", "taskfile"])
-    casepath = os.path.join(str(pytest.config.rootdir), "test/cases/")
+
+    testdir = os.path.split(__file__)[0]
+    casepath = os.path.join(testdir, "cases/")
 
     cases = []
     for path in os.listdir(casepath):
