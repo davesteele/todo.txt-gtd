@@ -20,33 +20,37 @@ def parse_args():
             break
 
     parser = configargparse.ArgumentParser(
-            default_config_files=conf_paths,
-            description="Back up the todo.txt file.",
-        )
+        default_config_files=conf_paths,
+        description="Back up the todo.txt file.",
+    )
 
     parser.add_argument(
-        "-f", "--file",
+        "-f",
+        "--file",
         help="the todo.txt file location (defaults to Dropbox)",
         type=str,
-        default="~/Dropbox/todo/todo.txt"
+        default="~/Dropbox/todo/todo.txt",
     )
 
     parser.add_argument(
-        "-b", "--backupdir",
-        help="the backup location (defaults to \"todo/backup\" in Dropbox)",
+        "-b",
+        "--backupdir",
+        help='the backup location (defaults to "todo/backup" in Dropbox)',
         type=str,
-        default="~/Dropbox/todo/backup"
+        default="~/Dropbox/todo/backup",
     )
 
     parser.add_argument(
-        "-n", "--num",
+        "-n",
+        "--num",
         help="the number of backup files to keep (defaults to 14)",
         type=int,
         default=14,
     )
 
     parser.add_argument(
-        "-c", "--config_file",
+        "-c",
+        "--config_file",
         is_config_file=True,
         help="alternate config file",
     )
@@ -61,7 +65,7 @@ def parse_args():
 def backup_path(backup_dir):
     datestr = str(datetime.datetime.now())
 
-    for badstr in [' ', ':', '.']:
+    for badstr in [" ", ":", "."]:
         datestr = datestr.replace(badstr, "-")
 
     return os.path.join(backup_dir, "todo.txt-{}".format(datestr))
@@ -71,7 +75,7 @@ def cleanup(backup_dir, num_files):
     files = sorted(os.listdir(backup_dir))
 
     if len(files) > num_files:
-        for delfile in files[:len(files)-num_files]:
+        for delfile in files[: len(files) - num_files]:
             os.remove(os.path.join(backup_dir, delfile))
 
 
@@ -80,8 +84,8 @@ def backup(backupdir, filename, num):
         os.makedirs(backupdir)
 
     # use read/write for a dos2unix action
-    with open(filename, 'r') as rp:
-        with open(backup_path(backupdir), 'w') as wp:
+    with open(filename, "r") as rp:
+        with open(backup_path(backupdir), "w") as wp:
             wp.write(rp.read())
 
     cleanup(backupdir, num)
@@ -92,5 +96,5 @@ def main():
     backup(args.backupdir, args.file, args.num)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

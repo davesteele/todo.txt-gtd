@@ -50,7 +50,7 @@ class Projects(OrderedDict):
         deferredTasks = []
         prev_line = ""
 
-        for line in todotxt.split('\n'):
+        for line in todotxt.split("\n"):
 
             if HeaderProj(line, prev_line):
                 current_project = HeaderProj(line, prev_line)
@@ -70,7 +70,7 @@ class Projects(OrderedDict):
             prev_line = line
 
         for line in deferredTasks:
-            yield(TaskProj(line), line)
+            yield (TaskProj(line), line)
 
 
 class Project(object):
@@ -121,10 +121,12 @@ class Task(object):
         return re.search(r" \+([^ ]+)", text).group(1)  # noqa
 
     def FixTask(self, text, project):
-        if self.GetContext(text) is not None \
-           and self.GetProject(text) is None \
-           and project != NONE_PROJ \
-           and project is not None:
+        if (
+            self.GetContext(text) is not None
+            and self.GetProject(text) is None
+            and project != NONE_PROJ
+            and project is not None
+        ):
 
             text = "{0} +{1}".format(text, project)
 
@@ -137,12 +139,13 @@ class Task(object):
 def parse_args():
     parser = argparse.ArgumentParser(
         description="Clean up the todo.txt file in a GTD fashion"
-        )
+    )
 
     parser.add_argument(
-        "-f", "--file",
+        "-f",
+        "--file",
         help="the todo.txt file location "
-             "(defaults to ~/Dropbox/todo/todo.txt)",
+        "(defaults to ~/Dropbox/todo/todo.txt)",
         default="~/Dropbox/todo/todo.txt",
     )
 
@@ -153,10 +156,10 @@ def parse_args():
 
 
 def cleanup(filepath):
-    with open(filepath, 'r', encoding="utf-8") as fp:
+    with open(filepath, "r", encoding="utf-8") as fp:
         projects = Projects(fp.read())
 
-    with open(filepath, 'w', encoding="utf-8") as fp:
+    with open(filepath, "w", encoding="utf-8") as fp:
         fp.write(str(projects))
 
 
@@ -166,5 +169,5 @@ def main():
     cleanup(args.file)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

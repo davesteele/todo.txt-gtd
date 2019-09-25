@@ -2,13 +2,11 @@
 
 import argparse
 import datetime
-import distutils.spawn
 import os
 import pwd
 import re
 import shutil
 import subprocess
-import sys
 import tempfile
 import textwrap
 from typing import List
@@ -32,10 +30,11 @@ def is_task(line: str, *terms: List[str]) -> bool:
 
     return True
 
+
 def is_current_task(line: str, *terms: List[str]) -> bool:
     if "@~" in line:
         return False
-    
+
     if threshold_mask(line):
         return False
 
@@ -79,20 +78,24 @@ def rstify(task: str) -> str:
 def parse_args():
     parser = argparse.ArgumentParser(
         description="List the tasks in todo.txt, by @category",
-        epilog=textwrap.dedent("""
+        epilog=textwrap.dedent(
+            """
             Process the todo.txt file, and save tasks lists, by context,
             in text and LibreOffice formats. The lists are saved in the
             same directory as tasks.txt and tasks.odt. Optionally, the
             LibreOffice list can be automatically opened.
-            """[1:-1]
+            """[
+                1:-1
+            ]
         ),
     )
 
     parser.add_argument(
-        "-f", "--file",
+        "-f",
+        "--file",
         help="the todo.txt file location "
-             "(defaults to ~/Dropbox/todo/todo.txt)",
-        default=os.path.expanduser("~/Dropbox/todo/todo.txt")
+        "(defaults to ~/Dropbox/todo/todo.txt)",
+        default=os.path.expanduser("~/Dropbox/todo/todo.txt"),
     )
 
     parser.add_argument(
@@ -103,7 +106,8 @@ def parse_args():
     )
 
     parser.add_argument(
-        "-l", "--launch",
+        "-l",
+        "--launch",
         action="store_true",
         help="open a transient version of the task list",
     )
@@ -114,17 +118,19 @@ def parse_args():
 
 
 def list_tasks(infile, outdir, terms, launch):
-    with open(infile, 'r', encoding="utf-8") as fp:
+    with open(infile, "r", encoding="utf-8") as fp:
         txt = fp.read()
-    tasks = task_sort([x for x in txt.splitlines() if is_current_task(x, *terms)])
+    tasks = task_sort(
+        [x for x in txt.splitlines() if is_current_task(x, *terms)]
+    )
     contexts = sorted({y for x in tasks for y in x.split() if y[0] == "@"})
 
     rst_file = os.path.join(outdir, "tasks.rst")
     txt_file = os.path.join(outdir, "tasks.txt")
     odt_file = os.path.join(outdir, "tasks.odt")
 
-    with open(txt_file, 'w', encoding="utf-8") as txtfd:
-        with open(rst_file, 'w', encoding="utf-8") as rstfd:
+    with open(txt_file, "w", encoding="utf-8") as txtfd:
+        with open(rst_file, "w", encoding="utf-8") as rstfd:
             rstfd.write("To Do List\n")
             rstfd.write("==========\n\n")
             rstfd.write(str(datetime.datetime.now().strftime("%B %d, %Y")))
@@ -152,13 +158,13 @@ def list_tasks(infile, outdir, terms, launch):
 
     if launch:
         with nullfd(1), nullfd(2):
-            subprocess.call(['xdg-open', odt_file])
+            subprocess.call(["xdg-open", odt_file])
 
 
 def tempdir():
     dirname = "tdtlist-{}".format(pwd.getpwuid(os.getuid())[0])
     tempdir = os.path.join(tempfile.gettempdir(), dirname)
-    shutil.rmtree(tempdir, onerror=lambda x,y,z: None)
+    shutil.rmtree(tempdir, onerror=lambda x, y, z: None)
     os.makedirs(tempdir)
     return tempdir
 
@@ -174,5 +180,5 @@ def main():
     list_tasks(args.file, docdir, args.terms, args.launch)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

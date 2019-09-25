@@ -1,4 +1,3 @@
-
 import copy
 import pytest
 
@@ -12,8 +11,8 @@ def test_cleanup(clean_fxt, numruns):
 
     test_output = clean_fxt.workfile.read_text("utf-8")
     ref_output = clean_fxt.outfile.read_text("utf-8")
-    assert(test_output == ref_output)
-    assert(clean_fxt.workfile.size() == clean_fxt.outfile.size())
+    assert test_output == ref_output
+    assert clean_fxt.workfile.size() == clean_fxt.outfile.size()
 
 
 @pytest.fixture
@@ -26,11 +25,11 @@ def projs_fxt(file_case):
 
 def test_proj_copy(projs_fxt):
     for proj in projs_fxt:
-        assert(str(proj) == str(copy.copy(proj)))
+        assert str(proj) == str(copy.copy(proj))
 
 
 def test_null_proj_str():
     proj = tdtcleanup.Project("foo")
-    assert("foo" in str(proj))
+    assert "foo" in str(proj)
 
-    assert(proj.tasks == [])
+    assert proj.tasks == []

@@ -25,8 +25,8 @@ def cases():
 
 
 def pytest_generate_tests(metafunc):
-    if 'file_case' in metafunc.fixturenames:
-        metafunc.parametrize('file_case', cases())
+    if "file_case" in metafunc.fixturenames:
+        metafunc.parametrize("file_case", cases())
 
 
 def makefiles(file_case, tmpdir):
@@ -41,7 +41,6 @@ def makefiles(file_case, tmpdir):
 
     return (outfile, workfile, taskfile)
 
-    
 
 @pytest.fixture
 def clean_fxt(file_case, tmpdir):

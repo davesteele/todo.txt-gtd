@@ -4,7 +4,7 @@ import pytest
 
 from tdtgtd import tdtbackup
 
-Env = namedtuple("Env", ['todopath', 'backupdir', 'configpath'])
+Env = namedtuple("Env", ["todopath", "backupdir", "configpath"])
 
 
 @pytest.fixture
@@ -86,28 +86,27 @@ def parser_mock(monkeypatch):
     return configargparse
 
 
-@pytest.mark.parametrize('params', [
-    ([], False),
-    (['x'], False),
-    (['-c'], True),
-    (["--config-file"], True),
-    (["--config-file=foo"], True),
-])
+@pytest.mark.parametrize(
+    "params",
+    [
+        ([], False),
+        (["x"], False),
+        (["-c"], True),
+        (["--config-file"], True),
+        (["--config-file=foo"], True),
+    ],
+)
 def test_parse_args(parser_mock, monkeypatch, params):
     monkeypatch.setattr(tdtbackup.sys, "argv", params[0])
 
     tdtbackup.parse_args()
 
     callargs = parser_mock.ArgumentParser.call_args
-    calledlist = callargs[1]['default_config_files']
+    calledlist = callargs[1]["default_config_files"]
     assert (calledlist == []) is params[1]
 
 
-@pytest.mark.parametrize("params", [
-    ("", True),
-    ("x", True),
-    ("~", False),
-])
+@pytest.mark.parametrize("params", [("", True), ("x", True), ("~", False)])
 def test_parse_expand_user(parser_mock, params):
     parser_mock.ArgumentParser().parse_args().file = params[0]
     parser_mock.ArgumentParser().parse_args().backupdir = params[0]

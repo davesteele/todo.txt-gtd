@@ -11,37 +11,43 @@ from .tdtlist import is_task
 def parse_args():
     parser = argparse.ArgumentParser(
         description="Work with one or more GTD projects in todo.txt",
-        epilog=textwrap.dedent("""
+        epilog=textwrap.dedent(
+            """
             Edit one or more isolated projects in a todo.txt file
-            (todo.txt projects are denoted by a a leading "+"). 
-            
+            (todo.txt projects are denoted by a a leading "+").
+
             If the entire project is deleted during the edit session,
             the original project is preserved in todo.txt. If just the
             Project Header line is kept, then the project is deleted in
             the original.
-            
+
             The default text editor, set by 'update-alternatives', is
             used. This can be overridden by setting the 'EDITOR' environment
             variable.
-        """[1:-1]
-        )
+        """[
+                1:-1
+            ]
+        ),
     )
 
     parser.add_argument(
-        "-f", "--file",
+        "-f",
+        "--file",
         help="the todo.txt file location "
-             "(defaults to ~/Dropbox/todo/todo.txt)",
+        "(defaults to ~/Dropbox/todo/todo.txt)",
         default="~/Dropbox/todo/todo.txt",
     )
 
     parser.add_argument(
-        "-l", "--list",
+        "-l",
+        "--list",
         action="store_true",
         help="just list the projects in the current todo.txt file",
     )
 
     parser.add_argument(
-        "-x", "--exact",
+        "-x",
+        "--exact",
         action="store_true",
         help="require an exact match of project to TERM",
     )
@@ -50,8 +56,8 @@ def parse_args():
         "terms",
         nargs="*",
         metavar="TERM",
-        help="search terms to filter the project(s) to use. " \
-             "Projects matching ANY of the terms will be used.",
+        help="search terms to filter the project(s) to use. "
+        "Projects matching ANY of the terms will be used.",
     )
 
     args = parser.parse_args()
@@ -61,12 +67,12 @@ def parse_args():
 
 
 def read_proj(path):
-    with open(path, 'r', encoding="utf-8") as p:
+    with open(path, "r", encoding="utf-8") as p:
         return Projects(p.read())
 
 
 def write_proj(path, projs):
-    with open(path, 'w', encoding="utf-8") as p:
+    with open(path, "w", encoding="utf-8") as p:
         p.write(str(projs))
 
 
@@ -124,7 +130,7 @@ def main():
         for proj in read_proj(args.file):
             if not args.terms:
                 print(proj)
-            elif args.exact and any(x==proj for x in args.terms):
+            elif args.exact and any(x == proj for x in args.terms):
                 print(proj)
             elif not args.exact and any(x in proj for x in args.terms):
                 print(proj)
