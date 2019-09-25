@@ -82,7 +82,6 @@ def save_selected_projs(tdpath, editpath, terms, exact):
     if len(pdict) == 0 and terms and terms[0]:
         proj = Project(terms[0])
         pdict[terms[0]] = proj
-        str(proj)
 
     write_proj(editpath, pdict)
 
