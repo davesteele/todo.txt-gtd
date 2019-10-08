@@ -2,7 +2,7 @@ from os import path
 from setuptools import setup
 
 this_directory = path.abspath(path.dirname(__file__))
-with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
+with open(path.join(this_directory, "README.md"), encoding="utf-8") as f:
     long_description = f.read()
 
 setup(
@@ -24,10 +24,7 @@ setup(
             "tdtproj = tdtgtd.tdtproj:main",
         ]
     },
-    install_requires=[
-        "configargparse",
-        "docutils",
-        ],
+    install_requires=["configargparse", "docutils"],
     setup_requires=["pytest-runner"],
     tests_require=["pytest"],
     classifiers=[
@@ -41,5 +38,5 @@ setup(
         "Operating System :: Microsoft :: Windows",
         "Programming Language :: Python :: 3 :: Only",
         "Topic :: Other/Nonlisted Topic",
-    ]
+    ],
 )
