@@ -101,11 +101,10 @@ class Project(object):
     def finish(self):
         if not self.tasks or self.tasks[-1].text:
             self.AddTask("")
+        return self
 
     def __str__(self):
-        workproj = copy.copy(self)
-        workproj.finish()
-        return "\n".join(str(x) for x in workproj.tasks)
+        return "\n".join(str(x) for x in copy.copy(self).finish())
 
 
 class Task(object):
