@@ -109,6 +109,7 @@ def parse_args():
 
     return args
 
+
 @functools.total_ordering
 class tdline:
     def __init__(self, num: int, text: str) -> None:
@@ -130,11 +131,11 @@ def list_tasks(infile: str, outdir: str, terms: List[str], launch: bool):
     with open(infile, "r", encoding="utf-8") as fp:
         tdlines = [tdline(*x) for x in enumerate(fp.read().splitlines())]
 
-    tasks = sorted(
-        [x for x in tdlines if is_current_task(str(x), *terms)]
-    )
+    tasks = sorted([x for x in tdlines if is_current_task(str(x), *terms)])
 
-    contexts = sorted({y for x in tasks for y in str(x).split() if y[0] == "@"})
+    contexts = sorted(
+        {y for x in tasks for y in str(x).split() if y[0] == "@"}
+    )
 
     rst_file = os.path.join(outdir, "tasks.rst")
     txt_file = os.path.join(outdir, "tasks.txt")
@@ -161,7 +162,11 @@ def list_tasks(infile: str, outdir: str, terms: List[str], launch: bool):
                     if context in str(task).split():
                         txtfd.write("{}\n".format(task))
 
-                        rstfd.write("* {1} - [{0}]\n".format(task.num, rstify(str(task))))
+                        rstfd.write(
+                            "* {1} - [{0}]\n".format(
+                                task.num, rstify(str(task))
+                            )
+                        )
                 rstfd.write("\n|\n")
 
     rst2odt(rst_file, odt_file)
