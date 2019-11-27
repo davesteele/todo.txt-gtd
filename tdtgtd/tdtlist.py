@@ -2,6 +2,7 @@
 
 import argparse
 import datetime
+import functools
 import os
 import pwd
 import re
@@ -42,7 +43,7 @@ def is_current_task(line: str, *terms: List[str]) -> bool:
 
 
 def task_priority(task: str) -> str:
-    match = re.search(r"^\((.)\) ", task)
+    match = re.search(r"^\((.)\) ", str(task))
     if match:
         return match.group(1)
 
@@ -67,10 +68,9 @@ def threshold_mask(task: str) -> bool:
 
 
 def rstify(task: str) -> str:
-
+    task = str(task)
     task = re.sub("\\(", r"\(", task)
     task = re.sub("\\)", r"\)", task)
-    task = "* " + task
 
     return task
 
@@ -116,14 +116,27 @@ def parse_args():
 
     return args
 
+@functools.total_ordering
+class tdline:
+    def __init__(self, num, text):
+        self.text = text
+        self.num = num + 1
+
+    def __str__(self):
+        return self.text
+
+    def __lt__(self, other):
+        return str(self) < str(other)
+
 
 def list_tasks(infile, outdir, terms, launch):
     with open(infile, "r", encoding="utf-8") as fp:
-        txt = fp.read()
+        tdlines = [tdline(*x) for x in enumerate(fp.read().splitlines())]
+
     tasks = task_sort(
-        [x for x in txt.splitlines() if is_current_task(x, *terms)]
+        [x for x in tdlines if is_current_task(str(x), *terms)]
     )
-    contexts = sorted({y for x in tasks for y in x.split() if y[0] == "@"})
+    contexts = sorted({y for x in tasks for y in str(x).split() if y[0] == "@"})
 
     rst_file = os.path.join(outdir, "tasks.rst")
     txt_file = os.path.join(outdir, "tasks.txt")
@@ -147,10 +160,10 @@ def list_tasks(infile, outdir, terms, launch):
                 rstfd.write("\n**{}**\n\n".format(context))
 
                 for task in tasks:
-                    if context in task.split():
+                    if context in str(task).split():
                         txtfd.write("{}\n".format(task))
 
-                        rstfd.write("{}\n".format(rstify(task)))
+                        rstfd.write("* {1} - [{0}]\n".format(task.num, rstify(task)))
                 rstfd.write("\n|\n")
 
     rst2odt(rst_file, odt_file)
