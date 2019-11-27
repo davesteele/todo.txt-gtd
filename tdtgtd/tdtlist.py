@@ -16,7 +16,7 @@ from .rst2odt import rst2odt
 from .utils import nullfd
 
 
-def is_task(line: str, *terms: List[str]) -> bool:
+def is_task(line: str, *terms: str) -> bool:
     if re.search(r"^\s*#", line):
         return False
 
@@ -32,7 +32,7 @@ def is_task(line: str, *terms: List[str]) -> bool:
     return True
 
 
-def is_current_task(line: str, *terms: List[str]) -> bool:
+def is_current_task(line: str, *terms: str) -> bool:
     if "@~" in line:
         return False
 
@@ -50,12 +50,6 @@ def task_priority(task: str) -> str:
     return "M"
 
 
-def task_sort(tasks: List[str]) -> List[str]:
-    pri_tasks = [(task_priority(txt), n, txt) for (n, txt) in enumerate(tasks)]
-
-    return [x[2] for x in sorted(pri_tasks)]
-
-
 def threshold_mask(task: str) -> bool:
     match = re.search(r"t:(\d\d\d\d-\d\d-\d\d)", task)
 
@@ -68,7 +62,6 @@ def threshold_mask(task: str) -> bool:
 
 
 def rstify(task: str) -> str:
-    task = str(task)
     task = re.sub("\\(", r"\(", task)
     task = re.sub("\\)", r"\)", task)
 
@@ -118,24 +111,29 @@ def parse_args():
 
 @functools.total_ordering
 class tdline:
-    def __init__(self, num, text):
+    def __init__(self, num: int, text: str) -> None:
         self.text = text
         self.num = num + 1
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.text
 
-    def __lt__(self, other):
-        return str(self) < str(other)
+    def _sort_key(self):
+        """Sort tasks by (priority, tasknum, tasktext)."""
+        return (task_priority(self.text), self.num, self.text)
+
+    def __lt__(self, other: tdline) -> bool:
+        return self._sort_key() < other._sort_key()
 
 
-def list_tasks(infile, outdir, terms, launch):
+def list_tasks(infile: str, outdir: str, terms: List[str], launch: bool):
     with open(infile, "r", encoding="utf-8") as fp:
         tdlines = [tdline(*x) for x in enumerate(fp.read().splitlines())]
 
-    tasks = task_sort(
+    tasks = sorted(
         [x for x in tdlines if is_current_task(str(x), *terms)]
     )
+
     contexts = sorted({y for x in tasks for y in str(x).split() if y[0] == "@"})
 
     rst_file = os.path.join(outdir, "tasks.rst")
@@ -163,7 +161,7 @@ def list_tasks(infile, outdir, terms, launch):
                     if context in str(task).split():
                         txtfd.write("{}\n".format(task))
 
-                        rstfd.write("* {1} - [{0}]\n".format(task.num, rstify(task)))
+                        rstfd.write("* {1} - [{0}]\n".format(task.num, rstify(str(task))))
                 rstfd.write("\n|\n")
 
     rst2odt(rst_file, odt_file)
