@@ -123,7 +123,7 @@ class tdline:
         """Sort tasks by (priority, tasknum, tasktext)."""
         return (task_priority(self.text), self.num, self.text)
 
-    def __lt__(self, other: tdline) -> bool:
+    def __lt__(self, other: "tdline") -> bool:
         return self._sort_key() < other._sort_key()
 
 
