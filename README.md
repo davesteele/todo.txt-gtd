@@ -119,6 +119,17 @@ of [threshold dates and recurrance](https://github.com/mpcjanssen/simpletask-and
 
 [SimpleTask](https://play.google.com/store/apps/details?id=nl.mpcjanssen.todotxtholo&hl=en_US) works well on Android. Make a "Current Tasks" filter with the "List" tab consisting of a checked "Invert Filter" box, plus check "-" and all contexts you want to eliminate (e.g. "someday").
 
+For SimpleTask, I also add this LUA filter, to eliminated commented-out tasks:
+
+    function onFilter(task, fields, extensions)
+	    c = string.sub(task, 1, 1);
+	    if c == "#" then
+		    return false;
+	    end
+    
+	    return true;
+    end
+
 Run 'tdtlist -l' for a printable todo list, for offline use.
 
 Of course, a primary way of interacting with the todo list is by editing the todo.txt file directly.
