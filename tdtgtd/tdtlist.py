@@ -51,12 +51,12 @@ def task_priority(task: str) -> str:
 
 
 def threshold_mask(task: str) -> bool:
-    match = re.search(r"t:(\d\d\d\d-\d\d-\d\d)", task)
+    match = re.search(r"(^|[^\S])t:(\d\d\d\d-\d\d-\d\d)($|[^\S])", task)
 
     if not match:
         return False
 
-    threshold_date = datetime.datetime.strptime(match.group(1), "%Y-%m-%d")
+    threshold_date = datetime.datetime.strptime(match.group(2), "%Y-%m-%d")
 
     return datetime.datetime.now() < threshold_date
 

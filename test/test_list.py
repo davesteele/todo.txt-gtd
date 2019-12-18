@@ -26,3 +26,32 @@ def test_odt(tmpdir):
 
     assert "tasks.odt" in os.listdir(str(workfile.dirpath()))
     assert "tasks.rst" not in os.listdir(str(workfile.dirpath()))
+
+
+ThreshCase = collections.namedtuple("ThreshCase", ["string", "result"])
+
+@pytest.mark.parametrize("case",
+    [
+        ThreshCase("", False),
+        ThreshCase("foo", False),
+
+        ThreshCase("t:1970-01-01", False),
+        ThreshCase(" t:1970-01-01", False),
+        ThreshCase("t:1970-01-01 ", False),
+        ThreshCase(" t:1970-01-01 ", False),
+
+        ThreshCase("t:2030-01-01", True),
+        ThreshCase(" t:2030-01-01", True),
+        ThreshCase("t:2030-01-01 ", True),
+        ThreshCase(" t:2030-01-01 ", True),
+
+        ThreshCase("t;2030-01-01 ", False),
+        ThreshCase("t:2030_01-01 ", False),
+        ThreshCase("t:2030001-01 ", False),
+
+        ThreshCase("st:2030-01-01 ", False),
+        ThreshCase(" t:2030-01-01s", False),
+    ]
+)
+def test_threshold_mask(case):
+    assert tdtlist.threshold_mask(case.string) == case.result
