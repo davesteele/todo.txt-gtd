@@ -129,7 +129,9 @@ class tdline:
 
 def list_tasks(infile: str, outdir: str, terms: List[str], launch: bool):
     with open(infile, "r", encoding="utf-8") as fp:
-        tdlines = [tdline(*x) for x in enumerate(fp.read().splitlines())]
+        lines = fp.read().splitlines()
+        lines = [x for x in lines if x.strip()]
+        tdlines = [tdline(*x) for x in enumerate(lines)]
 
     tasks = sorted([x for x in tdlines if is_current_task(str(x), *terms)])
 

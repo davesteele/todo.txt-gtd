@@ -36,8 +36,8 @@ Given the following text in the file _~/Dropbox/todo/todo.txt_:
     
 
 Now _todo.txt_ can be treated as a comprehensive Projects file. Tasks are
-organized by Project, and arbitrary text related to projects can be added
-as comments.
+organized by Project, and arbitrary text related to projects can be added as
+comments.
 
 A "#" comment block starting with a comment consisting of a single word is a Project Header, defining the
 default project for following tasks. The final *_None* project is special -
@@ -115,7 +115,7 @@ Avoid the 'archive' operation. This typically will remove duplicate lines in _to
 I've used the classic [todo.txt CLI](https://todotxt.org/) with success. As mentioned previously, avoid the archive operation.
 
 I've come to prefer [ToPydo](https://pypi.org/project/topydo/), for its support
-of [threshold dates and recurrance](https://github.com/mpcjanssen/simpletask-android/blob/master/app/src/main/assets/extensions.en.md). Note that it needs a [small change](https://github.com/davesteele/topydo/commit/fafee24beb4718f375a921f3b4772c5fea37d7ac) to avoid eliminating blank lines. Make sure to use the '-a' option to disable auto-archive on task completion (or set the config "archive_filename" to no content).
+of [threshold dates and recurrence](https://github.com/mpcjanssen/simpletask-android/blob/master/app/src/main/assets/extensions.en.md). Note that it needs a [small change](https://github.com/davesteele/topydo/commit/fafee24beb4718f375a921f3b4772c5fea37d7ac) to avoid eliminating blank lines. Make sure to use the '-a' option to disable auto-archive on task completion (or set the config "archive_filename" to no content).
 
 [SimpleTask](https://play.google.com/store/apps/details?id=nl.mpcjanssen.todotxtholo&hl=en_US) works well on Android. Make a "Current Tasks" filter with the "List" tab consisting of a checked "Invert Filter" box, plus check "-" and all contexts you want to eliminate (e.g. "someday").
 
