@@ -39,21 +39,26 @@ Now _todo.txt_ can be treated as a comprehensive Projects file. Tasks are
 organized by Project, and arbitrary text related to projects can be added as
 comments.
 
-A "#" comment block starting with a comment consisting of a single word is a Project Header, defining the
-default project for following tasks. The final *_None* project is special -
-it collects tasks that are added using various **todo.txt** applications.
+A "#" comment block starting with a comment consisting of a single word is a
+Project Header, defining the default project for following tasks. The final
+*_None* project is special - it collects tasks that are added using various
+**todo.txt** applications.
 
 On subsequent runs, _tdtcleanup_ will do the following:
 
 * Sort Project Sections alphabetically, by Project Name
-* Add the '+' project tag to any tasks in a Project Section that don't already have one. A task is defined here as a line of text that includes an '@' context. This processing doesn't happen in the *_None* section.
-* Move tasks to the proper Project Section, if they aren't already there. The Section is created, using a Project Header, if necessary.
+* Add the '+' project tag to any tasks in a Project Section that don't already
+  have one. A task is defined here as a line of text that includes an '@'
+  context. This processing doesn't happen in the *_None* section.
+* Move tasks to the proper Project Section, if they aren't already there. The
+  Section is created, using a Project Header, if necessary.
 
 ## The Context Listing Script
 
 The _tdtlist_ script lists the tasks in todo.txt, by context.
 
-If you process either of the above todo.txt files through _tdtlist_, it will output the following
+If you process either of the above todo.txt files through _tdtlist_, it will
+output the following
 
     @errands
     
@@ -69,17 +74,18 @@ automatically opened after it is created.
 
 ## The Project script
 
-The _tdtproj_ script supports working with a single project, or group of projects. It opens an
-edit session with just the specified project section from the todo.txt file, and replaces that
-section after the session is complete.
+The _tdtproj_ script supports working with a single project, or group of
+projects. It opens an edit session with just the specified project section from
+the todo.txt file, and replaces that section after the session is complete.
 
-If all of the lines are deleted from the edit session, no changes are made to the original
-todo.txt file. If just the header line is kept, all other lines are deleted from the original.
+If all of the lines are deleted from the edit session, no changes are made to
+the original todo.txt file. If just the header line is kept, all other lines
+are deleted from the original.
 
 Run _tdtproj_ with the "-l" option to get a current list of projects.
 
-A bash completion script is available that responds to tab completion with an appropriate project
-list.
+A bash completion script is available that responds to tab completion with an
+appropriate project list.
 
 ## The Backup script
 
@@ -87,9 +93,11 @@ _tdtbackup_ is a utility script for making rotating backups of the todo.txt file
 
 # Working with a GTD todo.txt
 
-Always add an '@' context to tasks, to put them on the proper GTD list, and to identify them to _tdtcleanup_.
+Always add an '@' context to tasks, to put them on the proper GTD list, and to
+identify them to _tdtcleanup_.
 
-Either add '+' project name to individual tasks, or physically move them to the appropriate Project Section.
+Either add '+' project name to individual tasks, or physically move them to the
+appropriate Project Section.
 
 Add comments, as necessary, to fully document each Project.
 
@@ -101,23 +109,38 @@ For the Weekly Review:
 * Add tasks and '+' project tags, as needed
 * Run _tdtcleanup_ again
 
-I've found that running "``for proj in `tdtproj -l`; do tdtproj -x $proj; done``" is a mind-clearing way to
-accomplish this.
+I've found that running "``for proj in `tdtproj -l`; do tdtproj -x $proj;
+done``" is a mind-clearing way to accomplish this.
 
 # Configuring Existing todo.txt Apps
 
-Filter on '@' to limit your task lists to just tasks. I use a '\~' as a special context flag (e.g. '@\~errands') for tasks that cannot be performed yet due to an uncompleted previous step. If you pick up this convention, you may want to filter out '@~' from your lists as well.
+Filter on '@' to limit your task lists to just tasks. I use a '\~' as a special
+context flag (e.g. '@\~errands') for tasks that cannot be performed yet due to
+an uncompleted previous step. If you pick up this convention, you may want to
+filter out '@~' from your lists as well.
 
-Avoid the 'archive' operation. This typically will remove duplicate lines in _todo.txt_. This can wreak havoc on formatting, eliminating white space and empty comment lines in the file.
+Avoid the 'archive' operation. This typically will remove duplicate lines in
+_todo.txt_. This can wreak havoc on formatting, eliminating white space and
+empty comment lines in the file.
 
 # Specific Todo.txt Apps for GTD
 
-I've used the classic [todo.txt CLI](https://todotxt.org/) with success. As mentioned previously, avoid the archive operation.
+I've used the classic [todo.txt CLI](https://todotxt.org/) with success. As
+mentioned previously, avoid the archive operation.
 
 I've come to prefer [ToPydo](https://pypi.org/project/topydo/), for its support
-of [threshold dates and recurrence](https://github.com/mpcjanssen/simpletask-android/blob/master/app/src/main/assets/extensions.en.md). Note that it needs a [small change](https://github.com/davesteele/topydo/commit/fafee24beb4718f375a921f3b4772c5fea37d7ac) to avoid eliminating blank lines. Make sure to use the '-a' option to disable auto-archive on task completion (or set the config "archive_filename" to no content).
+of [threshold dates and
+recurrence](https://github.com/mpcjanssen/simpletask-android/blob/master/app/src/main/assets/extensions.en.md).
+Note that it needs a [small
+change](https://github.com/davesteele/topydo/commit/fafee24beb4718f375a921f3b4772c5fea37d7ac)
+to avoid eliminating blank lines. Make sure to use the '-a' option to disable
+auto-archive on task completion (or set the config "archive_filename" to no
+content).
 
-[SimpleTask](https://play.google.com/store/apps/details?id=nl.mpcjanssen.todotxtholo&hl=en_US) works well on Android. Make a "Current Tasks" filter with the "List" tab consisting of a checked "Invert Filter" box, plus check "-" and all contexts you want to eliminate (e.g. "someday").
+[SimpleTask](https://play.google.com/store/apps/details?id=nl.mpcjanssen.todotxtholo&hl=en_US)
+works well on Android. Make a "Current Tasks" filter with the "List" tab
+consisting of a checked "Invert Filter" box, plus check "-" and all contexts
+you want to eliminate (e.g. "someday").
 
 For SimpleTask, I also add this LUA filter, to eliminated commented-out tasks:
 
@@ -132,7 +155,8 @@ For SimpleTask, I also add this LUA filter, to eliminated commented-out tasks:
 
 Run 'tdtlist -l' for a printable todo list, for offline use.
 
-Of course, a primary way of interacting with the todo list is by editing the todo.txt file directly.
+Of course, a primary way of interacting with the todo list is by editing the
+todo.txt file directly.
 
 My .bashrc to support todo.txt:
 
