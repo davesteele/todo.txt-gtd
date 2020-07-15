@@ -1,9 +1,10 @@
 import collections
-from unittest.mock import Mock
 import os
+from unittest.mock import Mock
+
 import pytest
 
-from conftest import makefiles, cases
+from conftest import cases, makefiles
 from tdtgtd import tdtlist
 
 

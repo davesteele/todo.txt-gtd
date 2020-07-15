@@ -1,5 +1,6 @@
 from collections import namedtuple
 from unittest.mock import Mock
+
 import pytest
 
 from tdtgtd import tdtbackup

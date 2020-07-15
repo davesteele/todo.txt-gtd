@@ -1,10 +1,10 @@
 import argparse
 import os
+import textwrap
 from subprocess import run
 from tempfile import TemporaryDirectory
-import textwrap
 
-from .tdtcleanup import Projects, Project
+from .tdtcleanup import Project, Projects
 from .tdtlist import is_task
 
 

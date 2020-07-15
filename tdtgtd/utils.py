@@ -1,6 +1,6 @@
+import os
 from contextlib import contextmanager
 from functools import wraps
-import os
 
 
 def none_on_exception(*exceptions):

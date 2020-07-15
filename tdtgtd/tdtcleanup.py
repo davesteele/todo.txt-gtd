@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 
-from collections import OrderedDict
-import copy
 import argparse
+import copy
 import os
 import re
+from collections import OrderedDict
 
 from .utils import none_on_exception
 
