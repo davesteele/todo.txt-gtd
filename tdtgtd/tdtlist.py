@@ -130,6 +130,9 @@ class tdline:
     def __lt__(self, other: "tdline") -> bool:
         return self._sort_key() < other._sort_key()
 
+    def __eq__(self, other: "tdline") -> bool:
+        return self._sort_key() == other._sort_key()
+
 
 def list_tasks(
     infile: str, outdir: str, terms: List[str], priority: str, launch: bool
