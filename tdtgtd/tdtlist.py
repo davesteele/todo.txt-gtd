@@ -105,6 +105,14 @@ def parse_args():
         help="open a transient version of the task list",
     )
 
+    parser.add_argument(
+        "-p",
+        "--priority",
+        type=str,
+        default="",
+        help="Minimum priority to display",
+    )
+
     args = parser.parse_args()
 
     return args
@@ -127,11 +135,16 @@ class tdline:
         return self._sort_key() < other._sort_key()
 
 
-def list_tasks(infile: str, outdir: str, terms: List[str], launch: bool):
+def list_tasks(
+    infile: str, outdir: str, terms: List[str], priority: str, launch: bool
+):
     with open(infile, "r", encoding="utf-8") as fp:
         tdlines = [tdline(*x) for x in enumerate(fp.read().splitlines())]
 
     tasks = sorted([x for x in tdlines if is_current_task(str(x), *terms)])
+
+    if priority:
+        tasks = [x for x in tasks if task_priority(str(x)) <= priority]
 
     contexts = sorted(
         {y for x in tasks for y in str(x).split() if y[0] == "@"}
@@ -193,7 +206,7 @@ def main():
     else:
         docdir = os.path.dirname(args.file)
 
-    list_tasks(args.file, docdir, args.terms, args.launch)
+    list_tasks(args.file, docdir, args.terms, args.priority, args.launch)
 
 
 if __name__ == "__main__":
