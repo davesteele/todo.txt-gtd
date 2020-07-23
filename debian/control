@@ -12,7 +12,7 @@ Build-Depends:
     python3-pytest,
     python3-mock,
     python3-configargparse,
-    python3-docutils,
+    python3-relatorio,
 Standards-Version: 4.1.1
 Homepage: https://davesteele.github.io/todo.txt-gtd/
 X-Python3-Version: >= 3.5

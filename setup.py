@@ -16,6 +16,7 @@ setup(
     description="Todo.txt support scripts for GTD.",
     long_description=long_description,
     long_description_content_type="text/markdown",
+    package_data={"": ["*.odt"]},
     entry_points={
         "console_scripts": [
             "tdtcleanup = tdtgtd.tdtcleanup:main",
@@ -24,7 +25,7 @@ setup(
             "tdtproj = tdtgtd.tdtproj:main",
         ]
     },
-    install_requires=["configargparse", "docutils"],
+    install_requires=["configargparse", "relatorio"],
     setup_requires=["pytest-runner"],
     tests_require=["pytest"],
     classifiers=[
