@@ -3,6 +3,7 @@
 import argparse
 import datetime
 import functools
+import json
 import os
 import pwd
 import re
@@ -10,6 +11,7 @@ import shutil
 import subprocess
 import tempfile
 import textwrap
+from collections import OrderedDict
 from typing import List
 
 from .rst2odt import rst2odt
@@ -150,40 +152,53 @@ def list_tasks(
         {y for x in tasks for y in str(x).split() if y[0] == "@"}
     )
 
-    rst_file = os.path.join(outdir, "tasks.rst")
     txt_file = os.path.join(outdir, "tasks.txt")
     odt_file = os.path.join(outdir, "tasks.odt")
+    json_file = os.path.join(outdir, "tasks.json")
+
+    proj_dict = {
+        "date": str(datetime.datetime.now().strftime("%B %d, %Y")),
+        "priority": priority,
+        "priority_string": "",
+        "terms": "",
+        "contexts": [],
+    }
+
+    if priority:
+        priority_string = "Priority {} and higher".format(priority)
+        proj_dict["priority_string"] = priority_string
+
+    if terms:
+        term_list = ", ".join(['"' + x + '"' for x in terms])
+        proj_dict["terms"] = term_list
 
     with open(txt_file, "w", encoding="utf-8") as txtfd:
-        with open(rst_file, "w", encoding="utf-8") as rstfd:
-            rstfd.write("To Do List\n")
-            rstfd.write("==========\n\n")
-            rstfd.write(str(datetime.datetime.now().strftime("%B %d, %Y")))
-            rstfd.write("\n_______________________________________\n\n")
+        for context in contexts:
+            context_dict = {"context": context, "tasks": []}
+            proj_dict["contexts"].append(context_dict)
 
-            if terms:
-                term_list = ", ".join(['"' + x + '"' for x in terms])
-                rstfd.write(term_list)
-                rstfd.write("\n++++++++++++++++++++++++++++++++++++++++++\n\n")
+            txtfd.write("\n{}\n".format(context))
 
-            for context in contexts:
-                txtfd.write("\n{}\n".format(context))
+            for task in tasks:
+                context_dict["tasks"].append(
+                    {"text": task.text, "num": task.num}
+                )
 
-                rstfd.write("\n**{}**\n\n".format(context))
+                if context in str(task).split():
+                    txtfd.write("{}\n".format(task))
 
-                for task in tasks:
-                    if context in str(task).split():
-                        txtfd.write("{}\n".format(task))
+    with open(json_file, "w") as fp:
+        json.dump(proj_dict, fp, indent=4)
 
-                        rstfd.write(
-                            "* {1} - [{0}]\n".format(
-                                task.num, rstify(str(task))
-                            )
-                        )
-                rstfd.write("\n|\n")
+    from relatorio.templates.opendocument import Template
 
-    rst2odt(rst_file, odt_file)
-    os.remove(rst_file)
+    basic = Template(source="", filepath="/home/daves/Documents/template.odt")
+    basic_generated = basic.generate(o=proj_dict).render()
+    with open(odt_file, "wb") as fp:
+        fp.write(basic_generated.getvalue())
+
+#     rst2odt(rst_file, odt_file)
+#     os.remove(rst_file)
 
     if launch:
         with nullfd(1), nullfd(2):
