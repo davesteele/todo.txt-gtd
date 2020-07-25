@@ -7,7 +7,7 @@ python:
   - "3.8-dev"
 # command to install dependencies
 install:
-  - pip install setuptools pytest pytest-runner
+  - pip install setuptools pytest pytest-runner relatorio
   - pip install configargparse docutils
   - export PYTHONPATH=$PYTHONPATH:$(pwd)
 # command to run tests
