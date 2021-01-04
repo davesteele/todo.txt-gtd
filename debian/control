@@ -21,7 +21,7 @@ Vcs-Browser: https://github.com/davesteele/todo.txt-gtd
 
 Package: tdtgtd
 Architecture: all
-Depends: ${python3:Depends}, ${misc:Depends}
+Depends: ${python3:Depends}, ${misc:Depends}, todo.txt-base, todo.txt
 Recommends: todotxt-cli
 Description: scripts to manage todo.txt in a GTD fashion
  A suite of scripts that support processing todo.txt files according to the
