@@ -5,7 +5,7 @@ from subprocess import run
 from tempfile import TemporaryDirectory
 
 from .tdtcleanup import Project, Projects
-from .tdtlist import is_task
+from .utils import is_task
 
 
 def parse_args():

@@ -1,4 +1,5 @@
 import os
+import re
 from contextlib import contextmanager
 from functools import wraps
 
@@ -27,3 +28,29 @@ def nullfd(fd):
     finally:
         os.dup2(saveout, fd)
         os.close(saveout)
+
+
+def is_task(line: str, *terms: str) -> bool:
+    if re.search(r"^\s*#", line):
+        return False
+
+    if "@" not in line:
+        return False
+
+    if re.search("^x ", line):
+        return False
+
+    if any(term not in line for term in terms):
+        return False
+
+    return True
+
+
+def is_current_task(line: str, *terms: str) -> bool:
+    if "@~" in line:
+        return False
+
+    if threshold_mask(line):
+        return False
+
+    return is_task(line, *terms)

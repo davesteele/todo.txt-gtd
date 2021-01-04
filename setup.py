@@ -22,7 +22,6 @@ setup(
         "console_scripts": [
             "tdtcleanup = tdtgtd.tdtcleanup:main",
             "tdtbackup = tdtgtd.tdtbackup:main",
-            "tdtlist = tdtgtd.tdtlist:main",
             "tdtproj = tdtgtd.tdtproj:main",
         ]
     },

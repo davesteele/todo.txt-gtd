@@ -12,5 +12,4 @@ _tdt_completions()
   fi
 }
 
-complete -F _tdt_completions tdtlist
 complete -F _tdt_completions tdtproj
