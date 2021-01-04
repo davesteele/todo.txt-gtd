@@ -21,7 +21,6 @@ setup(
     entry_points={
         "console_scripts": [
             "tdtcleanup = tdtgtd.tdtcleanup:main",
-            "tdtbackup = tdtgtd.tdtbackup:main",
             "tdtproj = tdtgtd.tdtproj:main",
         ]
     },
