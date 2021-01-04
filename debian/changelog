@@ -1,3 +1,9 @@
+todo.txt-gtd (0.4) UNRELEASED; urgency=medium
+
+  * Changed name to todo.txt-gtd.
+
+ -- David Steele <steele@debian.org>  Mon, 04 Jan 2021 18:54:48 -0500
+
 tdtgtd (0.3) tdtgtd; urgency=medium
 
   * tdtproj
