@@ -9,7 +9,7 @@ with open(path.join(this_directory, "README.md"), encoding="utf-8") as f:
 setup(
     name="todo.txt-gtd",
     version="0.2",
-    packages=["tdtgtd"],
+    packages=["todo_txt_gtd"],
     url="https://github.com/davesteele/todo.txt-gtd",
     license="GPL 2.0",
     author="David Steele",
@@ -20,8 +20,8 @@ setup(
     package_data={"": ["*.odt"]},
     entry_points={
         "console_scripts": [
-            "tdtcleanup = tdtgtd.tdtcleanup:main",
-            "tdtproj = tdtgtd.tdtproj:main",
+            "tdtcleanup = todo_txt_gtd.tdtcleanup:main",
+            "tdtproj = todo_txt_gtd.tdtproj:main",
         ]
     },
     install_requires=["configargparse", "relatorio"],

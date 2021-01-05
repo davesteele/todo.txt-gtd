@@ -3,7 +3,7 @@ from collections import namedtuple
 
 import pytest
 
-from tdtgtd.utils import is_task
+from todo_txt_gtd.utils import is_task
 
 Case = namedtuple("Case", ["line", "is_task"])
 

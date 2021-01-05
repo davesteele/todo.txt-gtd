@@ -2,7 +2,7 @@ import copy
 
 import pytest
 
-from tdtgtd import tdtcleanup
+from todo_txt_gtd import tdtcleanup
 
 
 @pytest.mark.parametrize("numruns", [1, 2])

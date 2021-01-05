@@ -2,9 +2,9 @@
 
 #export DH_VERBOSE = 1
 
-export PYBUILD_NAME=tdtgtd
-export PYBUILD_INSTALL_ARGS=--install-lib=/usr/share/tdtgtd\
- --install-scripts=/usr/share/tdtgtd
+export PYBUILD_NAME=todo_txt_gtd
+export PYBUILD_INSTALL_ARGS=--install-lib=/usr/share/todo.txt-gtd\
+ --install-scripts=/usr/share/todo.txt-gtd
 export PYBUILD_TEST_PYTEST=1
 
 %:
