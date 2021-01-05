@@ -6,9 +6,9 @@ _tdt_completions()
   if [ "$3" = "-f" ] ; then
 	COMPREPLY=($(compgen -A file $2))
   else
-	candidates=("$(tdtproj -l "$2")")
+	candidates=("$(project -l "$2")")
 	COMPREPLY=($(compgen -W "$candidates" $2))
   fi
 }
 
-complete -F _tdt_completions tdtproj
+complete -F _tdt_completions project

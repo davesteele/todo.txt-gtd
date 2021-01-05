@@ -21,7 +21,7 @@ setup(
     entry_points={
         "console_scripts": [
             "tdtcleanup = todo_txt_gtd.tdtcleanup:main",
-            "tdtproj = todo_txt_gtd.tdtproj:main",
+            "project = todo_txt_gtd.tdtproj:main",
         ]
     },
     install_requires=["configargparse", "relatorio"],
