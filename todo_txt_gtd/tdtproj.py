@@ -1,11 +1,23 @@
 import argparse
 import os
+import re
 import textwrap
 from subprocess import run
 from tempfile import TemporaryDirectory
 
 from .tdtcleanup import Project, Projects
 from .utils import is_task
+
+
+def default_file():
+    cp = subprocess.run(
+        ["todo.txt", "--info"],
+        capture_output=True,
+        encoding="utf-8",
+    )
+
+    match = re.search("^task_path\s*=\s*(.+)$", cp.stdout, re.MULTILINE)
+    return match.group(1)
 
 
 def parse_args():
@@ -33,9 +45,8 @@ def parse_args():
     parser.add_argument(
         "-f",
         "--file",
-        help="the todo.txt file location "
-        "(defaults to ~/Dropbox/todo/todo.txt)",
-        default="~/Dropbox/todo/todo.txt",
+        help="the todo.txt file location.",
+        default=None,
     )
 
     parser.add_argument(
@@ -61,6 +72,10 @@ def parse_args():
     )
 
     args = parser.parse_args()
+
+    if args.file is None:
+        args.file = default_file()
+
     args.file = os.path.expanduser(args.file)
 
     return args
