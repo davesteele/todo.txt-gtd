@@ -20,7 +20,7 @@ setup(
     package_data={"": ["*.odt"]},
     entry_points={
         "console_scripts": [
-            "tdtcleanup = todo_txt_gtd.tdtcleanup:main",
+            "gtdcleanup = todo_txt_gtd.tdtcleanup:main",
             "project = todo_txt_gtd.tdtproj:main",
         ]
     },
