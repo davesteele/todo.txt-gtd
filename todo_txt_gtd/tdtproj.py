@@ -1,8 +1,8 @@
 import argparse
 import os
 import re
+import subprocess
 import textwrap
-from subprocess import run
 from tempfile import TemporaryDirectory
 
 from .tdtcleanup import Project, Projects
@@ -118,7 +118,7 @@ def edit_proj(tdpath, terms, exact):
             editor = os.environ["EDITOR"]
         except KeyError:
             editor = "editor"
-        run([editor, editpath])
+        subprocess.run([editor, editpath])
 
         editprojs = read_proj(editpath)
 
