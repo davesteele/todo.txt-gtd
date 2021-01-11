@@ -1,3 +1,9 @@
+
+# Copyright (c) 2021 David Steele <dsteele@gmail.com>
+#
+# SPDX-License-Identifier: GPL-2.0-or-later
+# License-Filename: LICENSE
+
 import os
 import re
 from contextlib import contextmanager
@@ -54,3 +60,14 @@ def is_current_task(line: str, *terms: str) -> bool:
         return False
 
     return is_task(line, *terms)
+
+
+def threshold_mask(task: str) -> bool:
+    match = re.search(r"(^|[^\S])t:(\d\d\d\d-\d\d-\d\d)($|[^\S])", task)
+
+    if not match:
+        return False
+
+    threshold_date = datetime.datetime.strptime(match.group(2), "%Y-%m-%d")
+
+    return datetime.datetime.now() < threshold_date

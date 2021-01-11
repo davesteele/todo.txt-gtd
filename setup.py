@@ -1,3 +1,9 @@
+#!/usr/bin/python3
+# Copyright (c) 2021 David Steele <dsteele@gmail.com>
+#
+# SPDX-License-Identifier: GPL-2.0-or-later
+# License-Filename: LICENSE
+
 from os import path
 
 from setuptools import setup
