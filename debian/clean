@@ -3,3 +3,4 @@ todo.txt-gtd/
 todo.txt_gtd.egg-info/
 .eggs/
 dist/
+debian/project.1

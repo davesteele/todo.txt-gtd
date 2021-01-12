@@ -13,6 +13,7 @@ Build-Depends:
     python3-mock,
     python3-configargparse,
     python3-relatorio,
+    pandoc,
 X-Python3-Version: >= 3.6
 Standards-Version: 4.1.1
 Rules-Requires-Root: no
