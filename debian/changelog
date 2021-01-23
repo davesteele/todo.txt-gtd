@@ -1,3 +1,9 @@
+todo.txt-gtd (0.5) UNRELEASED; urgency=medium
+
+  * Replace links in todo.txt-base hooks dir with scripts.
+
+ -- David Steele <steele@debian.org>  Sat, 23 Jan 2021 14:46:38 -0500
+
 todo.txt-gtd (0.4) unstable; urgency=medium
 
   * Changed name to todo.txt-gtd.
