@@ -18,3 +18,10 @@ override_dh_auto_build:
 	  pandoc $$mn.md -s -t man -o $$mn;\
 	  sed -i 's/\\\[en\]/\\\-/' $$mn; \
 	done
+
+override_dh_auto_install:
+	dh_auto_install
+	for dir in prehooks posthooks; do \
+	  mkdir -p debian/todo.txt-gtd/etc/todo.txt-base/$$dir; \
+	  cp debian/50-gtdcleanup debian/todo.txt-gtd/etc/todo.txt-base/$$dir; \
+	done

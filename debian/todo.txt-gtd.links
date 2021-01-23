@@ -1,3 +1,2 @@
-/usr/share/todo.txt-gtd/gtdcleanup /etc/todo.txt-base/prehooks/50-gtdcleanup
-/usr/share/todo.txt-gtd/gtdcleanup /etc/todo.txt-base/posthooks/50-gtdcleanup
 /usr/share/todo.txt-gtd/project /usr/bin/project
+/usr/share/todo.txt-gtd/gtdcleanup /usr/bin/gtdcleanup
