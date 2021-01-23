@@ -1,9 +1,9 @@
-todo.txt-gtd (0.4) UNRELEASED; urgency=medium
+todo.txt-gtd (0.4) unstable; urgency=medium
 
   * Changed name to todo.txt-gtd.
   * Initial Debian release (Closes: #979842).
 
- -- David Steele <steele@debian.org>  Mon, 04 Jan 2021 18:54:48 -0500
+ -- David Steele <steele@debian.org>  Tue, 12 Jan 2021 13:50:03 -0500
 
 tdtgtd (0.3) tdtgtd; urgency=medium
 
