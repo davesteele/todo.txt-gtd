@@ -16,3 +16,4 @@ _tdt_completions()
 }
 
 complete -F _tdt_completions project
+complete -F _tdt_completions listtodo
