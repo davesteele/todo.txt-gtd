@@ -1,8 +1,9 @@
-todo.txt-gtd (0.5) UNRELEASED; urgency=medium
+todo.txt-gtd (0.5) unstable; urgency=medium
 
   * Replace links in todo.txt-base hooks dir with scripts.
+  * Install gtdcleanup as a user script.
 
- -- David Steele <steele@debian.org>  Sat, 23 Jan 2021 14:46:38 -0500
+ -- David Steele <steele@debian.org>  Mon, 25 Jan 2021 12:22:35 -0500
 
 todo.txt-gtd (0.4) unstable; urgency=medium
 
