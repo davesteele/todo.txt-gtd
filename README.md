@@ -1,6 +1,6 @@
 # todo.txt-gtd
 
-[![Travis Results](https://travis-ci.org/davesteele/todo.txt-gtd.svg?branch=master)](https://travis-ci.org/davesteele/todo.txt-gtd) [![PyPI version](https://badge.fury.io/py/todo.txt-gtd.svg)](https://badge.fury.io/py/todo.txt-gtd)
+[![PyPI version](https://badge.fury.io/py/todo.txt-gtd.svg)](https://badge.fury.io/py/todo.txt-gtd)
 
 My recipe for customizing a [**todo.txt**](http://todotxt.org/) environment for
 [**Getting Things Done**](https://gettingthingsdone.com/).
