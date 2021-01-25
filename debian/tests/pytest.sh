@@ -1,3 +1,3 @@
 #!/bin/sh
 
-PYTHONPATH=/usr/share/tdtgtd py.test-3
+PYTHONPATH=/usr/share/todo.txt-gtd py.test-3
