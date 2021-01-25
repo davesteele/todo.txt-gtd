@@ -4,3 +4,4 @@ todo.txt_gtd.egg-info/
 .eggs/
 dist/
 debian/project.1
+debian/gtdcleanup.1
