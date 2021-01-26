@@ -1,3 +1,9 @@
+todo.txt-gtd (0.6) unstable; urgency=medium
+
+  * New version to comply with debci's source-only mandate.
+
+ -- David Steele <steele@debian.org>  Tue, 26 Jan 2021 10:16:01 -0500
+
 todo.txt-gtd (0.5) unstable; urgency=medium
 
   * Replace links in todo.txt-base hooks dir with scripts.
