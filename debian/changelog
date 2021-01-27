@@ -1,3 +1,9 @@
+todo.txt-gtd (0.7) UNRELEASED; urgency=medium
+
+  * Declare conflict with turnin-ng (Closes: #981145).
+
+ -- David Steele <steele@debian.org>  Wed, 27 Jan 2021 13:58:50 -0500
+
 todo.txt-gtd (0.6) unstable; urgency=medium
 
   * New version to comply with debci's source-only mandate.

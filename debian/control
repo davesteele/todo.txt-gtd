@@ -25,6 +25,8 @@ Package: todo.txt-gtd
 Architecture: all
 Depends: ${python3:Depends}, ${misc:Depends}, todo.txt-base, topydo
 Recommends: todotxt-cli
+Conflicts: turnin-ng
+Replaces: turnin-ng
 Description: scripts to manage todo.txt in a GTD fashion
  A suite of scripts that support processing todo.txt files according to the
  precepts of the Getting Things Done philosophy.
