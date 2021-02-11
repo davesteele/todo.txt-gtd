@@ -23,7 +23,6 @@ setup(
     description="Todo.txt support scripts for GTD.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    package_data={"": ["*.odt"]},
     entry_points={
         "console_scripts": [
             "gtdcleanup = todo_txt_gtd.tdtcleanup:main",
