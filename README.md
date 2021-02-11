@@ -57,24 +57,11 @@ On subsequent runs, _tdtcleanup_ will do the following:
 
 The _tdtlist_ script lists the tasks in todo.txt, by context.
 
-If you process either of the above todo.txt files through _tdtlist_, it will
-output the following
-
-    @errands
-    
-    Get an oil change @errands +CarMaintenance
-    Get a Haircut @errands +Grooming
-    
-    @home
-    
-    Check the car battery water level @home +CarMaintenance
-
-The list is saved in text and LibreOffice ".odt" formats. It can be optionally
-automatically opened after it is created.
+It has been moved to [todo.txt-base](https://github.com/davesteele/todo.txt-base).
 
 ## The Project script
 
-The _tdtproj_ script supports working with a single project, or group of
+The _project script supports working with a single project, or group of
 projects. It opens an edit session with just the specified project section from
 the todo.txt file, and replaces that section after the session is complete.
 
@@ -82,7 +69,7 @@ If all of the lines are deleted from the edit session, no changes are made to
 the original todo.txt file. If just the header line is kept, all other lines
 are deleted from the original.
 
-Run _tdtproj_ with the "-l" option to get a current list of projects.
+Run _project_ with the "-l" option to get a current list of projects.
 
 A bash completion script is available that responds to tab completion with an
 appropriate project list.
@@ -90,6 +77,8 @@ appropriate project list.
 ## The Backup script
 
 _tdtbackup_ is a utility script for making rotating backups of the todo.txt file.
+
+It has been moved to [todo.txt-base](https://github.com/davesteele/todo.txt-base).
 
 # Working with a GTD todo.txt
 
@@ -109,7 +98,7 @@ For the Weekly Review:
 * Add tasks and '+' project tags, as needed
 * Run _tdtcleanup_ again
 
-I've found that running "``for proj in `tdtproj -l`; do tdtproj -x $proj;
+I've found that running "``for proj in `project -l`; do project -x $proj;
 done``" is a mind-clearing way to accomplish this.
 
 # Configuring Existing todo.txt Apps
@@ -196,28 +185,8 @@ The [Deb package](https://davesteele.github.io/todo.txt-gtd/deb/index.html):
 
 ---
 
-    $ tdtlist -h
-    usage: tdtlist [-h] [-f FILE] [-l] [TERM [TERM ...]]
-    
-    List the tasks in todo.txt, by @category
-    
-    positional arguments:
-      TERM                  search terms to filter the reported tasks
-    
-    optional arguments:
-      -h, --help            show this help message and exit
-      -f FILE, --file FILE  the todo.txt file location (defaults to
-                            ~/Dropbox/todo/todo.txt)
-      -l, --launch          open the task list, after creating
-
-    Process the todo.txt file, and save tasks lists, by context, in text and
-    LibreOffice formats. The lists are saved in the same directory as todo.txt.
-    Optionally, the LibreOffice list can be automatically opened.
-
----
-
-    $ tdtproj -h
-    usage: tdtproj [-h] [-f FILE] [-l] [-x] [TERM [TERM ...]]
+    $ project -h
+    usage: project [-h] [-f FILE] [-l] [-x] [TERM [TERM ...]]
     
     Work with one or more GTD projects in todo.txt
     
@@ -238,26 +207,3 @@ The [Deb package](https://davesteele.github.io/todo.txt-gtd/deb/index.html):
     Header line is kept, then the project is deleted in the original. The default
     text editor, set by 'update-alternatives', is used. This can be overridden by
     setting the 'EDITOR' environment variable.
-
----
-
-    $ tdtbackup -h
-    usage: tdtbackup [-h] [-f FILE] [-b BACKUPDIR] [-n NUM] [-c CONFIG_FILE]
-    
-    Back up the todo.txt file Args that start with '--' (eg. -f) can also be set
-    in a config file (/etc/todo-txt-gtd/tdtbackup.conf or ~/.config/todo-txt-
-    gtd/tdtbackup.conf or ~/.tdtbackup.conf or ~/.todo-txt/tdtbackup.conf or
-    specified via -c). Config file syntax allows: key=value, flag=true,
-    stuff=[a,b,c] (for details, see syntax at https://goo.gl/R74nmi). If an arg is
-    specified in more than one place, then commandline values override config file
-    values which override defaults.
-    
-    optional arguments:
-      -h, --help            show this help message and exit
-      -f FILE, --file FILE  the todo.txt file location (defaults to Dropbox)
-      -b BACKUPDIR, --backupdir BACKUPDIR
-                            the backup location (defaults to "todo/backup" in
-                            Dropbox)
-      -n NUM, --num NUM     the number of backup files to keep (defaults to 14)
-      -c CONFIG_FILE, --config_file CONFIG_FILE
-                            alternate config file
