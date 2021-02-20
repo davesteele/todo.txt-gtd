@@ -1,3 +1,9 @@
+todo.txt-gtd (0.8) unstable; urgency=medium
+
+  * Speed-up application launch.
+
+ -- David Steele <steele@debian.org>  Fri, 19 Feb 2021 21:50:47 -0500
+
 todo.txt-gtd (0.7) unstable; urgency=medium
 
   * Declare conflict with turnin-ng (Closes: #981145).
