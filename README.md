@@ -120,7 +120,7 @@ mentioned previously, avoid the archive operation.
 I've come to prefer [ToPydo](https://pypi.org/project/topydo/), for its support
 of [threshold dates and
 recurrence](https://github.com/mpcjanssen/simpletask-android/blob/master/app/src/main/assets/extensions.en.md).
-Note that it needs a [small
+Note that, for versions prior to 0.14, ToPydo needs a [small
 change](https://github.com/davesteele/topydo/commit/fafee24beb4718f375a921f3b4772c5fea37d7ac)
 to avoid eliminating blank lines. Make sure to use the '-a' option to disable
 auto-archive on task completion (or set the config "archive_filename" to no
@@ -146,16 +146,6 @@ Run 'tdtlist -l' for a printable todo list, for offline use.
 
 Of course, a primary way of interacting with the todo list is by editing the
 todo.txt file directly.
-
-My .bashrc to support todo.txt:
-
-    alias vitodo='vim ~/Dropbox/todo/todo.txt; tdtcleanup'
-    alias cdtodo='cd ~/Dropbox/todo/'
-    alias todo='topydo -a -t ~/Dropbox/todo/todo.txt'
-
-And my cron:
-
-    0 2 * * * tdtbackup; tdtcleanup; tdtlist
 
 <a name="Installing"/>
 
