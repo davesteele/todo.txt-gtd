@@ -124,7 +124,16 @@ Note that, for versions prior to 0.14, ToPydo needs a [small
 change](https://github.com/davesteele/topydo/commit/fafee24beb4718f375a921f3b4772c5fea37d7ac)
 to avoid eliminating blank lines. Make sure to use the '-a' option to disable
 auto-archive on task completion (or set the config "archive_filename" to no
-content).
+content). My ~/.topydo.conf:
+
+    [add]
+    auto_creation_date = 0
+    
+    [topydo]
+    filename = ~/Dropbox/todo/todo.txt
+    archive_filename =
+    
+    auto_delete_whitespace = 0
 
 [SimpleTask](https://play.google.com/store/apps/details?id=nl.mpcjanssen.todotxtholo&hl=en_US)
 works well on Android. Make a "Current Tasks" filter with the "List" tab
