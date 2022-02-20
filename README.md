@@ -124,7 +124,7 @@ Note that, for versions prior to 0.14, ToPydo needs a [small
 change](https://github.com/davesteele/topydo/commit/fafee24beb4718f375a921f3b4772c5fea37d7ac)
 to avoid eliminating blank lines. Make sure to use the '-a' option to disable
 auto-archive on task completion (or set the config "archive_filename" to no
-content). My ~/.topydo.conf:
+content). My ~/.topydo:
 
     [add]
     auto_creation_date = 0
