@@ -131,7 +131,7 @@ content). My ~/.topydo.conf:
     
     [topydo]
     filename = ~/Dropbox/todo/todo.txt
-    archive_filename =
+    archive_filename = ~/Dropbox/todo/done.txt
     
     auto_delete_whitespace = 0
 
