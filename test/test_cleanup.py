@@ -70,13 +70,6 @@ def context_fixture(request):
     return ContextTest(tdtcleanup.Task(casse.taskstr, "Foo"), casse)
 
 
-def test_task_get_context(context_fixture):
-    task = context_fixture.task
-    casse = context_fixture.casse
-
-    assert task.GetContext() == casse.context
-
-
 def test_task_get_contexts(context_fixture):
     task = context_fixture.task
     casse = context_fixture.casse

@@ -117,10 +117,6 @@ class Task(object):
         self.FixTask(project)
 
     @none_on_exception(AttributeError)
-    def GetContext(self):
-        return re.search("(^|\s)@([^ ]+)", self.text).group(2)
-
-    @none_on_exception(AttributeError)
     def GetContexts(self):
         occurs = re.findall("(^|\s)@([^ ]+)", self.text)
         return sorted([x[1] for x in occurs])
