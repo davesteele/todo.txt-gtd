@@ -113,27 +113,31 @@ class Project(object):
 
 class Task(object):
     def __init__(self, text, project):
-        self.text = self.FixTask(text, project)
+        self.text = text
+        self.FixTask(project)
 
     @none_on_exception(AttributeError)
-    def GetContext(self, text):
-        return re.search(" @([^ ]+)", text).group(1)
+    def GetContext(self):
+        return re.search("(^|\s)@([^ ]+)", self.text).group(2)
 
     @none_on_exception(AttributeError)
-    def GetProject(self, text):
-        return re.search(r" \+([^ ]+)", text).group(1)  # noqa
+    def GetContexts(self):
+        occurs = re.findall("(^|\s)@([^ ]+)", self.text)
+        return sorted([x[1] for x in occurs])
 
-    def FixTask(self, text, project):
+    @none_on_exception(AttributeError)
+    def GetProject(self):
+        return re.search(r"(^|\s)\+([^ ]+)", self.text).group(2)  # noqa
+
+    def FixTask(self, project):
         if (
-            self.GetContext(text) is not None
-            and self.GetProject(text) is None
+            self.GetContexts()
+            and self.GetProject() is None
             and project != NONE_PROJ
             and project is not None
         ):
-
-            text = "{0} +{1}".format(text, project)
-
-        return text
+            text = "{0} +{1}".format(self.text, project)
+            self.text = text
 
     def __str__(self):
         return self.text

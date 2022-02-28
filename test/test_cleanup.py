@@ -5,6 +5,7 @@
 # License-Filename: LICENSE
 
 import copy
+from typing import List, NamedTuple
 
 import pytest
 
@@ -40,3 +41,45 @@ def test_null_proj_str():
     assert "foo" in str(proj)
 
     assert proj.tasks == []
+
+#################################
+
+class ContextCase(NamedTuple):
+    taskstr: str
+    context: str
+    contexts: List[str]
+
+contexts = (
+    ContextCase("", None, []),
+    ContextCase("Foo", None, []),
+    ContextCase("Foo f@foo", None, []),
+    ContextCase("Foo @foo", "foo", ["foo"]),
+    ContextCase("@foo", "foo", ["foo"]),
+    ContextCase("Foo @foo @bar", "foo", ["bar", "foo"]),
+    ContextCase("Foo\t@foo", "foo", ["foo"]),
+)
+
+class ContextTest(NamedTuple):
+    task: tdtcleanup.Task
+    casse: ContextCase
+
+
+@pytest.fixture(params=contexts)
+def context_fixture(request):
+    casse = request.param
+    return ContextTest(tdtcleanup.Task(casse.taskstr, "Foo"), casse)
+
+
+def test_task_get_context(context_fixture):
+    task = context_fixture.task
+    casse = context_fixture.casse
+
+    assert task.GetContext() == casse.context
+
+
+def test_task_get_contexts(context_fixture):
+    task = context_fixture.task
+    casse = context_fixture.casse
+
+    assert task.GetContexts() == casse.contexts
+    assert casse.contexts == sorted(casse.contexts)
