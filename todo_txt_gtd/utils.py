@@ -40,7 +40,7 @@ def is_task(line: str, *terms: str) -> bool:
     if re.search(r"^\s*#", line):
         return False
 
-    if "@" not in line:
+    if not re.search("(^|\s)@", line):
         return False
 
     if re.search("^x ", line):

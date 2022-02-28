@@ -23,6 +23,8 @@ Case = namedtuple("Case", ["line", "is_task"])
         Case("foo", False),
         Case("bar @context", False),
         Case("foo @context", True),
+        Case("@context foo", True),
+        Case("foo v@context", False),
     ]
 )
 def test_utils_is_task(case):
