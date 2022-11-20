@@ -4,6 +4,7 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # License-Filename: LICENSE
 
+import datetime
 import os
 import re
 from contextlib import contextmanager
