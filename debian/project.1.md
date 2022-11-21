@@ -24,4 +24,4 @@ after the edit session is complete.
 
 ## SEE ALSO
 
-todo.txt-base(8), todo.txt(8), gtdcleanup(1)
+todo.txt-base(8), todo.txt(8), gtdcleanup(1), counttodo(1)

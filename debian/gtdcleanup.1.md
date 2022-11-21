@@ -35,4 +35,4 @@ This is designed to be installable as a todo.txt-base pre or post hook.
   * _-h_, _--help_ - Print help and exit
 
 ## SEE ALSO
-todo.txt-base(8), edittodo(8), vitodo(8), todo.txt(8), project(1)
+todo.txt-base(8), edittodo(8), vitodo(8), todo.txt(8), project(1), counttodo(1)

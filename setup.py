@@ -27,6 +27,7 @@ setup(
         "console_scripts": [
             "gtdcleanup = todo_txt_gtd.tdtcleanup:main",
             "project = todo_txt_gtd.tdtproj:main",
+            "counttodo = todo_txt_gtd.tdtcount:main",
         ]
     },
     install_requires=["configargparse", "relatorio"],
