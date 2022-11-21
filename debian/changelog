@@ -1,3 +1,9 @@
+todo.txt-gtd (0.9) UNRELEASED; urgency=medium
+
+  * Add the counttodo(1) command.
+
+ -- David Steele <steele@debian.org>  Sun, 20 Nov 2022 19:24:36 -0500
+
 todo.txt-gtd (0.8) unstable; urgency=medium
 
   * Speed-up application launch.
