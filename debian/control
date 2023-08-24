@@ -15,7 +15,7 @@ Build-Depends:
     python3-relatorio,
     pandoc,
 X-Python3-Version: >= 3.6
-Standards-Version: 4.1.1
+Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://davesteele.github.io/todo.txt-gtd/
 Vcs-Git: https://github.com/davesteele/todo.txt-gtd.git
