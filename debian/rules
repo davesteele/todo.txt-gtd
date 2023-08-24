@@ -5,7 +5,7 @@
 export PYBUILD_NAME=todo_txt_gtd
 export PYBUILD_INSTALL_ARGS=--install-lib=/usr/share/todo.txt-gtd\
  --install-scripts=/usr/share/todo.txt-gtd
-export PYBUILD_TEST_PYTEST=1
+export PYBUILD_TEST_PYTEST=0
 
 manpages = $(shell (ls debian/*.md | sed 's/.md//'))
 

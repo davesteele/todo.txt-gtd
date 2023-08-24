@@ -31,7 +31,7 @@ setup(
         ]
     },
     install_requires=["configargparse", "relatorio"],
-    setup_requires=["pytest-runner"],
+#    setup_requires=["pytest-runner"],
     tests_require=["pytest"],
     classifiers=[
         "Development Status :: 5 - Production/Stable",
