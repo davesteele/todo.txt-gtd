@@ -2,4 +2,4 @@
 
 # Run a Getting Things Done-style cleanup of the active todo.txt file
 
-gtdcleanup $1
+gtdcleanup "$1"
