@@ -1,9 +1,9 @@
-todo.txt-gtd (0.9) UNRELEASED; urgency=medium
+todo.txt-gtd (0.9) unstable; urgency=medium
 
   * Add the counttodo(1) command.
   * Fix a bug for todo paths containing a space.
 
- -- David Steele <steele@debian.org>  Sun, 20 Nov 2022 19:24:36 -0500
+ -- David Steele <steele@debian.org>  Thu, 24 Aug 2023 12:40:33 -0400
 
 todo.txt-gtd (0.8) unstable; urgency=medium
 
