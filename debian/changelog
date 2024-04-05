@@ -1,3 +1,10 @@
+todo.txt-gtd (0.10) unstable; urgency=medium
+
+  * Remove obsolete reference to python3-mock (Closes: #1068406).
+  * Fix homepage link (Closes: #1001047).
+
+ -- David Steele <steele@debian.org>  Fri, 05 Apr 2024 09:57:59 -0400
+
 todo.txt-gtd (0.9) unstable; urgency=medium
 
   * Add the counttodo(1) command.
