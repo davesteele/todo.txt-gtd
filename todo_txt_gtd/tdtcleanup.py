@@ -118,7 +118,7 @@ class Task(object):
 
     @none_on_exception(AttributeError)
     def GetContexts(self):
-        occurs = re.findall("(^|\s)@([^ ]+)", self.text)
+        occurs = re.findall(r"(^|\s)@([^ ]+)", self.text)
         return sorted([x[1] for x in occurs])
 
     @none_on_exception(AttributeError)
