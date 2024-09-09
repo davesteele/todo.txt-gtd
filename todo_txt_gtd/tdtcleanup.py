@@ -157,11 +157,13 @@ def parse_args():
 
 def cleanup(filepath):
     with open(filepath, "r", encoding="utf-8") as fp:
-        projects = Projects(fp.read())
+        instr = fp.read()
+        projects = Projects(instr)
 
-    with open(filepath, "w", encoding="utf-8") as fp:
-        fp.write(str(projects))
-
+    outstr = str(projects)
+    if outstr != instr:
+        with open(filepath, "w", encoding="utf-8") as fp:
+            fp.write(outstr)
 
 def main():
     args = parse_args()
