@@ -41,8 +41,8 @@ comments.
 
 A "#" comment block starting with a comment consisting of a single word is a
 Project Header, defining the default project for following tasks. The final
-*_None* project is special - it collects tasks that are added using various
-**todo.txt** applications.
+*_None* project is special - it collects tasks that do not have a +Project
+defined.
 
 On subsequent runs, _tdtcleanup_ will do the following:
 
@@ -57,11 +57,12 @@ On subsequent runs, _tdtcleanup_ will do the following:
 
 The _tdtlist_ script lists the tasks in todo.txt, by context.
 
-It has been moved to [todo.txt-base](https://github.com/davesteele/todo.txt-base).
+It has been moved to [todo.txt-base](https://github.com/davesteele/todo.txt-base),
+which is a dependency of todo.txt-gtd.
 
 ## The Project script
 
-The _project script supports working with a single project, or group of
+The _project_ script supports working with a single project, or group of
 projects. It opens an edit session with just the specified project section from
 the todo.txt file, and replaces that section after the session is complete.
 
