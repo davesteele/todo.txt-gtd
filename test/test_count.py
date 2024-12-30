@@ -5,6 +5,7 @@
 # License-Filename: LICENSE
 
 import copy
+from io import StringIO
 from typing import List, NamedTuple
 
 import pytest
@@ -21,4 +22,10 @@ countdata = """
 Future task @foo t:2099-01-01
 Current task @foo
 Pending task @~foo
+x Done task @foo
+
 """
+
+def test_count():
+    fp = StringIO(countdata)
+    assert tdtcount._counttodo(fp) == 1

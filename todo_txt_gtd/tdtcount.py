@@ -49,9 +49,14 @@ def parse_args():
     return args
 
 
+def _counttodo(fp):
+    count = len([line for line in fp if is_current_task(line)])
+
+    return count
+
 def counttodo(path):
     with open(path, "r", encoding="utf-8") as fp:
-        count = len([line for line in fp if is_current_task(line)])
+        count = _counttodo(fp)
 
     return count
 
