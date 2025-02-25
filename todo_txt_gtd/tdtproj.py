@@ -23,7 +23,7 @@ def default_file():
         encoding="utf-8",
     )
 
-    match = re.search("^task_path\s*=\s*(.+)$", cp.stdout, re.MULTILINE)
+    match = re.search(r"^task_path\s*=\s*(.+)$", cp.stdout, re.MULTILINE)
     return match.group(1)
 
 
