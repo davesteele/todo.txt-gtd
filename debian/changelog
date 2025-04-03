@@ -1,8 +1,10 @@
-todo.txt-gtd (0.11) UNRELEASED; urgency=medium
+todo.txt-gtd (0.11) unstable; urgency=medium
 
   * Change build to PEP517 poetry.
+  * Avoid updating todo.txt if there is no change.
+  * Misc cleanup.
 
- -- David Steele <steele@debian.org>  Thu, 03 Apr 2025 13:47:19 -0400
+ -- David Steele <steele@debian.org>  Thu, 03 Apr 2025 14:53:12 -0400
 
 todo.txt-gtd (0.10) unstable; urgency=medium
 
