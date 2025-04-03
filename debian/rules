@@ -20,6 +20,9 @@ override_dh_auto_build:
 	  sed -i 's/\\\[en\]/\\\-/' $$mn; \
 	done
 
+override_dh_auto_test:
+	python3 -m pytest
+
 override_dh_auto_install:
 	dh_auto_install
 	rm -rf debian/todo.txt-gtd/usr/share/todo.txt-gtd/.pytest_cache
