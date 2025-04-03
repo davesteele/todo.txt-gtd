@@ -1,0 +1,54 @@
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+package-mode = true
+name = "todo_txt_gtd"
+version = "0.11"
+description = "Todo.txt support scripts for GTD."
+license = "GPL-2.0-or-later"
+authors = [
+    "David Steele <steele@debian.org>",
+]
+readme = "README.md"
+homepage = "https://github.com/davesteele/todo.txt-gtd"
+classifiers = [
+    "Environment :: Console",
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)",
+    "Natural Language :: English",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: MacOS",
+    "Operating System :: Microsoft :: Windows",
+    "Programming Language :: Python :: 3 :: Only",
+    "Topic :: Other/Nonlisted Topic",
+]
+packages = [
+    {include = "todo_txt_gtd"},
+]
+
+[tool.poetry.scripts]
+gtdcleanup = "todo_txt_gtd.tdtcleanup:main"
+project = "todo_txt_gtd.tdtproj:main"
+counttodo = "todo_txt_gtd.tdtcount:main"
+
+[tool.poetry.dependencies]
+
+[tool.poetry.group.dev.dependencies]
+pytest="*"
+
+[tool.poetry.group.test.dependencies]
+pytest = "*"
+
+[tool.black]
+line-length = 79
+
+[tool.isort]
+profile = "black"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+

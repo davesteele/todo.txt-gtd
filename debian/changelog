@@ -1,3 +1,9 @@
+todo.txt-gtd (0.11) UNRELEASED; urgency=medium
+
+  * Change build to PEP517 poetry.
+
+ -- David Steele <steele@debian.org>  Thu, 03 Apr 2025 13:47:19 -0400
+
 todo.txt-gtd (0.10) unstable; urgency=medium
 
   * Remove obsolete reference to python3-mock (Closes: #1068406).

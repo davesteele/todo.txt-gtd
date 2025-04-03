@@ -6,6 +6,7 @@ export PYBUILD_NAME=todo_txt_gtd
 export PYBUILD_INSTALL_ARGS=--install-lib=/usr/share/todo.txt-gtd\
  --install-scripts=/usr/share/todo.txt-gtd
 export PYBUILD_TEST_PYTEST=0
+export PYBUILD_SYSTEM=pyproject
 
 manpages = $(shell (ls debian/*.md | sed 's/.md//'))
 
@@ -22,8 +23,6 @@ override_dh_auto_build:
 override_dh_auto_install:
 	dh_auto_install
 	rm -rf debian/todo.txt-gtd/usr/share/todo.txt-gtd/.pytest_cache
-	cp debian/project.launch debian/todo.txt-gtd/usr/share/todo.txt-gtd/project
-	cp debian/gtdcleanup.launch debian/todo.txt-gtd/usr/share/todo.txt-gtd/gtdcleanup
 	for dir in prehooks posthooks; do \
 	  mkdir -p debian/todo.txt-gtd/etc/todo.txt-base/$$dir; \
 	  cp debian/50-gtdcleanup debian/todo.txt-gtd/etc/todo.txt-base/$$dir; \

@@ -11,7 +11,8 @@ Build-Depends:
     python3-pytest-runner,
     python3-pytest,
     python3-configargparse,
-    python3-relatorio,
+    python3-poetry,
+    pybuild-plugin-pyproject,
     pandoc,
 X-Python3-Version: >= 3.6
 Standards-Version: 4.6.2
