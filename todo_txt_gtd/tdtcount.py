@@ -8,8 +8,8 @@ import argparse
 import os
 import textwrap
 
-from .utils import is_current_task
 from .tdtproj import default_file
+from .utils import is_current_task
 
 NONE_PROJ = "_None"
 
@@ -54,6 +54,7 @@ def _counttodo(fp):
 
     return count
 
+
 def counttodo(path):
     with open(path, "r", encoding="utf-8") as fp:
         count = _counttodo(fp)
@@ -65,6 +66,7 @@ def main():
     args = parse_args()
 
     print(counttodo(args.file))
+
 
 if __name__ == "__main__":
     main()

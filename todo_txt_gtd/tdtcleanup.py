@@ -165,6 +165,7 @@ def cleanup(filepath):
         with open(filepath, "w", encoding="utf-8") as fp:
             fp.write(outstr)
 
+
 def main():
     args = parse_args()
 
