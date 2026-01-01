@@ -100,7 +100,12 @@ class Project(object):
             self.AddTask("")
 
         if not (self.tasks and HeaderProj(text, self.tasks[-1].text)):
-            self.tasks.append(Task(text, self.name))
+            task = Task(text, self.name)
+
+            if len(self.tasks) > 0 and self.tasks[-1].is_completed():
+                task.enable_task()
+
+            self.tasks.append(task)
 
     def finish(self):
         if not self.tasks or self.tasks[-1].text:
@@ -134,6 +139,13 @@ class Task(object):
         ):
             text = "{0} +{1}".format(self.text, project)
             self.text = text
+
+    def is_completed(self):
+        return bool(re.match("x ", self.text))
+
+    def enable_task(self):
+        enabled_text = re.sub("@~", "@", self.text)
+        self.text = enabled_text
 
     def __str__(self):
         return self.text

@@ -76,3 +76,50 @@ def test_task_get_contexts(context_fixture):
 
     assert task.GetContexts() == casse.contexts
     assert casse.contexts == sorted(casse.contexts)
+
+
+@pytest.mark.parametrize("strng,completed",
+    [
+        ("foo", False),
+        ("foo", False),
+        ("foo", False),
+        ("foo", False),
+        ("foo", False),
+        ("x foo", True),
+    ]
+)
+def test_task_is_completed(strng, completed):
+    task = tdtcleanup.Task(strng, "P")
+
+    assert task.is_completed() == completed
+
+
+@pytest.mark.parametrize("first_line",
+    [
+        "Foo @ctx +P",
+        "#comment",
+        "",
+        "non-task text",
+    ]
+)
+def test_no_enable_context(first_line):
+    linein = "Bar @~ctx1 @~ctx2 +P"
+
+    proj = tdtcleanup.Project("P")
+    proj.AddTask("Task initializer @ctx +P")
+    proj.AddTask(first_line)
+    proj.AddTask(linein)
+
+    assert proj.tasks[-1].text == linein
+
+
+def test_enable_context():
+    first_line = "x Foo @ctx +P"
+    second_line = "Bar @~ctx1 @~ctx2 +P"
+    line_out = "Bar @ctx1 @ctx2 +P"
+
+    proj = tdtcleanup.Project("P")
+    proj.AddTask(first_line)
+    proj.AddTask(second_line)
+
+    assert proj.tasks[-1].text == line_out
