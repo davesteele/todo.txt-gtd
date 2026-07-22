@@ -5,7 +5,7 @@ build-backend = "poetry.core.masonry.api"
 [tool.poetry]
 package-mode = true
 name = "todo_txt_gtd"
-version = "0.11"
+version = "0.13"
 description = "Todo.txt support scripts for GTD."
 license = "GPL-2.0-or-later"
 authors = [
