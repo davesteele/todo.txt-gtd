@@ -8,7 +8,7 @@ Build-Depends:
     dh-python,
     python3-all,
     python3-pytest,
-    python3-poetry,
+    python3-poetry (>=2.0.0),
     pybuild-plugin-pyproject,
     pandoc,
 X-Python3-Version: >= 3.6
