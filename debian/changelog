@@ -2,6 +2,7 @@ todo.txt-gtd (0.13) UNRELEASED; urgency=medium
 
   * Delete multiple blank lines on cleanup. 
   * Upgrade pyproject.toml to PEP 621.
+  * Autopkgtest pytest across python versions.
 
  -- David Steele <steele@debian.org>  Wed, 22 Jul 2026 14:18:28 -0400
 
