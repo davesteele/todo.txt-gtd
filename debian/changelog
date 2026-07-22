@@ -1,6 +1,6 @@
 todo.txt-gtd (0.13) UNRELEASED; urgency=medium
 
-  *  
+  * Delete multiple blank lines on cleanup. 
 
  -- David Steele <steele@debian.org>  Wed, 22 Jul 2026 14:18:28 -0400
 

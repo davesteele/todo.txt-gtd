@@ -1,0 +1,8 @@
+# Foo
+
+task 1 @context +Foo
+
+task 2 @context +Foo
+
+# _None
+#

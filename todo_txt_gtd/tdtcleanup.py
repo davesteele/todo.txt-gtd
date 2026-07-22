@@ -113,7 +113,15 @@ class Project(object):
         return self
 
     def __str__(self):
-        return "\n".join(str(x) for x in copy.copy(self).finish())
+        thestr = "\n".join(str(x) for x in copy.copy(self).finish())
+
+        # no more than one blank line
+        thestr = re.sub(r'\n\n[\n]+', r'\n\n', thestr)
+
+        # delete trailing blank lines
+        thestr = re.sub(r'\n[\n]+$', r'\n', thestr)
+
+        return thestr
 
 
 class Task(object):
