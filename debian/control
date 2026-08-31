@@ -11,7 +11,6 @@ Build-Depends:
     python3-poetry (>=2.0.0),
     pybuild-plugin-pyproject,
     pandoc,
-X-Python3-Version: >= 3.6
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://github.com/davesteele/todo.txt-gtd
