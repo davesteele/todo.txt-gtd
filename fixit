@@ -3,7 +3,7 @@
 SCRIPT_DIR=$(dirname "$0")
 
 TARGETS=""
-for target in "todo.txt_gtd", "test" ; do
+for target in "todo_txt_gtd" "test" ; do
 	TARGETS+="$SCRIPT_DIR/$target ";
 done
 

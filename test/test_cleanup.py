@@ -19,7 +19,9 @@ def test_cleanup(clean_fxt, numruns):
     test_output = clean_fxt.workfile.read_text("utf-8")
     ref_output = clean_fxt.outfile.read_text("utf-8")
     assert test_output == ref_output
-    assert clean_fxt.workfile.size() == clean_fxt.outfile.size()
+    assert (
+        clean_fxt.workfile.stat().st_size == clean_fxt.outfile.stat().st_size
+    )
 
 
 @pytest.fixture

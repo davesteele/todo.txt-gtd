@@ -46,10 +46,7 @@ def is_task(line: str, *terms: str) -> bool:
     if re.search("^x ", line):
         return False
 
-    if any(term not in line for term in terms):
-        return False
-
-    return True
+    return not any(term not in line for term in terms)
 
 
 def is_current_task(line: str, *terms: str) -> bool:

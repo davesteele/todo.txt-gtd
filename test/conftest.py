@@ -5,8 +5,8 @@
 
 import os
 from collections import namedtuple
+from pathlib import Path
 
-import py
 import pytest
 
 
@@ -21,9 +21,9 @@ def cases():
         if path[-3:] == ".in":
             cases.append(
                 Case(
-                    py.path.local(casepath + path),
-                    py.path.local(casepath + path[:-3] + ".out"),
-                    py.path.local(casepath + path[:-3] + ".tasks"),
+                    Path(casepath + path),
+                    Path(casepath + path[:-3] + ".out"),
+                    Path(casepath + path[:-3] + ".tasks"),
                 )
             )
 
@@ -36,16 +36,17 @@ def pytest_generate_tests(metafunc):
 
 
 def makefiles(file_case, tmpdir):
-    workfile = tmpdir.join("todo.txt")
-    file_case.infile.copy(workfile)
+    tmp_path = Path(tmpdir)
+    workpath = tmp_path / "todo.txt"
+    file_case.infile.copy(workpath)
 
-    outfile = tmpdir.join(file_case.outfile.basename)
-    file_case.outfile.copy(outfile)
+    outpath = tmp_path / "test.out"
+    file_case.outfile.copy(outpath)
 
-    taskfile = tmpdir.join(file_case.taskfile.basename)
-    file_case.taskfile.copy(taskfile)
+    taskpath = tmp_path / "test.tasks"
+    file_case.taskfile.copy(taskpath)
 
-    return (outfile, workfile, taskfile)
+    return (outpath, workpath, taskpath)
 
 
 @pytest.fixture

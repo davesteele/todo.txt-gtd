@@ -17,7 +17,7 @@ NONE_PROJ = "_None"
 
 @none_on_exception(AttributeError)
 def TaskProj(line):
-    return re.search(r" \+([^ ]+)", line).group(1)  # noqa
+    return re.search(r" \+([^ ]+)", line).group(1)
 
 
 @none_on_exception(AttributeError)
@@ -25,12 +25,12 @@ def HeaderProj(line, prev_line):
     if prev_line.startswith("#"):
         return None
 
-    return re.search("^# ([^ ]+)$", line).group(1)  # noqa
+    return re.search("^# ([^ ]+)$", line).group(1)
 
 
 class Projects(OrderedDict):
     def __init__(self, todotxt=""):
-        super(Projects, self).__init__()
+        super().__init__()
         self[NONE_PROJ]
 
         for proj_name, task_text in self.LineGen(todotxt):
@@ -55,7 +55,6 @@ class Projects(OrderedDict):
         prev_line = ""
 
         for line in todotxt.split("\n"):
-
             if HeaderProj(line, prev_line):
                 current_project = HeaderProj(line, prev_line)
 
@@ -77,7 +76,7 @@ class Projects(OrderedDict):
             yield (TaskProj(line), line)
 
 
-class Project(object):
+class Project:
     def __init__(self, name):
         self.name = name
         self.tasks = []
@@ -95,7 +94,7 @@ class Project(object):
 
     def AddTask(self, text):
         if not self.tasks and (not text or text[0] != "#"):
-            self.AddTask("# {}".format(self.name))
+            self.AddTask(f"# {self.name}")
             self.AddTask("#")
             self.AddTask("")
 
@@ -123,15 +122,15 @@ class Project(object):
         thestr = "\n".join(str(x) for x in copy.copy(self).finish())
 
         # no more than one blank line
-        thestr = re.sub(r'\n\n[\n]+', r'\n\n', thestr)
+        thestr = re.sub(r"\n\n[\n]+", r"\n\n", thestr)
 
         # delete trailing blank lines
-        thestr = re.sub(r'\n[\n]+$', r'\n', thestr)
+        thestr = re.sub(r"\n[\n]+$", r"\n", thestr)
 
         return thestr
 
 
-class Task(object):
+class Task:
     def __init__(self, text, project):
         self.text = text
         self.FixTask(project)
@@ -143,7 +142,7 @@ class Task(object):
 
     @none_on_exception(AttributeError)
     def GetProject(self):
-        return re.search(r"(^|\s)\+([^ ]+)", self.text).group(2)  # noqa
+        return re.search(r"(^|\s)\+([^ ]+)", self.text).group(2)
 
     def FixTask(self, project):
         if (
@@ -152,7 +151,7 @@ class Task(object):
             and project != NONE_PROJ
             and project is not None
         ):
-            text = "{0} +{1}".format(self.text, project)
+            text = f"{self.text} +{project}"
             self.text = text
 
     def is_completed(self):

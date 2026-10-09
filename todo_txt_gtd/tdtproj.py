@@ -18,6 +18,7 @@ from .utils import is_task
 def default_file():
     cp = subprocess.run(
         ["todo.txt", "--info"],
+        check=False,
         capture_output=True,
         encoding="utf-8",
     )
@@ -42,9 +43,7 @@ def parse_args():
             The default text editor, set by 'update-alternatives', is
             used. This can be overridden by setting the 'EDITOR' environment
             variable.
-        """[
-                1:-1
-            ]
+        """[1:-1]
         ),
     )
 
@@ -101,9 +100,13 @@ def save_selected_projs(tdpath, editpath, terms, exact):
     pdict = read_proj(tdpath)
 
     for project in list(pdict):
-        if terms and not any(x in project for x in terms):
-            del pdict[project]
-        elif exact and terms and not any(x == project for x in terms):
+        if (
+            terms
+            and not any(x in project for x in terms)
+            or exact
+            and terms
+            and not any(x == project for x in terms)
+        ):
             del pdict[project]
 
     if len(pdict) == 0 and terms and terms[0]:
@@ -124,7 +127,7 @@ def edit_proj(tdpath, terms, exact):
             editor = os.environ["EDITOR"]
         except KeyError:
             editor = "editor"
-        subprocess.run([editor, editpath])
+        subprocess.run([editor, editpath], check=False)
 
         editprojs = read_proj(editpath)
 
@@ -149,11 +152,13 @@ def main():
 
     if args.list:
         for proj in read_proj(args.file):
-            if not args.terms:
-                print(proj)
-            elif args.exact and any(x == proj for x in args.terms):
-                print(proj)
-            elif not args.exact and any(x in proj for x in args.terms):
+            if (
+                not args.terms
+                or args.exact
+                and any(x == proj for x in args.terms)
+                or not args.exact
+                and any(x in proj for x in args.terms)
+            ):
                 print(proj)
     else:
         edit_proj(args.file, args.terms, args.exact)
