@@ -28,6 +28,11 @@ cannot be identified.
 
 This is designed to be installable as a todo.txt-base pre or post hook.
 
+By convention, tasks containing contexts with an inserted tilde (e.g.
+"@~tag") are considered deferred tasks. This program will enable such
+tasks, by removing the tilde, if the previous line in the task file is not
+a valid uncompleted task.
+
 ## ARGUMENTS
   * _\<path\>_ - the path to the todo.txt file
 

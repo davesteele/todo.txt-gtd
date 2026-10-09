@@ -81,10 +81,7 @@ def test_task_get_contexts(context_fixture):
 @pytest.mark.parametrize("strng,completed",
     [
         ("foo", False),
-        ("foo", False),
-        ("foo", False),
-        ("foo", False),
-        ("foo", False),
+        ("xfoo", False),
         ("x foo", True),
     ]
 )
@@ -92,25 +89,6 @@ def test_task_is_completed(strng, completed):
     task = tdtcleanup.Task(strng, "P")
 
     assert task.is_completed() == completed
-
-
-@pytest.mark.parametrize("first_line",
-    [
-        "Foo @ctx +P",
-        "#comment",
-        "",
-        "non-task text",
-    ]
-)
-def test_no_enable_context(first_line):
-    linein = "Bar @~ctx1 @~ctx2 +P"
-
-    proj = tdtcleanup.Project("P")
-    proj.AddTask("Task initializer @ctx +P")
-    proj.AddTask(first_line)
-    proj.AddTask(linein)
-
-    assert proj.tasks[-1].text == linein
 
 
 def test_enable_context():
@@ -123,3 +101,39 @@ def test_enable_context():
     proj.AddTask(second_line)
 
     assert proj.tasks[-1].text == line_out
+
+
+@pytest.mark.parametrize( "testtask, istask", 
+    [
+        ("task @t", True),
+        ("deferred task @t", True),
+        ("x completed task @t", True),
+        ("# comment", False),
+        ("# comment @t", False),
+        ("", False),
+    ]
+)
+def test_is_task(testtask, istask):
+    task = tdtcleanup.Task(testtask, "P")
+
+    assert task.is_task() == istask
+
+
+@pytest.mark.parametrize("first_line, second_line, final_line",
+    [
+        ("valid task @c +P", "d @~d +P", "d @~d +P"),
+        ("deferred task @~c +P", "d @~d +P", "d @~d +P"),
+        ("x done task @c +P", "d @~d +P", "d @d +P"),
+        ("# comment task @c +P", "d @~d +P", "d @d +P"),
+        ("", "d @~d +P", "d @d +P"),
+        ("random text", "d @~d +P", "d @d +P"),
+        ("", "# d @~d +P", "# d @~d +P"),
+    ]
+)
+def test_enable_context2(first_line, second_line, final_line):
+    proj = tdtcleanup.Project("P")
+    proj.AddTask(first_line)
+    proj.AddTask(second_line)
+
+    assert proj.tasks[-1].text == final_line
+

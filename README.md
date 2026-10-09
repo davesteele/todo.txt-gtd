@@ -52,7 +52,7 @@ On subsequent runs, _tdtcleanup_ will do the following:
   context. This processing doesn't happen in the *_None* section.
 * Move tasks to the proper Project Section, if they aren't already there. The
   Section is created, using a Project Header, if necessary.
-* Enable "@~" tasks which are immediately preceded by a completed task.
+* Enable "@~" tasks which are not immediately preceded by an active task.
 
 ## The Context Listing Script
 

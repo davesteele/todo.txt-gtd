@@ -102,7 +102,14 @@ class Project(object):
         if not (self.tasks and HeaderProj(text, self.tasks[-1].text)):
             task = Task(text, self.name)
 
-            if len(self.tasks) > 0 and self.tasks[-1].is_completed():
+            if (
+                len(self.tasks) > 0
+                and (
+                    self.tasks[-1].is_completed()
+                    or not self.tasks[-1].is_task()
+                )
+                and task.is_task()
+            ):
                 task.enable_task()
 
             self.tasks.append(task)
@@ -150,6 +157,12 @@ class Task(object):
 
     def is_completed(self):
         return bool(re.match("x ", self.text))
+
+    def is_task(self):
+        has_context = bool(self.GetContexts())
+        is_comment = len(self.text) > 0 and self.text[0] == "#"
+
+        return has_context and not is_comment
 
     def enable_task(self):
         enabled_text = re.sub("@~", "@", self.text)
