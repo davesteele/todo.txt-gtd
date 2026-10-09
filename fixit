@@ -1,0 +1,15 @@
+#!/bin/bash
+
+SCRIPT_DIR=$(dirname "$0")
+
+TARGETS=""
+for target in "todo.txt_gtd", "test" ; do
+	TARGETS+="$SCRIPT_DIR/$target ";
+done
+
+virtualenv $SCRIPT_DIR/.devenv
+$SCRIPT_DIR/.devenv/bin/python -m pip install ruff pytest requests pytest-mock
+
+$SCRIPT_DIR/.devenv/bin/ruff format $TARGETS
+$SCRIPT_DIR/.devenv/bin/ruff check --select I --fix $TARGETS
+$SCRIPT_DIR/.devenv/bin/ruff check --fix $TARGETS

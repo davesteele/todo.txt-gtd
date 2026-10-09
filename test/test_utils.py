@@ -1,4 +1,3 @@
-
 # Copyright (c) 2021 David Steele <dsteele@gmail.com>
 #
 # SPDX-License-Identifier: GPL-2.0-or-later
@@ -25,7 +24,7 @@ Case = namedtuple("Case", ["line", "is_task"])
         Case("foo @context", True),
         Case("@context foo", True),
         Case("foo v@context", False),
-    ]
+    ],
 )
 def test_utils_is_task(case):
     assert is_task(case.line, "foo") == case.is_task

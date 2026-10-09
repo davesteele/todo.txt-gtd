@@ -1,11 +1,10 @@
-
 # Copyright (c) 2021 David Steele <dsteele@gmail.com>
 #
 # SPDX-License-Identifier: GPL-2.0-or-later
 # License-Filename: LICENSE
 
 import copy
-from typing import List, NamedTuple
+from typing import NamedTuple
 
 import pytest
 
@@ -42,12 +41,15 @@ def test_null_proj_str():
 
     assert proj.tasks == []
 
+
 #################################
+
 
 class ContextCase(NamedTuple):
     taskstr: str
     context: str
-    contexts: List[str]
+    contexts: list[str]
+
 
 contexts = (
     ContextCase("", None, []),
@@ -58,6 +60,7 @@ contexts = (
     ContextCase("Foo @foo @bar", "foo", ["bar", "foo"]),
     ContextCase("Foo\t@foo", "foo", ["foo"]),
 )
+
 
 class ContextTest(NamedTuple):
     task: tdtcleanup.Task
@@ -78,12 +81,13 @@ def test_task_get_contexts(context_fixture):
     assert casse.contexts == sorted(casse.contexts)
 
 
-@pytest.mark.parametrize("strng,completed",
+@pytest.mark.parametrize(
+    "strng,completed",
     [
         ("foo", False),
         ("xfoo", False),
         ("x foo", True),
-    ]
+    ],
 )
 def test_task_is_completed(strng, completed):
     task = tdtcleanup.Task(strng, "P")
@@ -103,7 +107,8 @@ def test_enable_context():
     assert proj.tasks[-1].text == line_out
 
 
-@pytest.mark.parametrize( "testtask, istask", 
+@pytest.mark.parametrize(
+    "testtask, istask",
     [
         ("task @t", True),
         ("deferred task @t", True),
@@ -111,7 +116,7 @@ def test_enable_context():
         ("# comment", False),
         ("# comment @t", False),
         ("", False),
-    ]
+    ],
 )
 def test_is_task(testtask, istask):
     task = tdtcleanup.Task(testtask, "P")
@@ -119,7 +124,8 @@ def test_is_task(testtask, istask):
     assert task.is_task() == istask
 
 
-@pytest.mark.parametrize("first_line, second_line, final_line",
+@pytest.mark.parametrize(
+    "first_line, second_line, final_line",
     [
         ("valid task @c +P", "d @~d +P", "d @~d +P"),
         ("deferred task @~c +P", "d @~d +P", "d @~d +P"),
@@ -128,7 +134,7 @@ def test_is_task(testtask, istask):
         ("", "d @~d +P", "d @d +P"),
         ("random text", "d @~d +P", "d @d +P"),
         ("", "# d @~d +P", "# d @~d +P"),
-    ]
+    ],
 )
 def test_enable_context2(first_line, second_line, final_line):
     proj = tdtcleanup.Project("P")
@@ -136,4 +142,3 @@ def test_enable_context2(first_line, second_line, final_line):
     proj.AddTask(second_line)
 
     assert proj.tasks[-1].text == final_line
-

@@ -1,4 +1,3 @@
-
 # Copyright (c) 2021 David Steele <dsteele@gmail.com>
 #
 # SPDX-License-Identifier: GPL-2.0-or-later
@@ -6,6 +5,7 @@
 
 import os
 from collections import namedtuple
+
 import py
 import pytest
 
