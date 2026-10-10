@@ -1,3 +1,11 @@
+todo.txt-gtd (0.14) UNRELEASED; urgency=medium
+
+  * Fixes to auto-enabling deferred tasks.
+  * Improved testing.
+  * Ruff cleanup.
+
+ -- David Steele <steele@debian.org>  Fri, 09 Oct 2026 19:55:01 -0400
+
 todo.txt-gtd (0.13) unstable; urgency=medium
 
   * Delete multiple blank lines on cleanup. 
