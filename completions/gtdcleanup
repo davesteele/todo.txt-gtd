@@ -1,0 +1,11 @@
+# Copyright (c) 2026 David Steele <dsteele@gmail.com>
+#
+# SPDX-License-Identifier: GPL-2.0-or-later
+# License-Filename: LICENSE
+
+_gtd_cleanup_completions()
+{
+  COMPREPLY+=($(todo.txt --info | grep task_path | awk '{print $3}' | xargs))
+}
+
+complete -F _gtd_cleanup_completions gtdcleanup
