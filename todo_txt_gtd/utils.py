@@ -65,6 +65,11 @@ def threshold_mask(task: str) -> bool:
     if not match:
         return False
 
-    threshold_date = datetime.datetime.strptime(match.group(2), "%Y-%m-%d")
+    try:
+        threshold_date = datetime.datetime.strptime(match.group(2), "%Y-%m-%d")
+    except ValueError:
+        # Digit-shaped but impossible date (e.g. t:2026-13-45): a typo, not a
+        # threshold. Treat like a missing threshold instead of crashing.
+        return False
 
     return datetime.datetime.now() < threshold_date
